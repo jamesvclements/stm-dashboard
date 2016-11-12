@@ -21,6 +21,8 @@ export class Landing extends React.Component {
         welcome to the St. Thomas More Student Management System.
         <br/>
         Go to classroom <Link to="/run-placements">placement</Link>.
+        <br/>
+        go to example student <Link to="/student/3">card</Link>.
       </div>
     )
   }

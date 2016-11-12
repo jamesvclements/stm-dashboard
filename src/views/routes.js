@@ -6,6 +6,7 @@ import Landing from './Landing/Landing'
 import Placement from './Placement/Placement'
 import Login from './Login/Login'
 import RunPlacements from './RunPlacements/RunPlacements'
+import Student from './Student/Student'
 
 const auth = new AuthService(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -25,6 +26,7 @@ export const makeRoutes = () => {
       <Route path="run-placements" component={RunPlacements} />
       <Route path="placement/:grade" component={Placement} />
       <Route path="login" component={Login} />
+      <Route path="student/:studentID" component={Student} />
       <Route path="access_token=:token" component={Login} />
     </Route>
   )
