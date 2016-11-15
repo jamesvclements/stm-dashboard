@@ -144,5 +144,3 @@ const studentStatPrecendence = {
 export function sortStudentStats(a, b) {
   return studentStatPrecendence[a] - studentStatPrecendence[b]
 }
-
-

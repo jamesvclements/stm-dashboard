@@ -5,7 +5,8 @@ import './Landing.css'
 
 export class Landing extends React.Component {
   static contextTypes = {
-    router: T.object
+    router: T.object,
+    addNotification: T.func
   }
 
   static propTypes = {
@@ -15,6 +16,9 @@ export class Landing extends React.Component {
 
   render() {
     const { profile } = this.props
+    console.log(this.context)
+    // why doesn't this work?
+    // this.context.addNotification()
     return (
       <div className="root">
         Hi{profile.given_name ? ` ${profile.given_name}` : ''}, 
