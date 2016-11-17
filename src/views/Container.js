@@ -30,11 +30,9 @@ export class Container extends React.Component {
     }
   }
 
-  addNotification() {
-    this.notifications.addNotification({
-      message: 'test',
-      level: 'success'
-    })
+  addNotification(notification) {
+    notification.position = 'br'
+    this.notifications.addNotification(notification)
   }
 
   loggedIn() {

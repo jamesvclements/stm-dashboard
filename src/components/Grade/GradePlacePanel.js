@@ -3,7 +3,8 @@ import { Panel, Button } from 'react-bootstrap'
 
 export class GradePlacePanel extends React.Component {
   static contextTypes = {
-    router: T.object
+    router: T.object,
+    addNotification: T.func
   }
   
   static propTypes = {
@@ -19,8 +20,13 @@ export class GradePlacePanel extends React.Component {
       .then(() => {
         this.context.router.push(`/placement/${grade}`)
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to run placement',
+          level: 'error'
+        })
       })
   }
 
