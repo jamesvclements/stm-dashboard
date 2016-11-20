@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Panel, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
-import * as Utils from '../../utils/Utils'
+import * as Utils from '../../../utils/Utils'
 import './StudentListItem.css'
 
 export class StudentListItem extends React.Component {

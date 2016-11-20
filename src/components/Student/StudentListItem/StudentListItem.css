@@ -1,0 +1,7 @@
+.student-stats {
+  text-align: left;
+}
+
+.student-panel>.panel-heading{
+  cursor: pointer;
+}

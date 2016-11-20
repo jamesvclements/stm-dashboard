@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
-import { Link } from 'react-router'
+import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import './Landing.css'
 
 export class Landing extends React.Component {
@@ -14,13 +14,40 @@ export class Landing extends React.Component {
   }
 
   render() {
-    const { profile } = this.props
     return (
       <div className="root">
-        Hi{profile.given_name ? ` ${profile.given_name}` : ''}, 
-        welcome to the St. Thomas More Student Management System.
-        <br/>
-        Go to classroom <Link to="/run-placements">placement</Link>.
+        <Grid>
+          <Row>
+            <Col md={6} xs={12}>
+              <Panel
+                onClick={() => {this.context.router.push('/students')}}
+                className="landing-panel">
+                <h3>Students</h3>
+              </Panel>
+            </Col>
+            <Col md={6} xs={12}>
+              <Panel
+                onClick={() => {this.context.router.push('/grades')}}
+                className="landing-panel">
+                <h3>Grades</h3>
+              </Panel>
+            </Col>
+            <Col md={6} xs={12}>
+              <Panel
+                onClick={() => {this.context.router.push('/run-placements')}}
+                className="landing-panel">
+                <h3>Placement</h3>
+              </Panel>
+            </Col>
+            <Col md={6} xs={12}>
+              <Panel
+                onClick={() => {this.context.router.push('/admin')}}
+                className="landing-panel">
+                <h3>Admin</h3>
+              </Panel>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }
