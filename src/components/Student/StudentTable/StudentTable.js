@@ -38,7 +38,7 @@ export class StudentTable extends React.Component {
                         <Button
                           block
                           bsStyle="primary"
-                          onClick={() => { this.context.router.push(`/student-cards/${student.id}`) } }>
+                          onClick={() => { this.context.router.push(`/students/${student.id}`) } }>
                           View Card
                         </Button>
                       </td>
