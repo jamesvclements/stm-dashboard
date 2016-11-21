@@ -1,6 +1,5 @@
 import React, { PropTypes as T } from 'react'
 import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
-import AuthService from '../../utils/AuthService'
 import * as Utils from '../../utils/Utils'
 import './Student.css'
 
@@ -11,7 +10,6 @@ export class Student extends React.Component {
   }
 
   static propTypes = {
-    auth: T.instanceOf(AuthService),
     profile: T.object,
   }
 
@@ -28,15 +26,22 @@ export class Student extends React.Component {
       method: 'GET'
     }).then(response => {
       response.json().then(student => {
-        this.setState({
-          student: student[0]
-        })
-        console.log(student)
+        if (response.ok) {
+          this.setState({
+            student: student[0]
+          })
+        } else {
+          this.context.addNotification({
+            title: 'Error',
+            message: 'Failed to fetch student',
+            level: 'error'
+          })
+        }
       }).catch(err => {
         console.error(err)
         this.context.addNotification({
           title: 'Error',
-          message: 'Failed to get student from server',
+          message: 'Failed to fetch student',
           level: 'error'
         })
       })
@@ -123,12 +128,11 @@ export class Student extends React.Component {
   validateScore(key){
     let val = this.state.student[key]
     let retVal = ''
-    //alert(key + " with value " + val)
-    if (typeof val === 'undefined'){
+    if (typeof val === 'undefined') {
       return 'success'
-    } else if (isNaN(val)){
+    } else if (isNaN(val)) {
       return 'error'
-    } else if (typeof val === 'string'){
+    } else if (typeof val === 'string') {
       if(!val)
         return 'success'
       else {
@@ -136,7 +140,6 @@ export class Student extends React.Component {
         if(isNaN(val))
           return 'error'
       }
-
     } else if(!val){
       return 'error'
     }
@@ -196,8 +199,7 @@ export class Student extends React.Component {
   }
 
   getFormItem(key, val){
-      //first switch non test scores that expect an empty string
-    let nullFlag = false
+    // first switch non test scores that expect an empty string
     if (typeof val === 'undefined' || !val){
       val = 0
     }
@@ -210,12 +212,12 @@ export class Student extends React.Component {
       case 'hmp':
       case 'asp':
         return (
-          <FormGroup controlId={key + "Select"}>
+          <FormGroup controlId={key + 'Select'}>
             <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
             <FormControl
               componentClass="select"
               onChange={this.handleChange.bind(this, key)}
-              value={"" + this.state.student[key]}
+              value={'' + this.state.student[key]}
               >
               <option value="0">No</option>
               <option value="1">Yes</option>
@@ -226,10 +228,10 @@ export class Student extends React.Component {
     
     // for rest of the keys, an empty string is ok
     if (typeof val === 'undefined' || !val){
-      val = ""
+      val = ''
     }
 
-    //test scores
+    // test scores
     switch(key){
       case 'mathBench':
       case 'cogAT':
@@ -240,7 +242,7 @@ export class Student extends React.Component {
       case 'dial4':
         return (
           <FormGroup
-          controlId={key + "Input"}
+          controlId={key + 'Input'}
           validationState={this.validateScore(key)}
         >
           <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
@@ -255,7 +257,7 @@ export class Student extends React.Component {
       case 'behavior':
       case 'workEthic':
         return (
-          <FormGroup controlId={key + "Select"}>
+          <FormGroup controlId={key + 'Select'}>
             <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
             <FormControl componentClass="select" value={this.state.student[key].toString()} onChange={this.handleChange.bind(this,key)} placeholder={'1'}>
               <option value="0">-</option>
@@ -303,7 +305,7 @@ export class Student extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-        <PageHeader>Student Card for {student.firstName + " " + student.lastName}</PageHeader>
+        <PageHeader>Student Card for {student.firstName + ' ' + student.lastName}</PageHeader>
           <Grid>
             <Row>
               <Panel>
@@ -312,7 +314,7 @@ export class Student extends React.Component {
             </Row>
           </Grid>
           <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
-            {this.state.editStudent ? "Save Changes" : "Edit Student"}
+            {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
           </Button>
           {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
       </div>

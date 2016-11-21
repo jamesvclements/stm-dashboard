@@ -84,7 +84,7 @@ export function forHumanAttr(key, val) {
   
   // for rest of the keys, an empty string is ok
   if (typeof val === 'undefined'){
-    val = ""
+    val = ''
   }
   switch(key){
     case 'mathBench':
