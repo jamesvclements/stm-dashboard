@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, Radio, RadioGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import AuthService from '../../utils/AuthService'
 import * as Utils from '../../utils/Utils'
 import './Student.css'
@@ -49,7 +49,12 @@ export class Student extends React.Component {
       for (let i = 0; i < checkedScores.length; i++){
         let key = checkedScores[i]
         if(this.validateScore(key) === 'error'){
-
+          this.context.addNotification({
+            title: 'Error',
+            message: `Invalid value entered for ${Utils.studentTranslations[key]}`,
+            level: 'error'
+          })
+          return
         }
       }
       fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.params.studentID}`, {
@@ -105,6 +110,8 @@ export class Student extends React.Component {
     //alert(key + " with value " + val)
     if (typeof val === 'undefined'){
       return 'success'
+    } else if (isNaN(val)){
+      return 'error'
     } else if (typeof val === 'string'){
       if(!val)
         return 'success'
@@ -113,7 +120,7 @@ export class Student extends React.Component {
         if(isNaN(val))
           return 'error'
       }
-    }
+    } 
     switch(key){
       case 'mathBench':
         if(val < 0 || val > 100)
