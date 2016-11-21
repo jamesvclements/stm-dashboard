@@ -17,22 +17,14 @@ export class GradePlacePanel extends React.Component {
       {
         method: 'PUT',
       })
-      .then(response => {
-        if (response.ok) {
+      .then(() => {
           this.context.router.push(`/placement/${grade}`)
-        } else {
-          this.context.addNotification({
-            title: 'Error',
-            message: `Failed to run placement for grade ${grade}`,
-            level: 'error'
-          })
-        }
-      })
+	  })
       .catch(err => {
         console.error(err)
         this.context.addNotification({
           title: 'Error',
-          message: `Failed to run placement for grade ${grade}`,
+          message: 'Failed to run placement',
           level: 'error'
         })
       })
