@@ -27,9 +27,9 @@ export class Landing extends React.Component {
             </Col>
             <Col md={6} xs={12}>
               <Panel
-                onClick={() => {this.context.router.push('/grades')}}
+                onClick={() => {this.context.router.push('/sections')}}
                 className="landing-panel">
-                <h3>Grades</h3>
+                <h3>Sections</h3>
               </Panel>
             </Col>
             <Col md={6} xs={12}>

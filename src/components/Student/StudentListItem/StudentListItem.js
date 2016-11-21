@@ -19,7 +19,7 @@ export class StudentListItem extends React.Component {
   render() {
     const student = this.props.student
     return (
-      <Panel 
+      <Panel
         header={
           // temp solution until JSON is standardized
           student.hasOwnProperty('name')
