@@ -26,7 +26,7 @@ export const makeRoutes = () => {
       <Route path="run-placements" component={RunPlacements} />
       <Route path="placement/:grade" component={Placement} />
       <Route path="login" component={Login} />
-      <Route path="student/:studentID" component={Student} />
+      <Route path="student-cards/:studentID" component={Student} />
       <Route path="access_token=:token" component={Login} />
     </Route>
   )
