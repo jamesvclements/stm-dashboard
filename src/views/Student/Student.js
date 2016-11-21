@@ -42,7 +42,9 @@ export class Student extends React.Component {
       for (let i = 0; i < numericKeys.length; i++){
         let key = numericKeys[i]
         if( typeof this.state.student[key] === 'string' && this.state.student[key]){
-          this.state.student[key] = parseInt(this.state.student[key])
+          let tempStudent = this.state.student
+          tempStudent[key] = parseInt(this.state.student[key],10)
+          this.setState({student : tempStudent })
         }
       }
       let checkedScores = numericKeys.slice(2)
@@ -116,7 +118,7 @@ export class Student extends React.Component {
       if(!val)
         return 'success'
       else {
-        val = parseInt(val)
+        val = parseInt(val,10)
         if(isNaN(val))
           return 'error'
       }
@@ -164,6 +166,8 @@ export class Student extends React.Component {
         else
           retVal = 'success'
         break
+      default:
+        retVal = null
     }
     return retVal
   }
@@ -280,7 +284,6 @@ export class Student extends React.Component {
 
 
   render() {
-    const { studentID } = this.props.params
     const { student } = this.state
     return (
       <div className="root">
