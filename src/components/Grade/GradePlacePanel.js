@@ -13,9 +13,15 @@ export class GradePlacePanel extends React.Component {
 
   run() {
     const { grade } = this.props
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/placements/${grade}`, 
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/placements/`, 
     {
-      method: 'PUT',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        grade: grade
+      })
     })
       .then(() => {
         this.context.router.push(`/placement/${grade}`)

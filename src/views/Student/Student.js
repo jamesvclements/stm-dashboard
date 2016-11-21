@@ -31,7 +31,7 @@ export class Student extends React.Component {
         this.setState({
           student: student[0]
         })
-        console.log(student)
+        console.log(student[0])
       }).catch(err => {
         console.error(err)
         this.context.addNotification({
