@@ -10,6 +10,9 @@ import NotFound from './NotFound/NotFound'
 import Grades from './Grades/Grades'
 import Grade from './Grade/Grade'
 import Students from './Students/Students'
+import Admin from './Admin/Admin'
+import ManageUsers from './ManageUsers/ManageUsers'
+import Upload from './Upload/Upload'
 
 const auth = new AuthService(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -33,6 +36,9 @@ export const makeRoutes = () => {
       <Route path="grades/:grade" component={Grade} />
       <Route path="run-placements" component={RunPlacements} />
       <Route path="placement/:grade" component={Placement} />
+	  <Route path="admin" component={Admin}  />
+	  <Route path="manage-users" component={ManageUsers} />
+	  <Route path="upload" component={Upload} />
       <Route path="login" component={Login} />
       <Route path="access_token=:token" component={Login} />
       <Route path="*" component={NotFound} />
