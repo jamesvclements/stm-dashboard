@@ -98,7 +98,7 @@ export function forHumanAttr(key, val) {
       return `${studentTranslations[key]}: ${val}`
     case 'behavior':
     case 'workEthic':
-      const mark = (val === 0) ? '-' : (val === 1) ? '\u2713' : '+'
+      const mark = (val === 0 || val === '0') ? '-' : (val === 1 || val === '1') ? '\u2713' : '+'
       return `${studentTranslations[key]}: ${mark}`
     case 'sex':
       return `${studentTranslations[key]}: ${val}`

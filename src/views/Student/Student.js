@@ -29,9 +29,16 @@ export class Student extends React.Component {
     }).then(response => {
       response.json().then(student => {
         this.setState({
-          student: student
+          student: student[0]
         })
         console.log(student)
+      }).catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to get student from server',
+          level: 'error'
+        })
       })
     })
   }
@@ -66,6 +73,13 @@ export class Student extends React.Component {
         },
         body: JSON.stringify({
           student: this.state.student
+        })
+      }).catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to update student info',
+          level: 'error'
         })
       })
     } else {
@@ -122,7 +136,10 @@ export class Student extends React.Component {
         if(isNaN(val))
           return 'error'
       }
-    } 
+
+    } else if(!val){
+      return 'error'
+    }
     switch(key){
       case 'mathBench':
         if(val < 0 || val > 100)
@@ -182,7 +199,6 @@ export class Student extends React.Component {
       //first switch non test scores that expect an empty string
     let nullFlag = false
     if (typeof val === 'undefined' || !val){
-      nullFlag = true
       val = 0
     }
     switch (key) {
@@ -198,9 +214,8 @@ export class Student extends React.Component {
             <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
             <FormControl
               componentClass="select"
-              placeholder={0}
               onChange={this.handleChange.bind(this, key)}
-              value={this.state.student[key]}
+              value={"" + this.state.student[key]}
               >
               <option value="0">No</option>
               <option value="1">Yes</option>
@@ -210,9 +225,10 @@ export class Student extends React.Component {
     }
     
     // for rest of the keys, an empty string is ok
-    if (nullFlag){
+    if (typeof val === 'undefined' || !val){
       val = ""
     }
+
     //test scores
     switch(key){
       case 'mathBench':
@@ -241,7 +257,7 @@ export class Student extends React.Component {
         return (
           <FormGroup controlId={key + "Select"}>
             <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-            <FormControl componentClass="select" value={this.state.student[key]} onChange={this.handleChange.bind(this,key)}>
+            <FormControl componentClass="select" value={this.state.student[key].toString()} onChange={this.handleChange.bind(this,key)} placeholder={'1'}>
               <option value="0">-</option>
               <option value="1">{'\u2713'}</option>
               <option value="2">+</option>
