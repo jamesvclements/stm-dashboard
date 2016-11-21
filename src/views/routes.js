@@ -11,6 +11,7 @@ import Sections from './Sections/Sections'
 import Section from './Section/Section'
 import GradeSections from './GradeSections/GradeSections'
 import Students from './Students/Students'
+import Student from './Student/Student'
 
 const auth = new AuthService(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -34,6 +35,7 @@ export const makeRoutes = () => {
       <Route path="run-placements" component={RunPlacements} />
       <Route path="placement/:grade" component={Placement} />
       <Route path="login" component={Login} />
+      <Route path="students/:studentID" component={Student} />
       <Route path="access_token=:token" component={Login} />
       <Route path="*" component={NotFound} />
     </Route>

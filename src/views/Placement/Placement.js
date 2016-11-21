@@ -49,7 +49,14 @@ export class Placement extends React.Component {
           message: `Failed to fetch placement for grade ${this.props.params.grade}`,
           level: 'error'
         })
+      }).catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to fetch placement',
+          level: 'error'
       })
+    })
   }
 
   render() {

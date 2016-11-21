@@ -11,6 +11,7 @@ Student classroom management system for St. Thomas More (www.stmschoolpa.com)
     REACT_APP_AUTH0_DOMAIN=YOUR_AUTH0_DOMAIN
 <br>
     REACT_APP_SERVER_ADDRESS=YOUR_SERVER_ADDRESS
+
 ## Usage
 
 Run the app in development mode - `npm start`

@@ -64,10 +64,12 @@ export const studentTranslations = {
   asp: 'ASP',
   behaviorObservation: 'Behavior Observation',
   dial4: 'Dial 4',
-  age: 'Age'
+  age: 'Age',
+  comments: 'Comments'
 }
 
 export function forHumanAttr(key, val) {
+  //first switch non test scores that expect an empty string
   switch (key) {
     case 'potentialDelay':
     case 'advancedMath':
@@ -76,13 +78,15 @@ export function forHumanAttr(key, val) {
     case 'newStudent':
     case 'hmp':
     case 'asp':
-      return `${studentTranslations[key]}: ${(val === 0) ? 'No' : 'Yes'}`
-    case 'behavior':
-    case 'workEthic':
-      const mark = (val === 0) ? '-' : (val === 1) ? '\u2713' : '+'
-      return `${studentTranslations[key]}: ${mark}`
-    case 'sex':
-      return `${studentTranslations[key]}: ${(val === 'F') ? '\u2640' : '\u2642'}`
+      return (`${studentTranslations[key]}: ${(typeof val === 'undefined') ? '' : 
+      (val === 0 || val === '') ? 'No' : 'Yes'}`)
+  }
+  
+  // for rest of the keys, an empty string is ok
+  if (typeof val === 'undefined'){
+    val = ''
+  }
+  switch(key){
     case 'mathBench':
     case 'cogAT':
     case 'dra':
@@ -90,6 +94,13 @@ export function forHumanAttr(key, val) {
     case 'mathTotal':
     case 'behaviorObservation':
     case 'dial4':
+    case 'comments':
+      return `${studentTranslations[key]}: ${val}`
+    case 'behavior':
+    case 'workEthic':
+      const mark = (val === 0 || val === '0') ? '-' : (val === 1 || val === '1') ? '\u2713' : '+'
+      return `${studentTranslations[key]}: ${mark}`
+    case 'sex':
       return `${studentTranslations[key]}: ${val}`
     case 'age':
       return `${studentTranslations[key]}: ${round(val / 12, 0)} y. ${round(val % 12, 0)} mo.`
@@ -138,9 +149,15 @@ const studentStatPrecendence = {
   asp: 14,
   behaviorObservation: 7,
   dial4: 3,
-  age: 1
+  age: 1,
+  comments: 16
 }
 
 export function sortStudentStats(a, b) {
   return studentStatPrecendence[a] - studentStatPrecendence[b]
 }
+
+export const cardKeys = ['potentialDelay','advancedMath','medicalConcern','facultyStudent',
+                         'newStudent', 'hmp', 'asp', 'behavior', 'workEthic', 'sex', 'mathBench',
+                         'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4',
+                         'age', 'comments']
