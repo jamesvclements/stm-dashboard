@@ -22,7 +22,7 @@ export class Landing extends React.Component {
         <br/>
         Go to classroom <Link to="/run-placements">placement</Link>.
         <br/>
-        go to example student <Link to="/student/3">card</Link>.
+        go to example student <Link to="/student-cards/3">card</Link>.
       </div>
     )
   }
