@@ -64,7 +64,8 @@ export const studentTranslations = {
   asp: 'ASP',
   behaviorObservation: 'Behavior Observation',
   dial4: 'Dial 4',
-  age: 'Age'
+  age: 'Age',
+  comments: 'Comments'
 }
 
 export function forHumanAttr(key, val) {
@@ -93,6 +94,7 @@ export function forHumanAttr(key, val) {
     case 'mathTotal':
     case 'behaviorObservation':
     case 'dial4':
+    case 'comments':
       return `${studentTranslations[key]}: ${val}`
     case 'behavior':
     case 'workEthic':
@@ -147,7 +149,8 @@ const studentStatPrecendence = {
   asp: 14,
   behaviorObservation: 7,
   dial4: 3,
-  age: 1
+  age: 1,
+  comments: 16
 }
 
 export function sortStudentStats(a, b) {
@@ -157,4 +160,4 @@ export function sortStudentStats(a, b) {
 export const cardKeys = ['potentialDelay','advancedMath','medicalConcern','facultyStudent',
                          'newStudent', 'hmp', 'asp', 'behavior', 'workEthic', 'sex', 'mathBench',
                          'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4',
-                         'age']
+                         'age', 'comments']

@@ -261,7 +261,18 @@ export class Student extends React.Component {
               {Utils.round(val / 12, 0)} y. {Utils.round(val % 12, 0)} mo.
             </FormControl.Static>
           </FormGroup>
-        )      
+        )
+      case 'comments':
+        return (
+          <FormGroup controlId="CommentsTextarea">
+            <ControlLabel>Comments</ControlLabel>
+            <FormControl
+              placeholder="Enter comments here"
+              componentClass="textarea" 
+              value={this.state.student[key]}
+              onChange={this.handleChange.bind(this,key)}/>
+          </FormGroup>
+          )     
       default:
         return null
     }
