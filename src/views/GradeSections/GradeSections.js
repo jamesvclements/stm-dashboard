@@ -13,41 +13,35 @@ export class GradeSections extends React.Component {
 
     this.state = {
       grade: {
-        sections: [{
-          teacher: {
-            firstName: 'Sally',
-            lastName: 'Mae'
-          },
-          id: 1
-        }]
+        sections: []
       }
     }
 
-    // fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/grades/${this.props.params.grade}`, {
-    //   method: 'GET'
-    // })
-    //   .then(response => {
-    //     if (response.ok) {
-    //       response.json().then(grade => {
-    //         this.setState({
-    //           grade: grade
-    //         })
-    //       })
-    //     } else {
-    //       this.context.addNotification({
-    //         title: 'Error',
-    //         message: `Failed to fetch sections for grade ${this.props.params.grade}`,
-    //         level: 'error'
-    //       })
-    //     }
-    //   }).catch(err => {
-    //     console.error(err)
-    //     this.context.addNotification({
-    //       title: 'Error',
-    //       message: `Failed to fetch sections for grade ${this.props.params.grade}`,
-    //       level: 'error'
-    //     })
-    //   })
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/grades/${this.props.params.grade}`, {
+      method: 'GET'
+    })
+      .then(response => {
+        if (response.ok) {
+          response.json().then(grade => {
+            this.setState({
+              grade: grade
+            })
+          })
+        } else {
+          this.context.addNotification({
+            title: 'Error',
+            message: `Failed to fetch sections for grade ${this.props.params.grade}`,
+            level: 'error'
+          })
+        }
+      }).catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: `Failed to fetch sections for grade ${this.props.params.grade}`,
+          level: 'error'
+        })
+      })
   }
 
   render() {
@@ -61,7 +55,7 @@ export class GradeSections extends React.Component {
                 return (
                   <Col md={3} xs={6} key={i}>
                     <Panel
-                      onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.id}`) } }
+                      onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.sectionID}`) } }
                       className="grade-sections-panel">
                       <h3>{`${section.teacher.firstName} ${section.teacher.lastName}`}</h3>
                     </Panel>

@@ -102,13 +102,13 @@ export class Student extends React.Component {
   getInfo(){
     const { student } = this.state
     return (
-      <ListGroup fill>
+        <ListGroup fill>
         {
           Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
             return <Col xs={12} md={6}> <ListGroupItem key={i}>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem> </Col>
           })
         }
-      </ListGroup>
+        </ListGroup>
     )
   }
 
@@ -305,7 +305,7 @@ export class Student extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-        <PageHeader>Student Card for {student.firstName + ' ' + student.lastName}</PageHeader>
+        <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
           <Grid>
             <Row>
               <Panel>
