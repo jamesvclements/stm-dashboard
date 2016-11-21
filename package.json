@@ -8,11 +8,13 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
-    "auth0-lock": "^10.4.0",
+    "auth0-lock": "^10.6.1",
     "bootstrap": "^3.3.7",
-    "react": "^15.3.1",
+    "react": "^15.4.0",
+    "react-addons-test-utils": "^15.4.0",
     "react-bootstrap": "^0.30.5",
-    "react-dom": "^15.3.1",
+    "react-dom": "^15.4.0",
+    "react-notification-system": "^0.2.10",
     "react-router": "^2.8.1"
   },
   "peerDependencies": {

@@ -7,7 +7,8 @@ import './Placement.css'
 
 export class Placement extends React.Component {
   static contextTypes = {
-    router: T.object
+    router: T.object,
+    addNotification: T.func
   }
 
   static propTypes = {
@@ -26,11 +27,19 @@ export class Placement extends React.Component {
 
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/placements/${this.props.params.grade}`, {
       method: 'GET'
-    }).then(response => {
-      response.json().then(placement => {
-        this.setState({
-          placement: placement
+    })
+      .then(response => {
+        response.json().then(placement => {
+          this.setState({
+            placement: placement
+          })
         })
+      }).catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to fetch placement',
+          level: 'error'
       })
     })
   }

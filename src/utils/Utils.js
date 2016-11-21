@@ -152,7 +152,7 @@ const studentStatPrecendence = {
 
 export function sortStudentStats(a, b) {
   return studentStatPrecendence[a] - studentStatPrecendence[b]
-}
+
 
 export const cardKeys = ['potentialDelay','advancedMath','medicalConcern','facultyStudent',
                          'newStudent', 'hmp', 'asp', 'behavior', 'workEthic', 'sex', 'mathBench',
