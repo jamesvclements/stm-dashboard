@@ -28,14 +28,14 @@ export const makeRoutes = () => {
     <Route path="/" component={Container} auth={auth}>
       <IndexRedirect to="/landing" />
       <Route path="landing" component={Landing} onEnter={requireAuth} />
-      <Route path="students" component={Students} />
-      <Route path="sections" component={Sections} />
-      <Route path="sections/:grade" component={GradeSections} />
-      <Route path="sections/:grade/:sectionID" component={Section} />
-      <Route path="run-placements" component={RunPlacements} />
-      <Route path="placement/:grade" component={Placement} />
+      <Route path="students" component={Students} onEnter={requireAuth} />
+      <Route path="sections" component={Sections} onEnter={requireAuth} />
+      <Route path="sections/:grade" component={GradeSections} onEnter={requireAuth} />
+      <Route path="sections/:grade/:sectionID" component={Section} onEnter={requireAuth} />
+      <Route path="run-placements" component={RunPlacements} onEnter={requireAuth} />
+      <Route path="placement/:grade" component={Placement} onEnter={requireAuth} />
       <Route path="login" component={Login} />
-      <Route path="students/:studentID" component={Student} />
+      <Route path="students/:studentID" component={Student} onEnter={requireAuth} />
       <Route path="access_token=:token" component={Login} />
       <Route path="*" component={NotFound} />
     </Route>
