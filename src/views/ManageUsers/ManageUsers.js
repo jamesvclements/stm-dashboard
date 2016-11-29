@@ -62,7 +62,6 @@ export class ManageUsers extends React.Component {
 						<MenuItem eventKey="3">Admin</MenuItem>
 						<MenuItem eventKey="4">Default</MenuItem>
 					</DropdownButton>
-					//{ "app_metadata" : { "role": "", "grade": "", "section": ""}}
 			</Col>
 			<Col xs={2}>
 					<DropdownButton bsSize="large" title="grade">
