@@ -18,9 +18,14 @@ export class Upload extends React.Component {
     <div className="root">
       <Grid>
         <Row>
-			<Col xs={4}>
+			<Col xs={6}>
 				<Panel>
 					<h3>Data Upload</h3> 
+                 </Panel>
+            </Col>
+			<Col xs={6}>
+				<Panel>
+					<h3>Download Template</h3> 
                  </Panel>
             </Col>
         </Row>
