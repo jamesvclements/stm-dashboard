@@ -17,6 +17,12 @@ export class ManageUsers extends React.Component {
   //fetch(`st-thomas-more.auth0.com/api/v2/users`, {
     //  method: 'GET'
     //})
+	
+	//TO DO:
+	//get list of users - emails, access level, grade, section
+	//drop downs should include available access levels, grades, sections
+	//section depends on the grade selected
+	//last row empty to input new user
   
   render() {
     return (
