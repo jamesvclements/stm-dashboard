@@ -100,16 +100,16 @@ export class Student extends React.Component {
     } else {
       this.unchangedStudent = JSON.parse(JSON.stringify(this.state.student))
     }
-    this.setState({ editStudent: !this.state.editStudent})
+    this.setState({ editStudent: !this.state.editStudent })
   }
 
-  discardChanges(){
-    this.setState({ student: this.unchangedStudent})
-    this.setState({ editStudent: false})
+  discardChanges() {
+    this.setState({ student: this.unchangedStudent })
+    this.setState({ editStudent: false })
   }
 
 
-  getInfo(){
+  getInfo() {
     const { student } = this.state
     return (
       <ListGroup fill>
@@ -122,7 +122,7 @@ export class Student extends React.Component {
     )
   }
 
-  getEditForm(){
+  getEditForm() {
     const { student } = this.state
     return (
       <div>
@@ -134,17 +134,15 @@ export class Student extends React.Component {
       </div>
     )
   }
-
-
-  handleChange(key, event){
+  handleChange(key, event) {
     let tempStudent = this.state.student
     tempStudent[key] = event.target.value
-    this.setState({student : tempStudent })
+    this.setState({ student: tempStudent })
   }
 
-  getFormItem(key, val){
+  getFormItem(key, val) {
     // first switch non test scores that expect an empty string
-    if (typeof val === 'undefined' || !val){
+    if (typeof val === 'undefined' || !val) {
       val = 0
     }
     switch (key) {
@@ -253,18 +251,18 @@ export class Student extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-        <PageHeader>Student Card for {student.firstName + ' ' + student.lastName}</PageHeader>
-          <Grid>
-            <Row>
-              <Panel>
-                {this.state.editStudent ? this.getEditForm() : this.getInfo()}
-              </Panel>
-            </Row>
-          </Grid>
-          <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
-            {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
-          </Button>
-          {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
+        <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
+        <Grid>
+          <Row>
+            <Panel>
+              {this.state.editStudent ? this.getEditForm() : this.getInfo()}
+            </Panel>
+          </Row>
+        </Grid>
+        <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
+          {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
+        </Button>
+        {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
       </div>
     )
   }
