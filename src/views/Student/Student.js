@@ -48,21 +48,21 @@ export class Student extends React.Component {
     })
   }
 
-  toggleEdit(){
-    if(this.state.editStudent){
-      let numericKeys = ['behavior','workEthic', 'mathBench', 'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4']
-      for (let i = 0; i < numericKeys.length; i++){
+  toggleEdit() {
+    if (this.state.editStudent) {
+      let numericKeys = ['behavior', 'workEthic', 'mathBench', 'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4']
+      for (let i = 0; i < numericKeys.length; i++) {
         let key = numericKeys[i]
-        if( typeof this.state.student[key] === 'string' && this.state.student[key]){
+        if (typeof this.state.student[key] === 'string' && this.state.student[key]) {
           let tempStudent = this.state.student
-          tempStudent[key] = parseInt(this.state.student[key],10)
-          this.setState({student : tempStudent })
+          tempStudent[key] = parseInt(this.state.student[key], 10)
+          this.setState({ student: tempStudent })
         }
       }
       let checkedScores = numericKeys.slice(2)
-      for (let i = 0; i < checkedScores.length; i++){
+      for (let i = 0; i < checkedScores.length; i++) {
         let key = checkedScores[i]
-        if(this.validateScore(key) === 'error'){
+        if (this.validateScore(key) === 'error') {
           this.context.addNotification({
             title: 'Error',
             message: `Invalid value entered for ${Utils.studentTranslations[key]}`,
@@ -90,29 +90,29 @@ export class Student extends React.Component {
     } else {
       this.unchangedStudent = JSON.parse(JSON.stringify(this.state.student))
     }
-    this.setState({ editStudent: !this.state.editStudent})
+    this.setState({ editStudent: !this.state.editStudent })
   }
 
-  discardChanges(){
-    this.setState({ student: this.unchangedStudent})
-    this.setState({ editStudent: false})
+  discardChanges() {
+    this.setState({ student: this.unchangedStudent })
+    this.setState({ editStudent: false })
   }
 
 
-  getInfo(){
+  getInfo() {
     const { student } = this.state
     return (
       <ListGroup fill>
         {
           Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-            return <Col xs={12} md={6}> <ListGroupItem key={i}>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem> </Col>
+            return <Col xs={12} md={6} key={i}><ListGroupItem>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem> </Col>
           })
         }
       </ListGroup>
     )
   }
 
-  getEditForm(){
+  getEditForm() {
     const { student } = this.state
     return (
       <div>
@@ -125,7 +125,7 @@ export class Student extends React.Component {
     )
   }
 
-  validateScore(key){
+  validateScore(key) {
     let val = this.state.student[key]
     let retVal = ''
     if (typeof val === 'undefined') {
@@ -133,55 +133,57 @@ export class Student extends React.Component {
     } else if (isNaN(val)) {
       return 'error'
     } else if (typeof val === 'string') {
-      if(!val)
+      if (!val) {
         return 'success'
-      else {
-        val = parseInt(val,10)
-        if(isNaN(val))
-          return 'error'
       }
-    } else if(!val){
+      else {
+        val = parseInt(val, 10)
+        if (isNaN(val)) {
+          return 'error'
+        }   
+      }
+    } else if (!val) {
       return 'error'
     }
-    switch(key){
+    switch (key) {
       case 'mathBench':
-        if(val < 0 || val > 100)
+        if (val < 0 || val > 100)
           retVal = 'error'
         else
           retVal = 'success'
         break
       case 'cogAT':
-        if(val < 0 || val > 160)
-            retVal = 'error'
+        if (val < 0 || val > 160)
+          retVal = 'error'
         else
           retVal = 'success'
         break
       case 'dra':
-        if(val < 0 || val > 70)
+        if (val < 0 || val > 70)
           retVal = 'error'
         else
           retVal = 'success'
         break
       case 'elaTotal':
-        if(val < 0 || val > 100)
+        if (val < 0 || val > 100)
           retVal = 'error'
         else
           retVal = 'success'
         break
       case 'mathTotal':
-        if(val < 0 || val > 100)
+        if (val < 0 || val > 100)
           retVal = 'error'
         else
           retVal = 'success'
         break
       case 'behaviorObservation':
-        if(val < 0 || val > 54)
+        if (val < 0 || val > 54)
           retVal = 'error'
         else
           retVal = 'success'
         break
       case 'dial4':
-        if(val < 0 || val > 105)
+        if (val < 0 || val > 105)
           retVal = 'error'
         else
           retVal = 'success'
@@ -192,15 +194,15 @@ export class Student extends React.Component {
     return retVal
   }
 
-  handleChange(key, event){
+  handleChange(key, event) {
     let tempStudent = this.state.student
     tempStudent[key] = event.target.value
-    this.setState({student : tempStudent })
+    this.setState({ student: tempStudent })
   }
 
-  getFormItem(key, val){
+  getFormItem(key, val) {
     // first switch non test scores that expect an empty string
-    if (typeof val === 'undefined' || !val){
+    if (typeof val === 'undefined' || !val) {
       val = 0
     }
     switch (key) {
@@ -225,14 +227,14 @@ export class Student extends React.Component {
           </FormGroup>
         )
     }
-    
+
     // for rest of the keys, an empty string is ok
-    if (typeof val === 'undefined' || !val){
+    if (typeof val === 'undefined' || !val) {
       val = ''
     }
 
     // test scores
-    switch(key){
+    switch (key) {
       case 'mathBench':
       case 'cogAT':
       case 'dra':
@@ -242,24 +244,24 @@ export class Student extends React.Component {
       case 'dial4':
         return (
           <FormGroup
-          controlId={key + 'Input'}
-          validationState={this.validateScore(key)}
-        >
-          <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-          <FormControl
-            value={this.state.student[key]}
-            placeholder="Enter Score"
-            onChange={this.handleChange.bind(this, key)}
-          />
-          <FormControl.Feedback />
-        </FormGroup>
+            controlId={key + 'Input'}
+            validationState={this.validateScore(key)}
+            >
+            <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
+            <FormControl
+              value={this.state.student[key]}
+              placeholder="Enter Score"
+              onChange={this.handleChange.bind(this, key)}
+              />
+            <FormControl.Feedback />
+          </FormGroup>
         )
       case 'behavior':
       case 'workEthic':
         return (
           <FormGroup controlId={key + 'Select'}>
             <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-            <FormControl componentClass="select" value={this.state.student[key].toString()} onChange={this.handleChange.bind(this,key)} placeholder={'1'}>
+            <FormControl componentClass="select" value={this.state.student[key].toString()} onChange={this.handleChange.bind(this, key)} placeholder={'1'}>
               <option value="0">-</option>
               <option value="1">{'\u2713'}</option>
               <option value="2">+</option>
@@ -280,7 +282,7 @@ export class Student extends React.Component {
           <FormGroup>
             <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
             <FormControl.Static>
-              {Utils.round(val / 12, 0)} y. {Utils.round(val % 12, 0)} mo.
+              {Utils.round(val / 12, 0)}y. {Utils.round(val % 12, 0)}mo.
             </FormControl.Static>
           </FormGroup>
         )
@@ -290,11 +292,11 @@ export class Student extends React.Component {
             <ControlLabel>Comments</ControlLabel>
             <FormControl
               placeholder="Enter comments here"
-              componentClass="textarea" 
+              componentClass="textarea"
               value={this.state.student[key]}
-              onChange={this.handleChange.bind(this,key)}/>
+              onChange={this.handleChange.bind(this, key)} />
           </FormGroup>
-          )     
+        )
       default:
         return null
     }
@@ -305,18 +307,18 @@ export class Student extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-        <PageHeader>Student Card for {student.firstName + ' ' + student.lastName}</PageHeader>
-          <Grid>
-            <Row>
-              <Panel>
-                {this.state.editStudent ? this.getEditForm() : this.getInfo()}
-              </Panel>
-            </Row>
-          </Grid>
-          <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
-            {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
-          </Button>
-          {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
+        <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
+        <Grid>
+          <Row>
+            <Panel>
+              {this.state.editStudent ? this.getEditForm() : this.getInfo()}
+            </Panel>
+          </Row>
+        </Grid>
+        <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
+          {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
+        </Button>
+        {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
       </div>
     )
   }
