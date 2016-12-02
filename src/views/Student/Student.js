@@ -48,31 +48,32 @@ export class Student extends React.Component {
     })
   }
 
-  toggleEdit(){
-    if(this.state.editStudent){
+  toggleEdit() {
+    if (this.state.editStudent) {
       let tempStudent = this.state.student
-      if(tempStudent.behavior === 'null'){
+      if (tempStudent.behavior === 'null') {
         tempStudent.behavior = null
-      } else{
-        tempStudent.behavior = parseInt(tempStudent.behavior,10)
+      } else {
+        tempStudent.behavior = parseInt(tempStudent.behavior, 10)
       }
-      if(tempStudent.workEthic === 'null'){
+      if (tempStudent.workEthic === 'null') {
         tempStudent.workEthic = null
-      } else{
-        tempStudent.workEthic = parseInt(tempStudent.workEthic,10)
+      } else {
+        tempStudent.workEthic = parseInt(tempStudent.workEthic, 10)
       }
       let numericKeys = ['mathBench', 'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4']
-      for (let i = 0; i < numericKeys.length; i++){
+      for (let i = 0; i < numericKeys.length; i++) {
         let key = numericKeys[i]
-        if( typeof this.state.student[key] === 'string' && this.state.student[key]){
-          tempStudent[key] = parseInt(this.state.student[key],10)
+        if (typeof this.state.student[key] === 'string' && this.state.student[key]) {
+          tempStudent[key] = parseInt(this.state.student[key], 10)
         }
       }
-      this.setState({student : tempStudent })
 
-      for (let i = 0; i < numericKeys.length; i++){
+      this.setState({ student: tempStudent })
+
+      for (let i = 0; i < numericKeys.length; i++) {
         let key = numericKeys[i]
-        if(Utils.validateScore(key, this.state.student[key]) === 'error'){
+        if (Utils.validateScore(key, this.state.student[key]) === 'error') {
           this.context.addNotification({
             title: 'Error',
             message: `Invalid value entered for ${Utils.studentTranslations[key]}`,
@@ -112,10 +113,13 @@ export class Student extends React.Component {
   getInfo() {
     const { student } = this.state
     return (
-      <ListGroup fill>
+      <ListGroup fill className="student-info-list-group">
         {
           Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-            return <Col key={i + 'A'} xs={12} md={6}> <ListGroupItem key={i + 'B'}>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem> </Col>
+            return (
+              <Col key={i} xs={12} md={6}>
+                <ListGroupItem className="student-info-list-group-item">{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem>
+              </Col>)
           })
         }
       </ListGroup>
@@ -128,12 +132,13 @@ export class Student extends React.Component {
       <div>
         {
           Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-            return <Col xs={12} md={6} key={i + 'A'}> {this.getFormItem(key, student[key])}</Col>
+            return <Col xs={12} md={6} key={i}>{this.getFormItem(key, student[key])}</Col>
           })
         }
       </div>
     )
   }
+
   handleChange(key, event) {
     let tempStudent = this.state.student
     tempStudent[key] = event.target.value
@@ -168,11 +173,11 @@ export class Student extends React.Component {
         )
       default:
         // for rest of the keys, an empty string is ok
-        if (typeof val === 'undefined' || !val){
+        if (typeof val === 'undefined' || !val) {
           val = ''
         }
         // test scores
-        switch(key){
+        switch (key) {
           case 'mathBench':
           case 'cogAT':
           case 'dra':
@@ -182,28 +187,28 @@ export class Student extends React.Component {
           case 'dial4':
             return (
               <FormGroup
-              controlId={key + 'Input'}
-              validationState={Utils.validateScore(key, val)}
-            >
-              <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-              <FormControl
-                value={val}
-                placeholder="Enter Score"
-                onChange={this.handleChange.bind(this, key)}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
+                controlId={key + 'Input'}
+                validationState={Utils.validateScore(key, val)}
+                >
+                <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
+                <FormControl
+                  value={val}
+                  placeholder="Enter Score"
+                  onChange={this.handleChange.bind(this, key)}
+                  />
+                <FormControl.Feedback />
+              </FormGroup>
             )
           case 'behavior':
           case 'workEthic':
-            if(val)
+            if (val)
               val = val.toString()
             else
-              val = "null"
+              val = 'null'
             return (
               <FormGroup controlId={key + 'Select'}>
                 <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-                <FormControl componentClass="select" value={val} onChange={this.handleChange.bind(this,key)} placeholder={'1'}>
+                <FormControl componentClass="select" value={val} onChange={this.handleChange.bind(this, key)} placeholder={'1'}>
                   <option value="0">-</option>
                   <option value="1">{'\u2713'}</option>
                   <option value="2">+</option>
@@ -225,7 +230,7 @@ export class Student extends React.Component {
               <FormGroup>
                 <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
                 <FormControl.Static>
-                  {Utils.round(val / 12, 0)} y. {Utils.round(val % 12, 0)} mo.
+                  {Utils.round(val / 12, 0)}y. {Utils.round(val % 12, 0)}mo.
                 </FormControl.Static>
               </FormGroup>
             )
@@ -235,11 +240,11 @@ export class Student extends React.Component {
                 <ControlLabel>Comments</ControlLabel>
                 <FormControl
                   placeholder="Enter comments here"
-                  componentClass="textarea" 
+                  componentClass="textarea"
                   value={val}
-                  onChange={this.handleChange.bind(this,key)}/>
+                  onChange={this.handleChange.bind(this, key)} />
               </FormGroup>
-              )     
+            )
           default:
             return null
         }
@@ -253,11 +258,11 @@ export class Student extends React.Component {
       <div className="root">
         <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
         <Grid>
-          <Row>
-            <Panel>
-              {this.state.editStudent ? this.getEditForm() : this.getInfo()}
-            </Panel>
-          </Row>
+          <Panel>
+            <Row>
+                {this.state.editStudent ? this.getEditForm() : this.getInfo()}
+            </Row>
+          </Panel>
         </Grid>
         <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
           {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
