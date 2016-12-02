@@ -78,34 +78,34 @@ export function forHumanAttr(key, val) {
     case 'newStudent':
     case 'hmp':
     case 'asp':
-      return (`${studentTranslations[key]}: ${(typeof val === 'undefined') ? '' : 
-      (val === 0 || val === '') ? 'No' : 'Yes'}`)
-  }
-  
-  // for rest of the keys, an empty string is ok
-  if (typeof val === 'undefined'){
-    val = ''
-  }
-  switch(key){
-    case 'mathBench':
-    case 'cogAT':
-    case 'dra':
-    case 'elaTotal':
-    case 'mathTotal':
-    case 'behaviorObservation':
-    case 'dial4':
-    case 'comments':
-      return `${studentTranslations[key]}: ${val}`
-    case 'behavior':
-    case 'workEthic':
-      const mark = (val === 0 || val === '0') ? '-' : (val === 1 || val === '1') ? '\u2713' : '+'
-      return `${studentTranslations[key]}: ${mark}`
-    case 'sex':
-      return `${studentTranslations[key]}: ${val}`
-    case 'age':
-      return `${studentTranslations[key]}: ${round(val / 12, 0)} y. ${round(val % 12, 0)} mo.`
+      return (`${studentTranslations[key]}: 
+              ${(val) ? 'Yes' : 'No'}`)
     default:
-      return `${key}: ${val}`
+      // for rest of the keys, an empty string is ok
+      if (!val){
+        val = ''
+      }
+      switch(key){
+        case 'mathBench':
+        case 'cogAT':
+        case 'dra':
+        case 'elaTotal':
+        case 'mathTotal':
+        case 'behaviorObservation':
+        case 'dial4':
+        case 'comments':
+          return `${studentTranslations[key]}: ${val}`
+        case 'behavior':
+        case 'workEthic':
+          const mark = (val === 0 || val === '0') ? '-' : (val === 1 || val === '1') ? '\u2713' : (val === 2 || val === '2') ? '+' : 'N/A'
+          return `${studentTranslations[key]}: ${mark}`
+        case 'sex':
+          return `${studentTranslations[key]}: ${val}`
+        case 'age':
+          return `${studentTranslations[key]}: ${round(val / 12, 0)} y. ${round(val % 12, 0)} mo.`
+        default:
+          return `${key}: ${val}`
+      }
   }
 }
 
@@ -161,3 +161,60 @@ export const cardKeys = ['potentialDelay','advancedMath','medicalConcern','facul
                          'newStudent', 'hmp', 'asp', 'behavior', 'workEthic', 'sex', 'mathBench',
                          'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4',
                          'age', 'comments']
+
+export function validateScore(key, val){
+    if (typeof val === 'undefined' || val === null) {
+      return 'success'
+    } else if (isNaN(val)) {
+      return 'error'
+    } else if (typeof val === 'string') {
+      if(!val)
+        return 'success'
+      else {
+        val = parseInt(val,10)
+        if(isNaN(val))
+          return 'error'
+      }
+    } else if(!val){
+      return 'error'
+    }
+    switch(key){
+      case 'mathBench':
+        if(val < 0 || val > 100)
+          return 'error'
+        else
+          return 'success'
+      case 'cogAT':
+        if(val < 0 || val > 160)
+          return 'error'
+        else
+          return 'success'
+      case 'dra':
+        if(val < 0 || val > 70)
+          return 'error'
+        else
+          return 'success'
+      case 'elaTotal':
+        if(val < 0 || val > 100)
+          return 'error'
+        else
+          return 'success'
+      case 'mathTotal':
+        if(val < 0 || val > 100)
+          return 'error'
+        else
+          return 'success'
+      case 'behaviorObservation':
+        if(val < 0 || val > 54)
+          return 'error'
+        else
+          return 'success'
+      case 'dial4':
+        if(val < 0 || val > 105)
+          return 'error'
+        else
+          return 'success'
+      default:
+        return null
+    }
+  }
