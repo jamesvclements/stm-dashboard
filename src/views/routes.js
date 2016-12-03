@@ -13,6 +13,8 @@ import Students from './Students/Students'
 import Admin from './Admin/Admin'
 import ManageUsers from './ManageUsers/ManageUsers'
 import Upload from './Upload/Upload'
+import UploadCSV from './Upload/UploadCSV'
+import DownloadCSV from './Upload/DownloadCSV'
 
 const auth = new AuthService(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -36,9 +38,11 @@ export const makeRoutes = () => {
       <Route path="grades/:grade" component={Grade} />
       <Route path="run-placements" component={RunPlacements} />
       <Route path="placement/:grade" component={Placement} />
-	  <Route path="admin" component={Admin}  />
-	  <Route path="manage-users" component={ManageUsers} />
-	  <Route path="upload" component={Upload} />
+  	  <Route path="admin" component={Admin}  />
+  	  <Route path="admin/manage-users" component={ManageUsers} />
+  	  <Route path="admin/upload" component={Upload} />
+      <Route path="admin/upload/upload-csv" component={UploadCSV} />
+      <Route path="admin/upload/download-template" component={DownloadCSV} />
       <Route path="login" component={Login} />
       <Route path="access_token=:token" component={Login} />
       <Route path="*" component={NotFound} />

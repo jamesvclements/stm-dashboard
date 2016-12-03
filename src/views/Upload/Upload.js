@@ -1,7 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import {Grid, Row, Col} from 'react-bootstrap'
+import {Grid, Row, Col, Panel} from 'react-bootstrap'
 import AuthService from '../../utils/AuthService'
-import { Panel } from 'react-bootstrap'
 import './Upload.css'
 
 export class Upload extends React.Component {
@@ -18,16 +17,24 @@ export class Upload extends React.Component {
     <div className="root">
       <Grid>
         <Row>
-			<Col xs={6}>
-				<Panel>
-					<h3>Data Upload</h3> 
-                 </Panel>
-            </Col>
-			<Col xs={6}>
-				<Panel>
-					<h3>Download Template</h3> 
-                 </Panel>
-            </Col>
+    			<Col xs={6}>
+    				<Panel
+              onClick={()=> {
+                this.context.router.push('admin/upload/upload-csv')
+              }}
+              className="upload-panel">
+    					<h3>Upload Data</h3> 
+            </Panel>
+          </Col>
+    			<Col xs={6}>
+    				<Panel
+              onClick={()=> {
+                this.context.router.push('admin/upload/download-template')
+              }}
+              className="upload-panel">
+    					<h3>Download Template</h3> 
+            </Panel>
+          </Col>
         </Row>
       </Grid>
     </div>
