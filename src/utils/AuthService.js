@@ -8,7 +8,8 @@ export default class AuthService extends EventEmitter {
     const options = {
       allowedConnections: ['google-oauth2'],
 	  theme: {
-		  logo: logo
+		  logo: logo,
+		  primaryColor: 'red'
 	  },
 	  languageDictionary: {
 		  title: "Student Management Login"
