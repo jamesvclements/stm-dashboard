@@ -12,7 +12,7 @@ export default class AuthService extends EventEmitter {
 		  primaryColor: 'red'
 	  },
 	  languageDictionary: {
-		  title: "Student Management Login"
+		  title: 'Student Management Login'
 	  }
     }
     // Configure Auth0
