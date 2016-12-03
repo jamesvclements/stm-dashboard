@@ -29,10 +29,25 @@ export class Placement extends React.Component {
       method: 'GET'
     })
       .then(response => {
-        response.json().then(placement => {
-          this.setState({
-            placement: placement
+        if (response.ok) {
+          response.json().then(placement => {
+            this.setState({
+              placement: placement
+            })
           })
+        } else {
+          this.context.addNotification({
+            title: 'Error',
+            message: `Failed to fetch placement for grade ${this.props.params.grade}`,
+            level: 'error'
+          })
+        }
+      }).catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: `Failed to fetch placement for grade ${this.props.params.grade}`,
+          level: 'error'
         })
       }).catch(err => {
         console.error(err)

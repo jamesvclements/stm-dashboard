@@ -28,7 +28,7 @@ export class Student extends React.Component {
       response.json().then(student => {
         if (response.ok) {
           this.setState({
-            student: student[0]
+            student: student
           })
         } else {
           this.context.addNotification({
@@ -101,14 +101,13 @@ export class Student extends React.Component {
     } else {
       this.unchangedStudent = JSON.parse(JSON.stringify(this.state.student))
     }
-    this.setState({ editStudent: !this.state.editStudent })
+    this.setState({ editStudent: !this.state.editStudent})
   }
 
-  discardChanges() {
-    this.setState({ student: this.unchangedStudent })
-    this.setState({ editStudent: false })
+  discardChanges(){
+    this.setState({ student: this.unchangedStudent})
+    this.setState({ editStudent: false})
   }
-
 
   getInfo() {
     const { student } = this.state
@@ -139,10 +138,10 @@ export class Student extends React.Component {
     )
   }
 
-  handleChange(key, event) {
+  handleChange(key, event){
     let tempStudent = this.state.student
     tempStudent[key] = event.target.value
-    this.setState({ student: tempStudent })
+    this.setState({student : tempStudent })
   }
 
   getFormItem(key, val) {

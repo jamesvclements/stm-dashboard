@@ -1,15 +1,20 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes as T} from 'react'
 import { Panel, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
-import * as Utils from '../../utils/Utils'
+import * as Utils from '../../../utils/Utils'
 import './StudentListItem.css'
 
 export class StudentListItem extends React.Component {
+  static contextTypes = {
+    router: T.object
+  }
+  
   static propTypes = {
-    student: PropTypes.object
+    student: T.object
   }
 
-  constructor(...args) {
-    super(...args)
+  constructor() {
+    super()
+
     this.state = {
       open: false,
       button: false
@@ -19,12 +24,8 @@ export class StudentListItem extends React.Component {
   render() {
     const student = this.props.student
     return (
-      <Panel 
-        header={
-          // temp solution until JSON is standardized
-          student.hasOwnProperty('name')
-            ? student.name : `${student.firstName} ${student.lastName}`
-        } 
+      <Panel
+        header={`${student.firstName} ${student.lastName}`} 
         collapsible 
         expanded={this.state.open} 
         onClick={() => this.setState({ open: !this.state.open })}
@@ -39,7 +40,7 @@ export class StudentListItem extends React.Component {
         <Button 
           block
           bsStyle="primary"
-          onClick={() => alert('this is not implemented yet')}>
+          onClick={() => this.context.router.push(`students/${student.id}`)}>
           View Card
         </Button>
       </Panel>

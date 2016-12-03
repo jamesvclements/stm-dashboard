@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap'
-import StudentListItem from '../Student/StudentListItem'
+import StudentListItem from '../Student/StudentListItem/StudentListItem'
 import * as Utils from '../../utils/Utils'
 import './SectionListGroup.css'
 
@@ -37,11 +37,13 @@ export class Section extends React.Component {
           </ListGroup>
         </Panel>
         <Panel header="Students">
-          {
-            section.students.map((student, i) => {
-              return <StudentListItem student={student} key={i}/>
-            })
-          }
+          <ListGroup>
+            {
+              section.students.map((student, i) => {
+                return <StudentListItem student={student} key={i} />
+              })
+            }
+          </ListGroup>
         </Panel>
       </div>
     )
