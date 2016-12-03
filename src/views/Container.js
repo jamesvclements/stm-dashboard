@@ -2,6 +2,8 @@ import React, { PropTypes as T } from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { Link } from 'react-router'
 import NotificationSystem from 'react-notification-system'
+import logo from '../images/stm-logo.png'
+import './Container.css'
 
 export class Container extends React.Component {
   static contextTypes = {
@@ -66,9 +68,12 @@ export class Container extends React.Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/landing">St. Thomas More Student Management</Link>
+				<img src={logo} className="logo" alt="STM Logo"/>
             </Navbar.Brand>
-            <Navbar.Toggle />
+			<Navbar.Text>
+				<Link to="/landing" className="title">St. Thomas More Student Management</Link>
+            </Navbar.Text>
+			<Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
