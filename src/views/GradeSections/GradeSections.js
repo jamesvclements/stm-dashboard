@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import { Grid, Row, Col, Panel } from 'react-bootstrap'
+import { render } from 'react-dom'
+import { Grid, Row, Col, Panel, Breadcrumb } from 'react-bootstrap'
 import './GradeSections.css'
 
 export class GradeSections extends React.Component {
@@ -48,6 +49,21 @@ export class GradeSections extends React.Component {
     const { sections } = this.state.grade
     return (
       <div className="root">
+
+
+ <Breadcrumb>
+    <Breadcrumb.Item href="#">
+      Home
+    </Breadcrumb.Item>
+    <Breadcrumb.Item href="http://localhost:3000/#/sections?_k=4zifyr">
+      Grades
+    </Breadcrumb.Item>
+    <Breadcrumb.Item active>
+      Teachers
+    </Breadcrumb.Item>
+  </Breadcrumb>
+
+
         <Grid>
           <Row>
             {
