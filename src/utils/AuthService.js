@@ -34,6 +34,8 @@ export default class AuthService extends EventEmitter {
         this.setProfile(profile)
       }
     })
+    // Trigger authenticated event
+    this.emit('authenticated')
   }
 
   login() {

@@ -21,9 +21,19 @@ export class Container extends React.Component {
       profile: props.route.auth.getProfile()
     }
 
+    props.route.auth.on('authenticated', () => {
+      this.addNotification({
+        title: 'Disclaimer',
+        message: 'This system contains confidential student information and should not be left unattended.',
+        level: 'info',
+        autoDismiss: 8
+      })
+    })
+
     props.route.auth.on('profile_updated', profile => {
       this.setState({ profile: profile })
     })
+
   }
 
   getChildContext() {
