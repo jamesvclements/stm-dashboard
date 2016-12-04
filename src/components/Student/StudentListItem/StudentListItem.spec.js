@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import SimStudentItem from './SimStudentItem'
+import StudentListItem from './SimStudentItem'
 
-describe('<SimStudentItem />', () => {
+describe('<StudentListItem />', () => {
   it('renders without crashing', () => {
     const student = {}
     const div = document.createElement('div')

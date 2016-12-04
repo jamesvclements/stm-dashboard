@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
-import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap'
-import * as Utils from '../../utils/Utils'
-import './SimStudentItem.css'
+import { Panel } from 'react-bootstrap'
+import { StudentStats } from '../StudentStats/StudentStats'
+import './StudentListItem.css'
 
-export class SimStudentItem extends React.Component {
+export class StudentListItem extends React.Component {
   static propTypes = {
     student: PropTypes.object,
   }
 
-  constructor(...args) {
-    super(...args)
+  constructor() {
+    super()
     this.state = {
       open: false,
       button: false
@@ -30,16 +30,10 @@ export class SimStudentItem extends React.Component {
         expanded={this.state.open} 
         onClick={() => this.setState({ open: !this.state.open })}
         className="student-panel">
-        <ListGroup fill className="student-stats">
-          {
-            Object.keys(student).filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-              return <ListGroupItem key={i}>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem>
-            })
-          }
-        </ListGroup>
+        <StudentStats student={student}></StudentStats>
       </Panel>
     )
   }
 }
 
-export default SimStudentItem
+export default StudentListItem
