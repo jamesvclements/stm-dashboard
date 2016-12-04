@@ -1,5 +1,7 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { PageHeader, Panel, Grid, Row, Button } from 'react-bootstrap'
+import StudentViewForm from '../../components/Student/StudentViewForm/StudentViewForm'
+import StudentEditForm from '../../components/Student/StudentEditForm/StudentEditForm'
 import * as Utils from '../../utils/Utils'
 import './Student.css'
 
@@ -19,7 +21,6 @@ export class Student extends React.Component {
     this.state = {
       student: {},
       editStudent: false,
-      allowSave: true
     }
 
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.params.studentID}`, {
@@ -108,149 +109,7 @@ export class Student extends React.Component {
     this.setState({ student: this.unchangedStudent})
     this.setState({ editStudent: false})
   }
-
-  getInfo() {
-    const { student } = this.state
-    return (
-      <ListGroup fill className="student-info-list-group">
-        {
-          Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-            return (
-              <Col key={i} xs={12} md={6}>
-                <ListGroupItem className="student-info-list-group-item">{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem>
-              </Col>)
-          })
-        }
-      </ListGroup>
-    )
-  }
-
-  getEditForm() {
-    const { student } = this.state
-    return (
-      <div>
-        {
-          Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-            return <Col xs={12} md={6} key={i}>{this.getFormItem(key, student[key])}</Col>
-          })
-        }
-      </div>
-    )
-  }
-
-  handleChange(key, event){
-    let tempStudent = this.state.student
-    tempStudent[key] = event.target.value
-    this.setState({student : tempStudent })
-  }
-
-  getFormItem(key, val) {
-    // first switch non test scores that expect an empty string
-    if (typeof val === 'undefined' || !val) {
-      val = 0
-    }
-    switch (key) {
-      case 'potentialDelay':
-      case 'advancedMath':
-      case 'medicalConcern':
-      case 'facultyStudent':
-      case 'newStudent':
-      case 'hmp':
-      case 'asp':
-        return (
-          <FormGroup controlId={key + 'Select'}>
-            <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-            <FormControl
-              componentClass="select"
-              onChange={this.handleChange.bind(this, key)}
-              value={'' + this.state.student[key]}
-              >
-              <option value="0">No</option>
-              <option value="1">Yes</option>
-            </FormControl>
-          </FormGroup>
-        )
-      default:
-        // for rest of the keys, an empty string is ok
-        if (typeof val === 'undefined' || !val) {
-          val = ''
-        }
-        // test scores
-        switch (key) {
-          case 'mathBench':
-          case 'cogAT':
-          case 'dra':
-          case 'elaTotal':
-          case 'mathTotal':
-          case 'behaviorObservation':
-          case 'dial4':
-            return (
-              <FormGroup
-                controlId={key + 'Input'}
-                validationState={Utils.validateScore(key, val)}
-                >
-                <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-                <FormControl
-                  value={val}
-                  placeholder="Enter Score"
-                  onChange={this.handleChange.bind(this, key)}
-                  />
-                <FormControl.Feedback />
-              </FormGroup>
-            )
-          case 'behavior':
-          case 'workEthic':
-            if (val)
-              val = val.toString()
-            else
-              val = 'null'
-            return (
-              <FormGroup controlId={key + 'Select'}>
-                <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-                <FormControl componentClass="select" value={val} onChange={this.handleChange.bind(this, key)} placeholder={'1'}>
-                  <option value="0">-</option>
-                  <option value="1">{'\u2713'}</option>
-                  <option value="2">+</option>
-                  <option value="null">N/A</option>
-                </FormControl>
-              </FormGroup>
-            )
-          case 'sex':
-            return (
-              <FormGroup>
-                <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-                <FormControl.Static>
-                  {val}
-                </FormControl.Static>
-              </FormGroup>
-            )
-          case 'age':
-            return (
-              <FormGroup>
-                <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
-                <FormControl.Static>
-                  {Utils.round(val / 12, 0)}y. {Utils.round(val % 12, 0)}mo.
-                </FormControl.Static>
-              </FormGroup>
-            )
-          case 'comments':
-            return (
-              <FormGroup controlId="CommentsTextarea">
-                <ControlLabel>Comments</ControlLabel>
-                <FormControl
-                  placeholder="Enter comments here"
-                  componentClass="textarea"
-                  value={val}
-                  onChange={this.handleChange.bind(this, key)} />
-              </FormGroup>
-            )
-          default:
-            return null
-        }
-    }
-  }
-
-
+  
   render() {
     const { student } = this.state
     return (
@@ -259,7 +118,7 @@ export class Student extends React.Component {
         <Grid>
           <Panel>
             <Row>
-                {this.state.editStudent ? this.getEditForm() : this.getInfo()}
+                {this.state.editStudent ? StudentEditForm : StudentViewForm}
             </Row>
           </Panel>
         </Grid>
