@@ -15,6 +15,13 @@ export class UploadCSV extends React.Component {
 
   }
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      file: null
+    }
+  }
   submitButton(event){
     event.preventDefault()
     console.log(typeof this.input)
@@ -25,7 +32,7 @@ export class UploadCSV extends React.Component {
     }
 
     var formData = new FormData()
-    formData.append('students', this.input.file)
+    formData.append('students', this.state.input)
     console.log(formData)
 
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/upload`, {
@@ -46,23 +53,31 @@ export class UploadCSV extends React.Component {
       })
       
   }
-  handleChange(event){
-    console.log(event.target)
-    this.input = event.target
+  onDrop(acceptedFiles, rejectedFiles) {
+    if(acceptedFiles.length === 1)
+      this.setState({input:acceptedFiles[0]})
+    else
+      this.context.addNotification({
+          title: 'Error',
+          message: 'File must in CSV format',
+          level: 'error'
+        })
   }
 
   render() {
     return (
     <div className='root'>
-      <Panel>
-        <form encType="multipart/form-data" action={`${process.env.REACT_APP_SERVER_ADDRESS}/api/upload`} method="post">
-          <FormGroup controlId='uploadCSVFormGroup' className="centered">
-            <ControlLabel className="centered">Upload Student Data File</ControlLabel>
-            <FormControl type='file' className="centered" onChange={this.handleChange.bind(this)}/>
-            <HelpBlock className="centered">REMINDER: csv file shouldn't contain apostrophes, tabs, or commas</HelpBlock>
-          </FormGroup>
-          <Button onClick={this.submitButton.bind(this)}type="submit">Upload CSV file</Button>
-        </form>
+    <Panel>
+      <Dropzone className='centered' onDrop={this.onDrop.bind(this)} multiple={false} accept='text/csv'>
+        <br/>
+        <h3>Drop CSV here, or click to select file to upload.</h3>
+        <br/>
+      </Dropzone>
+      <h5>REMINDER: Uploaded date shouldn't contain commas, tabs, or apostrophes</h5>
+      {this.state.input ? 
+        (<Button bsStyle='primary' onClick={this.submitButton.bind(this)}>Click here to upload CSV</Button>) :
+        (<h4>please choose a file</h4>)
+      }
       </Panel>
     </div>
     )
