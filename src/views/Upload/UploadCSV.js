@@ -51,6 +51,9 @@ export class UploadCSV extends React.Component {
           level: 'error'
         })
       })
+      this.setState({
+        input:null
+      })
       
   }
   onDrop(acceptedFiles, rejectedFiles) {
