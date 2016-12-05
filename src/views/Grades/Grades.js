@@ -1,15 +1,13 @@
 import React, { PropTypes as T } from 'react'
-import { render } from 'react-dom'
 import {Grid, Row, Col, Breadcrumb} from 'react-bootstrap'
 import { Panel } from 'react-bootstrap'
-import './Sections.css'
+import './Grades.css'
 
-export class Sections extends React.Component {
+export class Grades extends React.Component {
   static contextTypes = {
     router: T.object
   }
   
-
   render() {
     return (
     <div className="root">
@@ -31,7 +29,7 @@ export class Sections extends React.Component {
                     onClick={() => {
                       this.context.router.push(`/sections/${grade}`)
                     }}
-                    className="sections-panel">
+                    className="grades-panel">
                     <h2>{(grade === 0) ? 'K' : grade}</h2>
                   </Panel>
                 </Col>)
@@ -44,4 +42,4 @@ export class Sections extends React.Component {
   }
 }
 
-export default Sections
+export default Grades

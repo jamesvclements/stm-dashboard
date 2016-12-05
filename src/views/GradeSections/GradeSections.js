@@ -53,7 +53,7 @@ export class GradeSections extends React.Component {
           <Breadcrumb.Item href="#/landing">
             Home
           </Breadcrumb.Item>
-          <Breadcrumb.Item href="#/sections">
+          <Breadcrumb.Item href="#/grades">
             Grades
           </Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -65,7 +65,7 @@ export class GradeSections extends React.Component {
             {
               sections.map((section, i) => {
                 return (
-                  <Col md={3} xs={6} key={i}>
+                  <Col md={sections.length === 4 ? 3 : 4} xs={6} key={i}>
                     <Panel
                       onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.sectionID}`) } }
                       className="grade-sections-panel">

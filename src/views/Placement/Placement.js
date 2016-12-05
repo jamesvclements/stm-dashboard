@@ -199,9 +199,11 @@ export class Placement extends React.Component {
           <Breadcrumb.Item href="#/landing">
             Home
           </Breadcrumb.Item>
-          <Breadcrumb.Item href="#/run-placements">Placement</Breadcrumb.Item>
+          <Breadcrumb.Item href="#/run-placements">
+            Run Placements
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>
-            View
+            Placement
           </Breadcrumb.Item>
         </Breadcrumb>
         <PageHeader>{ordinal(grade)}Placement</PageHeader>

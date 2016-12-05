@@ -18,7 +18,7 @@ export class RunPlacements extends React.Component {
             Home
           </Breadcrumb.Item>
           <Breadcrumb.Item active>
-            Placement
+            Run Placements
           </Breadcrumb.Item>
         </Breadcrumb>
         <Grid>

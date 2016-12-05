@@ -1,5 +1,4 @@
 import React, { PropTypes as T } from 'react'
-import { render } from 'react-dom'
 import { Grid, Row, Col, Breadcrumb } from 'react-bootstrap'
 import DynamicStudentTable from '../../components/Student/DynamicStudentTable/DynamicStudentTable'
 import './Students.css'
@@ -25,75 +24,30 @@ export class Students extends React.Component {
       students: []
     }
 
-    if ('sectionID' in this.props.params) {
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/sections/${this.props.params.sectionID}`, {
-        method: 'GET'
-      })
-        .then(response => {
-          if (response.ok) {
-            response.json().then(section => {
-              this.setState({
-                students: section.students
-              })
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`, {
+      method: 'GET'
+    })
+      .then(response => {
+        if (response.ok) {
+          response.json().then(students => {
+            this.setState({
+              students: students
             })
-          } else {
-
-          }
-        }).catch(err => {
-          console.error(err)
-          this.notifyError(`Failed to fetch students from section ${this.props.params.sectionID}`)
-        })
-    } else if ('grade' in this.props.params) {
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/grades/${this.props.params.grade}`, {
-        method: 'GET'
-      })
-        .then(response => {
-          if (response.ok) {
-            response.json().then(grade => {
-              let students = []
-              for (let section of grade.sections) {
-                students.push(section.students)
-              }
-              this.setState({
-                students: students
-              })
-            })
-          } else {
-            this.notifyError(`Failed to fetch students from grade ${this.props.params.grade}`)
-          }
-        }).catch(err => {
-          console.error(err)
-          this.notifyError(`Failed to fetch students from grade ${this.props.params.grade}`)
-        })
-    } else {
-      console.log('students')
-	  fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`, {
-        method: 'GET'
-      })
-        .then(response => {
-          if (response.ok) {
-            console.log(response)
-            response.json().then(students => {
-              console.log(students)
-			  this.setState({
-                students: students
-              })
-            })
-          } else {
-            this.notifyError('Failed to fetch students')
-          }
-        }).catch(err => {
-          console.error(err)
+          })
+        } else {
           this.notifyError('Failed to fetch students')
-        })
-    }
+        }
+      }).catch(err => {
+        console.error(err)
+        this.notifyError('Failed to fetch students')
+      })
   }
 
   render() {
     const { students } = this.state
     return (
       <div className="root">
-      <Breadcrumb>
+        <Breadcrumb>
           <Breadcrumb.Item href="#/landing">
             Home
           </Breadcrumb.Item>

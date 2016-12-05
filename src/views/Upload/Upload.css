@@ -1,0 +1,8 @@
+.root {
+  text-align: center;
+}
+
+.upload-panel:hover {
+  cursor: pointer;
+  background: #F5F5F5;
+}
