@@ -52,26 +52,20 @@ export class Section extends React.Component {
     const { params } = this.props
     return (
       <div className="root">
-
-
- <Breadcrumb>
-    <Breadcrumb.Item href="#/landing">
-      Home
-    </Breadcrumb.Item>
-    <Breadcrumb.Item href="#/sections?_k=ckp29a">
-      Grades
-    </Breadcrumb.Item>
-      <Breadcrumb.Item href="#">
-      Teachers
-    </Breadcrumb.Item>
-    <Breadcrumb.Item active>
-      Section
-    </Breadcrumb.Item>
-  </Breadcrumb>
-
- 
-
-    
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/sections">
+            Grades
+          </Breadcrumb.Item>
+            <Breadcrumb.Item href="#">
+            Sections
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Section
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <PageHeader>
           {`${section.teacher.firstName} ${section.teacher.lastName}`}
           <small>{` ${params.grade === '0' ? 'Kindergarten' : `Grade ${params.grade}`} Section ${params.sectionID}`}</small>

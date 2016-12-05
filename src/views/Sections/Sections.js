@@ -13,20 +13,14 @@ export class Sections extends React.Component {
   render() {
     return (
     <div className="root">
-
-
- <Breadcrumb>
-    <Breadcrumb.Item href="#/landing">
-      Home
-    </Breadcrumb.Item>
-    <Breadcrumb.Item active>
-      Grades
-    </Breadcrumb.Item>
-  </Breadcrumb>
-
-
-
-    
+    <Breadcrumb>
+        <Breadcrumb.Item href="#/landing">
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Grades
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <Grid>
         <Row>
           {

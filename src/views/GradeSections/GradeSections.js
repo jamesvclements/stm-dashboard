@@ -49,21 +49,17 @@ export class GradeSections extends React.Component {
     const { sections } = this.state.grade
     return (
       <div className="root">
-
-
- <Breadcrumb>
-    <Breadcrumb.Item href="#/landing">
-      Home
-    </Breadcrumb.Item>
-    <Breadcrumb.Item href="#/sections?_k=4zifyr">
-      Grades
-    </Breadcrumb.Item>
-    <Breadcrumb.Item active>
-      Teachers
-    </Breadcrumb.Item>
-  </Breadcrumb>
-
-
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/sections">
+            Grades
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Sections
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Grid>
           <Row>
             {

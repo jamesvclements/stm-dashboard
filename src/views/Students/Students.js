@@ -91,18 +91,14 @@ export class Students extends React.Component {
     const { students } = this.state
     return (
       <div className="root">
-
- <Breadcrumb>
-    <Breadcrumb.Item href="#/landing">
-      Home
-    </Breadcrumb.Item>
-    <Breadcrumb.Item active>
-      Students
-    </Breadcrumb.Item>
-  </Breadcrumb>
-
-
-   
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Students
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Grid>
           <Row>
             <Col xs={12}>

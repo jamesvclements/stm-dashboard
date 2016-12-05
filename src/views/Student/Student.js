@@ -27,6 +27,9 @@ export class Student extends React.Component {
       method: 'GET'
     }).then(response => {
       response.json().then(student => {
+        this.setState({
+          student: student
+        })
         if (response.ok) {
           this.setState({
             student: student
@@ -126,7 +129,7 @@ export class Student extends React.Component {
     )
   }
 
-  getEditForm() {
+  getEditForm(){
     const { student } = this.state
     return (
       <div>
@@ -171,6 +174,7 @@ export class Student extends React.Component {
             </FormControl>
           </FormGroup>
         )
+
       default:
         // for rest of the keys, an empty string is ok
         if (typeof val === 'undefined' || !val) {
@@ -256,22 +260,17 @@ export class Student extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-
-
- <Breadcrumb>
-    <Breadcrumb.Item href="#/landing">
-      Home
-    </Breadcrumb.Item>
-    <Breadcrumb.Item href="#/students">
-      Students
-    </Breadcrumb.Item>
-    <Breadcrumb.Item active>
-      Student Card
-    </Breadcrumb.Item>
-  </Breadcrumb>
-
-
-        
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/students">
+            Students
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Student
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
         <Grid>
           <Panel>
