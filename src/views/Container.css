@@ -1,9 +1,12 @@
 .logo {
-  height: 70px !important;
-  padding: 8px !important;
+  height: 60px !important;
+  padding: 4px !important;
 }
 
 .title {
-	font-size: x-large !important;
-	color: grey;
+	font-size: x-large;
+}
+
+.logo:hover, .title:hover {
+  cursor: pointer;
 }

@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
-import { Link } from 'react-router'
+import { Link, Image} from 'react-router'
 import NotificationSystem from 'react-notification-system'
 import logo from '../images/stm-logo.png'
 import './Container.css'
@@ -78,12 +78,12 @@ export class Container extends React.Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-				<img src={logo} className="logo" alt="STM Logo"/>
+              <img src={logo} alt="" className="logo" onClick={this.land.bind(this)}></img>
             </Navbar.Brand>
-			<Navbar.Text>
-				<Link to="/landing" className="title">St. Thomas More Student Management</Link>
+            <Navbar.Text>
+              <span className="title" onClick={this.land.bind(this)}>St. Thomas More Student Management</span>
             </Navbar.Text>
-			<Navbar.Toggle />
+            <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>

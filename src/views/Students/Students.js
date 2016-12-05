@@ -70,6 +70,7 @@ export class Students extends React.Component {
       })
         .then(response => {
           if (response.ok) {
+            console.log(response)
             response.json().then(students => {
               this.setState({
                 students: students
