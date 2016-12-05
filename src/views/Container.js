@@ -1,7 +1,9 @@
 import React, { PropTypes as T } from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
-import { Link } from 'react-router'
+import { Link, Image} from 'react-router'
 import NotificationSystem from 'react-notification-system'
+import logo from '../images/stm-logo.png'
+import './Container.css'
 
 export class Container extends React.Component {
   static contextTypes = {
@@ -19,9 +21,19 @@ export class Container extends React.Component {
       profile: props.route.auth.getProfile()
     }
 
+    props.route.auth.on('authenticated', () => {
+      this.addNotification({
+        title: 'Disclaimer',
+        message: 'This system contains confidential student information and should not be left unattended.',
+        level: 'info',
+        autoDismiss: 8
+      })
+    })
+
     props.route.auth.on('profile_updated', profile => {
       this.setState({ profile: profile })
     })
+
   }
 
   getChildContext() {
@@ -66,8 +78,11 @@ export class Container extends React.Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/landing">St. Thomas More Student Management</Link>
+              <img src={logo} alt="" className="logo" onClick={this.land.bind(this)}></img>
             </Navbar.Brand>
+            <Navbar.Text>
+              <span className="title" onClick={this.land.bind(this)}>St. Thomas More Student Management</span>
+            </Navbar.Text>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>

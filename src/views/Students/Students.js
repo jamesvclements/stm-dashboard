@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import StudentList from '../../components/Student/StudentList/StudentList'
+import { Grid, Row, Col, Breadcrumb } from 'react-bootstrap'
+import DynamicStudentTable from '../../components/Student/DynamicStudentTable/DynamicStudentTable'
 import './Students.css'
 
 export class Students extends React.Component {
@@ -88,7 +89,21 @@ export class Students extends React.Component {
     const { students } = this.state
     return (
       <div className="root">
-        <StudentList students={students} />
+        <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Students
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <Grid>
+          <Row>
+            <Col xs={12}>
+              <DynamicStudentTable students={students} />
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

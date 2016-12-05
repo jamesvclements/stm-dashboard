@@ -1,17 +1,12 @@
 import React, { PropTypes as T } from 'react'
-import { Grid, Row, Col } from 'react-bootstrap'
-import AuthService from '../../utils/AuthService'
-import { Panel } from 'react-bootstrap'
-import './Grade.css'
+import { render } from 'react-dom'
+import { Grid, Row, Col, Panel, Breadcrumb } from 'react-bootstrap'
+import './GradeSections.css'
 
-export class Grade extends React.Component {
+export class GradeSections extends React.Component {
   static contextTypes = {
     router: T.object,
     addNotification: T.func
-  }
-
-  static propTypes = {
-    auth: T.instanceOf(AuthService)
   }
 
   constructor(props) {
@@ -54,15 +49,26 @@ export class Grade extends React.Component {
     const { sections } = this.state.grade
     return (
       <div className="root">
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/sections">
+            Grades
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Sections
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Grid>
           <Row>
             {
               sections.map((section, i) => {
                 return (
-                  <Col md={sections.length === 4 ? 3 : 4} xs={6} key={i}>
+                  <Col md={3} xs={6} key={i}>
                     <Panel
                       onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.sectionID}`) } }
-                      className="grade-panel">
+                      className="grade-sections-panel">
                       <h3>{`${section.teacher.firstName} ${section.teacher.lastName}`}</h3>
                     </Panel>
                   </Col>)
@@ -75,4 +81,4 @@ export class Grade extends React.Component {
   }
 }
 
-export default Grade
+export default GradeSections

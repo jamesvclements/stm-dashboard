@@ -1,16 +1,18 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes as T } from 'react'
 import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap'
-import StudentListItem from '../Student/StudentListItem/StudentListItem'
+import DraggableStudentListItem from '../Student/DraggableStudentListItem/DraggableStudentListItem'
 import * as Utils from '../../utils/Utils'
 import './SectionListGroup.css'
 
-export class Section extends React.Component {
+export class SectionListGroup extends React.Component {
   static propTypes = {
-    section: PropTypes.object
+    section: T.object,
+    sectionIndex: T.number
   }
 
   render() {
-    const section = this.props.section
+    const { section } = this.props
+    const { sectionIndex } = this.props
     const { stats } = section
     return (
       <div>
@@ -37,17 +39,15 @@ export class Section extends React.Component {
           </ListGroup>
         </Panel>
         <Panel header="Students">
-          <ListGroup>
-            {
-              section.students.map((student, i) => {
-                return <StudentListItem student={student} key={i} />
-              })
-            }
-          </ListGroup>
+          {
+            section.students.map((student, i) => {
+              return <DraggableStudentListItem key={i} student={student} sectionIndex={sectionIndex} studentIndex={i} />
+            })
+          }
         </Panel>
       </div>
     )
   }
 }
 
-export default Section
+export default SectionListGroup
