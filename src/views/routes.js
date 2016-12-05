@@ -14,7 +14,6 @@ import Upload from './Upload/Upload'
 import Sections from './Sections/Sections'
 import Section from './Section/Section'
 import GradeSections from './GradeSections/GradeSections'
-import Students from './Students/Students'
 import Student from './Student/Student'
 
 const auth = new AuthService(
