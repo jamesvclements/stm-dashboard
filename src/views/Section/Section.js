@@ -52,14 +52,14 @@ export class Section extends React.Component {
     const { params } = this.props
     return (
       <div className="root">
-      <Breadcrumb>
-          <Breadcrumb.Item href="/landing">
+        <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
             Home
           </Breadcrumb.Item>
-          <Breadcrumb.Item href="/grades">
+          <Breadcrumb.Item href="#/grades">
             Grades
           </Breadcrumb.Item>
-            <Breadcrumb.Item href={`/grades/${params.grade}`}>
+          <Breadcrumb.Item href={`#/sections/${params.grade}`}>
             Sections
           </Breadcrumb.Item>
           <Breadcrumb.Item active>

@@ -7,15 +7,11 @@ import Placement from './Placement/Placement'
 import Login from './Login/Login'
 import RunPlacements from './RunPlacements/RunPlacements'
 import NotFound from './NotFound/NotFound'
-import Grades from './Grades/Grades'
-import Grade from './Grade/Grade'
 import Students from './Students/Students'
 import Admin from './Admin/Admin'
 import ManageUsers from './ManageUsers/ManageUsers'
 import Upload from './Upload/Upload'
-import UploadCSV from './Upload/UploadCSV'
-import DownloadCSV from './Upload/DownloadCSV'
-import Sections from './Sections/Sections'
+import Grades from './Grades/Grades'
 import Section from './Section/Section'
 import GradeSections from './GradeSections/GradeSections'
 import Student from './Student/Student'
@@ -35,19 +31,13 @@ export const makeRoutes = () => {
     <Route path="/" component={Container} auth={auth}>
       <IndexRedirect to="/landing" />
       <Route path="landing" component={Landing} onEnter={requireAuth} />
-      <Route path="students/:grade" component={Students} />
-      <Route path="students/:grade/:sectionID" component={Students} />
-      <Route path="grades" component={Grades} />
-      <Route path="grades/:grade" component={Grade} />
       <Route path="run-placements" component={RunPlacements} />
       <Route path="placement/:grade" component={Placement} />
   	  <Route path="admin" component={Admin}  />
   	  <Route path="admin/manage-users" component={ManageUsers} />
   	  <Route path="admin/upload" component={Upload} />
-      <Route path="admin/upload/upload-csv" component={UploadCSV} />
-      <Route path="admin/upload/download-template" component={DownloadCSV} />
       <Route path="students" component={Students} onEnter={requireAuth} />
-      <Route path="sections" component={Sections} onEnter={requireAuth} />
+      <Route path="grades" component={Grades} onEnter={requireAuth} />
       <Route path="sections/:grade" component={GradeSections} onEnter={requireAuth} />
       <Route path="sections/:grade/:sectionID" component={Section} onEnter={requireAuth} />
       <Route path="run-placements" component={RunPlacements} onEnter={requireAuth} />

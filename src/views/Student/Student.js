@@ -260,17 +260,6 @@ export class Student extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-      <Breadcrumb>
-          <Breadcrumb.Item href="#/landing">
-            Home
-          </Breadcrumb.Item>
-          <Breadcrumb.Item href="#/students">
-            Students
-          </Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            Student
-          </Breadcrumb.Item>
-        </Breadcrumb>
         <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
         <Grid>
           <Panel>
