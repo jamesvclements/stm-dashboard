@@ -17,32 +17,7 @@ export class StudentViewForm extends React.Component {
     this.state = {
       student: {}
     }
-	
-	fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.params.studentID}`, {
-      method: 'GET'
-    }).then(response => {
-      response.json().then(student => {
-        if (response.ok) {
-          this.setState({
-            student: student
-          })
-        } else {
-          this.context.addNotification({
-            title: 'Error',
-            message: 'Failed to fetch student',
-            level: 'error'
-          })
-        }
-      }).catch(err => {
-        console.error(err)
-        this.context.addNotification({
-          title: 'Error',
-          message: 'Failed to fetch student',
-          level: 'error'
-        })
-      })
-    })
-	
+
   }
   
    getInfo() {
@@ -65,7 +40,6 @@ export class StudentViewForm extends React.Component {
     const { student } = this.state
     return (
       <div className="root">
-        <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
         <Grid>
           <Panel>
             <Row>

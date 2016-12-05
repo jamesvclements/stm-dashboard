@@ -12,6 +12,7 @@ import Section from './Section/Section'
 import GradeSections from './GradeSections/GradeSections'
 import Students from './Students/Students'
 import Student from './Student/Student'
+import BulkEdit from './BulkEdit/BulkEdit'
 
 const auth = new AuthService(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -36,6 +37,7 @@ export const makeRoutes = () => {
       <Route path="placement/:grade" component={Placement} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="students/:studentID" component={Student} onEnter={requireAuth} />
+	  <Route path="bulk-edit/:sectionID" component={BulkEdit} onEnter={requireAuth} />
       <Route path="access_token=:token" component={Login} />
       <Route path="*" component={NotFound} />
     </Route>

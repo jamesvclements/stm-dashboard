@@ -4,9 +4,9 @@ import { PageHeader, Breadcrumb, ListGroup, ListGroupItem, Panel, Grid, Row, Col
 import { StudentViewForm } from '../../components/Student/StudentViewForm/StudentViewForm'
 import { StudentEditForm } from '../../components/Student/StudentEditForm/StudentEditForm'
 import * as Utils from '../../utils/Utils'
-import './Student.css'
+import './BulkEdit.css'
 
-export class Student extends React.Component {
+export class BulkEdit extends React.Component {
   static contextTypes = {
     router: T.object,
     addNotification: T.func
@@ -20,20 +20,21 @@ export class Student extends React.Component {
     super(props)
 
     this.state = {
-      student: {},
-      editStudent: false,
+      student: [],
+	  currentStudentIndex: 0
     }
 
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.params.studentID}`, {
+	//TO DO: change to fetch section
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/sections/${this.props.params.sectionID}`, {
       method: 'GET'
     }).then(response => {
-      response.json().then(student => {
+      response.json().then(section => {
         this.setState({
-          student: student
+          student: section.students
         })
         if (response.ok) {
           this.setState({
-            student: student
+            student: section.students
           })
         } else {
           this.context.addNotification({
@@ -110,11 +111,11 @@ export class Student extends React.Component {
     this.setState({ editStudent: !this.state.editStudent})
   }
 
+  /*
   discardChanges(){
-    this.setState({ student: this.unchangedStudent})
-    this.setState({ editStudent: false})
+    this.setState({ student[this.state.currentStudentIndex]: this.unchangedStudent})
   }
-
+*/
 
   render() {
     const { student } = this.state
@@ -128,13 +129,13 @@ export class Student extends React.Component {
             Students
           </Breadcrumb.Item>
           <Breadcrumb.Item active>
-            Student
+            EditStudent
           </Breadcrumb.Item>
         </Breadcrumb>
-        <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
+        <PageHeader>{`${student[this.currentStudentIndex].firstName} ${student[this.state.currentStudentIndex].lastName}`}</PageHeader>
         <Grid>
             <Row>
-				{this.state.editStudent ? <StudentEditForm student={student}/> : <StudentViewForm student={student}/>} 
+				<StudentEditForm student={student[this.state.currentStudentIndex]}/> 
             </Row>
         </Grid>
 		<Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
@@ -146,4 +147,4 @@ export class Student extends React.Component {
   }
 }
 
-export default Student
+export default BulkEdit
