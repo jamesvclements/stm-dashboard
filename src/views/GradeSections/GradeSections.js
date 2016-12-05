@@ -52,10 +52,10 @@ export class GradeSections extends React.Component {
 
 
  <Breadcrumb>
-    <Breadcrumb.Item href="#">
+    <Breadcrumb.Item href="#/landing">
       Home
     </Breadcrumb.Item>
-    <Breadcrumb.Item href="http://localhost:3000/#/sections?_k=4zifyr">
+    <Breadcrumb.Item href="#/sections?_k=4zifyr">
       Grades
     </Breadcrumb.Item>
     <Breadcrumb.Item active>

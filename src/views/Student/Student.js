@@ -259,10 +259,10 @@ export class Student extends React.Component {
 
 
  <Breadcrumb>
-    <Breadcrumb.Item href="#">
+    <Breadcrumb.Item href="#/landing">
       Home
     </Breadcrumb.Item>
-    <Breadcrumb.Item href="/">
+    <Breadcrumb.Item href="#/students">
       Students
     </Breadcrumb.Item>
     <Breadcrumb.Item active>

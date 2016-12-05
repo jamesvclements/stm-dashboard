@@ -55,10 +55,10 @@ export class Section extends React.Component {
 
 
  <Breadcrumb>
-    <Breadcrumb.Item href="#">
+    <Breadcrumb.Item href="#/landing">
       Home
     </Breadcrumb.Item>
-    <Breadcrumb.Item href="#">
+    <Breadcrumb.Item href="#/sections?_k=ckp29a">
       Grades
     </Breadcrumb.Item>
       <Breadcrumb.Item href="#">
