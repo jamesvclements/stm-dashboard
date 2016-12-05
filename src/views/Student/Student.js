@@ -1,7 +1,7 @@
 import React, { PropTypes as T } from 'react'
 import { PageHeader, Panel, Grid, Row, Button } from 'react-bootstrap'
-import StudentViewForm from '../../components/Student/StudentViewForm/StudentViewForm'
-import StudentEditForm from '../../components/Student/StudentEditForm/StudentEditForm'
+import { StudentViewForm } from '../../components/Student/StudentViewForm/StudentViewForm'
+import { StudentEditForm } from '../../components/Student/StudentEditForm/StudentEditForm'
 import * as Utils from '../../utils/Utils'
 import './Student.css'
 
@@ -12,7 +12,7 @@ export class Student extends React.Component {
   }
 
   static propTypes = {
-    profile: T.object,
+    profile: T.object
   }
 
   constructor(props) {
@@ -49,6 +49,7 @@ export class Student extends React.Component {
     })
   }
 
+  
   toggleEdit() {
     if (this.state.editStudent) {
       let tempStudent = this.state.student
@@ -110,6 +111,7 @@ export class Student extends React.Component {
     this.setState({ editStudent: false})
   }
   
+  
   render() {
     const { student } = this.state
     return (
@@ -118,15 +120,15 @@ export class Student extends React.Component {
         <Grid>
           <Panel>
             <Row>
-                {this.state.editStudent ? StudentEditForm : StudentViewForm}
+				{StudentViewForm}
             </Row>
           </Panel>
         </Grid>
-        <Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
+		<Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
           {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
         </Button>
         {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
-      </div>
+	  </div>
     )
   }
 }

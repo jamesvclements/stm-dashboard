@@ -65,13 +65,15 @@ export class Students extends React.Component {
           this.notifyError(`Failed to fetch students from grade ${this.props.params.grade}`)
         })
     } else {
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`, {
+      console.log('students')
+	  fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`, {
         method: 'GET'
       })
         .then(response => {
           if (response.ok) {
             response.json().then(students => {
-              this.setState({
+              console.log(students)
+			  this.setState({
                 students: students
               })
             })
