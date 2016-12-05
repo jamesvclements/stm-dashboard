@@ -1,0 +1,12 @@
+.logo {
+  height: 60px !important;
+  padding: 4px !important;
+}
+
+.title {
+	font-size: x-large;
+}
+
+.logo:hover, .title:hover {
+  cursor: pointer;
+}

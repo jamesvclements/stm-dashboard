@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, Grid, Row, Col } from 'react-bootstrap'
+import { render } from 'react-dom'
+import { PageHeader, Grid, Row, Col, Breadcrumb } from 'react-bootstrap'
 import { StudentTable } from '../../components/Student/StudentTable/StudentTable'
 import './Section.css'
 
@@ -51,6 +52,20 @@ export class Section extends React.Component {
     const { params } = this.props
     return (
       <div className="root">
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/sections">
+            Grades
+          </Breadcrumb.Item>
+            <Breadcrumb.Item href="#">
+            Sections
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Section
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <PageHeader>
           {`${section.teacher.firstName} ${section.teacher.lastName}`}
           <small>{` ${params.grade === '0' ? 'Kindergarten' : `Grade ${params.grade}`} Section ${params.sectionID}`}</small>

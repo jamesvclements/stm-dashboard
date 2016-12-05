@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, Panel, Grid, Row, Button } from 'react-bootstrap'
+import { render } from 'react-dom'
+import { PageHeader, Breadcrumb, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import { StudentViewForm } from '../../components/Student/StudentViewForm/StudentViewForm'
 import { StudentEditForm } from '../../components/Student/StudentEditForm/StudentEditForm'
 import * as Utils from '../../utils/Utils'
@@ -27,6 +28,9 @@ export class Student extends React.Component {
       method: 'GET'
     }).then(response => {
       response.json().then(student => {
+        this.setState({
+          student: student
+        })
         if (response.ok) {
           this.setState({
             student: student
@@ -110,12 +114,23 @@ export class Student extends React.Component {
     this.setState({ student: this.unchangedStudent})
     this.setState({ editStudent: false})
   }
-  
-  
+
+
   render() {
     const { student } = this.state
     return (
       <div className="root">
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/students">
+            Students
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Student
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
         <Grid>
           <Panel>

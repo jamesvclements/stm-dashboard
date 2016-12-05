@@ -13,20 +13,18 @@ export class GradePlacePanel extends React.Component {
 
   run() {
     const { grade } = this.props
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/placements/${grade}`,
-      {
-        method: 'PUT',
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/placements/`, 
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        grade: grade
       })
-      .then(response => {
-        if (response.ok) {
-          this.context.router.push(`/placement/${grade}`)
-        } else {
-          this.context.addNotification({
-            title: 'Error',
-            message: `Failed to run placement for grade ${grade}`,
-            level: 'error'
-          })
-        }
+    })
+      .then(() => {
+        this.context.router.push(`/placement/${grade}`)
       })
       .catch(err => {
         console.error(err)

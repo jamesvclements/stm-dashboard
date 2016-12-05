@@ -1,11 +1,19 @@
 import Auth0Lock from 'auth0-lock'
 import { EventEmitter } from 'events'
+import logo from '../images/stm-logo.png'
 
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
     super()
     const options = {
-      allowedConnections: ['google-oauth2']
+      allowedConnections: ['google-oauth2'],
+      theme: {
+        logo: logo,
+        primaryColor: 'red'
+      },
+      languageDictionary: {
+        title: 'Student Management Login'
+      }
     }
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, options)
@@ -26,6 +34,8 @@ export default class AuthService extends EventEmitter {
         this.setProfile(profile)
       }
     })
+    // Trigger authenticated event
+    this.emit('authenticated')
   }
 
   login() {
@@ -72,8 +82,8 @@ export default class AuthService extends EventEmitter {
       headers: headers,
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(newProfile => this.setProfile(newProfile))
+      .then(response => response.json())
+      .then(newProfile => this.setProfile(newProfile))
   }
 
   logout() {
