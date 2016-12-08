@@ -121,18 +121,11 @@ export class ChangeYear extends React.Component {
 			<PageHeader>{`Current Academic Year: ${this.state.year} - ${this.state.year + 1}`}</PageHeader>
 			<Grid>
 			<Row>
-			<Col xs={6}>
+			<Col xs={12}>
 			<Panel
 			onClick={this.incrementYear.bind(this)}
 			className="admin-panel">
 			<h3>Go to Next Year</h3>
-			</Panel>
-			</Col>
-			<Col xs={6}>
-			<Panel
-			onClick={this.decrementYear.bind(this)}
-			className="admin-panel">
-			<h3>Go to Previous Year</h3>
 			</Panel>
 			</Col>
 			</Row>
