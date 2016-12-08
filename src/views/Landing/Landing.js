@@ -70,6 +70,7 @@ export class Landing extends React.Component {
             }
           </Row>
         </Grid>
+        <h5>This system contains confidential student information and should not be left unattended.</h5>
       </div>
     )
   }

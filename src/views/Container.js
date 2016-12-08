@@ -22,12 +22,8 @@ export class Container extends React.Component {
     }
 
     props.route.auth.on('authenticated', () => {
-      this.addNotification({
-        title: 'Disclaimer',
-        message: 'This system contains confidential student information and should not be left unattended.',
-        level: 'info',
-        autoDismiss: 8
-      })
+        this.forceUpdate()
+        location.reload()        
     })
 
     props.route.auth.on('profile_updated', profile => {
@@ -41,6 +37,7 @@ export class Container extends React.Component {
         })
       })
   }
+
 
   getChildContext() {
     return {
