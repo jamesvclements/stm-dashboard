@@ -22,8 +22,10 @@ export class ManageStudents extends React.Component {
         this.state = {
             student: [],
             newStudent: {
-                Grade: '0', 
+                grade: '0', 
+                sectionID: '00',
                 id: null,
+                firstName: null,
                 lastName: null,
                 sex: null,
                 dob: null
@@ -44,6 +46,7 @@ export class ManageStudents extends React.Component {
                         for (let section of grade.sections) {
                             options.push({ teacher: section.teacher, sectionID: section.sectionID })
                         }
+                       // student.sectionID = options[0]
                         this.setState({
                             options: options
                         })
@@ -62,16 +65,15 @@ export class ManageStudents extends React.Component {
 
     updateCreateField(field, event) {
         let tempMember = this.state.newStudent
-        if (field === 'name') {
-            tempMember.name = event.target.value
-            tempMember.firstName = tempMember.name.split(' ')[0]
-            if (tempMember.name.split(' ').length !== 1)
-                tempMember.lastName = event.target.value.substr(tempMember.firstName.length + 1)
-        } else if (field === 'grade') {
-            tempMember.grade = event.target.value
-            this.setState({
-                newStudent: tempMember
-            })
+        // if (field === 'name') {
+        //     tempMember.name = event.target.value
+        //     tempMember.firstName = tempMember.name.split(' ')[0]
+        //     if (tempMember.name.split(' ').length !== 1)
+        //         tempMember.lastName = event.target.value.substr(tempMember.firstName.length + 1)
+        // } 
+        if (field === 'grade') {
+           tempMember.grade = event.target.value
+          
             fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/grades/${event.target.value}`, {
                 method: 'GET'
             })
@@ -79,14 +81,19 @@ export class ManageStudents extends React.Component {
 
                     if (response.ok) {
                         response.json().then(grade => {
-                            console.log(grade)
+                            //console.log(grade)
                             // bind the values of section dropdown to 
                             let options = []
                             for (let section of grade.sections) {
                                 options.push({ teacher: section.teacher, sectionID: section.sectionID })
                             }
+                           
+                            tempMember.sectionID = options[0].sectionID
                             this.setState({
-                                options: options
+                                options: options,
+                                
+                                newStudent: tempMember
+
                             })
                         })
                     } else {
@@ -97,8 +104,17 @@ export class ManageStudents extends React.Component {
                     this.notifyError('Failed to fetch sections')
                 })
         }
+
+        if (field === 'sectionID') {
+            tempMember.sectionID = event.target.value
+            this.setState({
+                newStudent: tempMember
+            })
+        }
+
         else {
             tempMember[field] = event.target.value
+           // console.log(tempMember['sectionID'])
         }
 
         this.setState({
@@ -108,15 +124,18 @@ export class ManageStudents extends React.Component {
 
 
 
-
-
     createStudent() {
-        if (!this.state.newStudent.firstName || !this.state.newStudent.lastName || !this.state.newStudent.id) {
+        if (!this.state.newStudent.firstName || !this.state.newStudent.lastName || !this.state.newStudent.id || !this.state.newStudent.sectionID ) {
             let error = ''
             if (!this.state.newStudent.firstName) {
                 error = 'no name provided'
             } else if (!this.state.newStudent.lastName) {
                 error = 'no last name provided'
+            }else if (!this.state.newStudent.sectionID) {
+                error = 'no sectionID'
+            }
+            else if (!this.state.newStudent.id) {
+                error = 'no student ID'
             }
             this.context.addNotification({
                 title: 'Error',
@@ -179,7 +198,8 @@ export class ManageStudents extends React.Component {
                     <Table striped bordered condensed hover>
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>ID</th>
                                 <th>Grade</th>
                                 <th>Section</th>
@@ -192,9 +212,19 @@ export class ManageStudents extends React.Component {
                                     <FormGroup controlId="formBasicTextName">
                                         <FormControl
                                             type="text"
-                                            placeholder="Enter Name"
-                                            value={(this.state.newStudent.name)}
-                                            onChange={this.updateCreateField.bind(this, 'name')}
+                                            placeholder="Enter First Name"
+                                            value={(this.state.newStudent.firstName)}
+                                            onChange={this.updateCreateField.bind(this, 'firstName')}
+                                            />
+                                    </FormGroup>
+                                </td>
+                                <td>
+                                    <FormGroup controlId="formBasicTextName">
+                                        <FormControl
+                                            type="text"
+                                            placeholder="Enter Last Name"
+                                            value={(this.state.newStudent.lastName)}
+                                            onChange={this.updateCreateField.bind(this, 'lastName')}
                                             />
                                     </FormGroup>
                                 </td>
@@ -216,6 +246,7 @@ export class ManageStudents extends React.Component {
                                             componentClass="select"
                                             value={this.state.newStudent.grade ? this.state.newStudent.grade : '0'}
                                             onChange={this.updateCreateField.bind(this, 'grade')}>
+                                            
                                             <option value="0">Kindergarten</option>
                                             <option value="1">First</option>
                                             <option value="2">Second</option>
@@ -234,8 +265,8 @@ export class ManageStudents extends React.Component {
                                     <FormGroup controlId="formSelectSection">
                                         <FormControl
                                             componentClass="select"
-                                            value={this.state.newStudent.section ? this.state.newStudent.section : '0'}
-                                            onChange={this.updateCreateField.bind(this, 'section')}>
+                                            value={this.state.newStudent.sectionID ? this.state.newStudent.sectionID : '0'}
+                                            onChange={this.updateCreateField.bind(this, 'sectionID')}>
 
                                             {
                                                 this.state.options.map((option, i) => {

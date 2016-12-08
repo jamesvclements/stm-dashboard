@@ -42,7 +42,7 @@ export class DeleteStudents extends React.Component {
 
   deleteStudent(studentID) {
 
-    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`,
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${studentID}`,
       {
         method: 'DELETE',
         headers: {
@@ -60,6 +60,25 @@ export class DeleteStudents extends React.Component {
           message: 'Successfully deleted student',
           level: 'success'
         })
+ fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`, {
+      method: 'GET'
+    })
+      .then(response => {
+        if (response.ok) {
+          response.json().then(students => {
+            this.setState({
+              students: students
+            })
+          })
+        } else {
+          this.notifyError('Failed to fetch students')
+        }
+      }).catch(err => {
+        console.error(err)
+        this.notifyError('Failed to fetch students')
+      })
+
+
       })
       .catch(err => {
         console.error(err)
@@ -117,7 +136,7 @@ export class DeleteStudents extends React.Component {
         <Table striped bordered condensed hover className="delete-students">
           <thead>
             <tr>
-              <th>#</th>
+          
               <th>First Name</th>
               <th>Last Name</th>
               <th>Grade</th>
