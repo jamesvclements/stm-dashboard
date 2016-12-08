@@ -28,6 +28,7 @@ export class ManageUsers extends React.Component {
 	}
 
 	getStaffList() {
+		console.log('here son son')
 		fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff`,
 			{
 				method: 'GET',
@@ -93,15 +94,9 @@ export class ManageUsers extends React.Component {
 	}
 
 	deleteStaff(email) {
-		fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff`,
+		fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff/${email}`,
 			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					emailID: email
-				})
+				method: 'DELETE',
 			})
 			.then(() => {
 				this.context.addNotification({
@@ -155,6 +150,11 @@ export class ManageUsers extends React.Component {
 				level: 'error'
 			})
 		} else {
+			let temp = this.state.newStaff
+			if(this.state.newStaff.accessLevel === 2 || this.state.newStaff.gradeTeaching === null){
+				temp.gradeTeaching = 0
+			}
+			console.log('posting')
 			fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff`,
 				{
 					method: 'POST',
@@ -162,7 +162,7 @@ export class ManageUsers extends React.Component {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						staff: this.state.newStaff
+						staff: temp
 					})
 				})
 				.then(() => {
