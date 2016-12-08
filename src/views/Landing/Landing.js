@@ -5,7 +5,8 @@ import './Landing.css'
 
 export class Landing extends React.Component {
   static contextTypes = {
-    router: T.object
+    router: T.object,
+    addNotification: T.func
   }
 
   static propTypes = {
@@ -52,5 +53,4 @@ export class Landing extends React.Component {
     )
   }
 }
-
 export default Landing

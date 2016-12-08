@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import { Grid, Row, Col, Panel } from 'react-bootstrap'
+import { render } from 'react-dom'
+import { Grid, Row, Col, Panel, Breadcrumb } from 'react-bootstrap'
 import './GradeSections.css'
 
 export class GradeSections extends React.Component {
@@ -48,12 +49,23 @@ export class GradeSections extends React.Component {
     const { sections } = this.state.grade
     return (
       <div className="root">
+      <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/grades">
+            Grades
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Sections
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Grid>
           <Row>
             {
               sections.map((section, i) => {
                 return (
-                  <Col md={3} xs={6} key={i}>
+                  <Col md={sections.length === 4 ? 3 : 4} xs={6} key={i}>
                     <Panel
                       onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.sectionID}`) } }
                       className="grade-sections-panel">

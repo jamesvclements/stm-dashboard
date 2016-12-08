@@ -3,5 +3,6 @@
 }
 
 .upload-panel:hover {
-  cursor: pointer
+  cursor: pointer;
+  background: #F5F5F5;
 }

@@ -1,10 +1,10 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, Grid, Row, Col, Button, Modal } from 'react-bootstrap'
+import { PageHeader, Grid, Row, Col, Button, Modal, Breadcrumb } from 'react-bootstrap'
 import { Droppable } from 'react-drag-and-drop'
 import SectionListGroup from '../../components/Section/SectionListGroup'
 import StudentListItem from '../../components/Student/StudentListItem/StudentListItem'
 import StudentStats from '../../components/Student/StudentStats/StudentStats'
-import * as Utils from '../../utils/Utils'
+import { ordinal } from '../../utils/Utils'
 import './Placement.css'
 
 export class Placement extends React.Component {
@@ -188,7 +188,18 @@ export class Placement extends React.Component {
 
     return (
       <div className="root">
-        <PageHeader>{Utils.ordinal(grade)}Placement</PageHeader>
+        <Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/run-placements">
+            Run Placements
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Placement
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        <PageHeader>{ordinal(grade)}Placement</PageHeader>
         <Grid>
           <Row>
             {

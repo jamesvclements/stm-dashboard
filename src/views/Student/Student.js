@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { render } from 'react-dom'
+import { PageHeader, Breadcrumb, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import * as Utils from '../../utils/Utils'
 import './Student.css'
 
