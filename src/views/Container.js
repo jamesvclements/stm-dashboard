@@ -1,6 +1,5 @@
 import React, { PropTypes as T } from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
-import { Link, Image} from 'react-router'
 import NotificationSystem from 'react-notification-system'
 import logo from '../images/stm-logo.png'
 import './Container.css'
@@ -18,23 +17,34 @@ export class Container extends React.Component {
     super(props, context)
 
     this.state = {
-      profile: props.route.auth.getProfile()
+      profile: props.route.auth.getProfile(),
+      user: {}
     }
 
     props.route.auth.on('authenticated', () => {
-      this.addNotification({
-        title: 'Disclaimer',
-        message: 'This system contains confidential student information and should not be left unattended.',
-        level: 'info',
-        autoDismiss: 8
-      })
+     /* this.sleep(00).then(()=>{
+        this.forceUpdate()
+        location.reload()        
+      })*/
+
     })
 
     props.route.auth.on('profile_updated', profile => {
       this.setState({ profile: profile })
     })
 
+    props.route.auth.getUser()
+      .then(user => {
+        this.setState({
+          user: user
+        })
+      })
   }
+
+  sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
   getChildContext() {
     return {
@@ -69,7 +79,8 @@ export class Container extends React.Component {
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
         auth: this.props.route.auth,
-        profile: this.state.profile
+        profile: this.state.profile,
+        user: this.state.user
       })
     }
 

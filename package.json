@@ -8,16 +8,16 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
-    "auth0-lock": "^10.6.1",
+    "auth0-lock": "^10.7.2",
     "bootstrap": "^3.3.7",
     "react": "^15.4.0",
     "react-addons-test-utils": "^15.4.0",
     "react-bootstrap": "^0.30.5",
     "react-dom": "^15.4.0",
+    "react-drag-and-drop": "^2.1.0",
     "react-dropzone": "^3.7.3",
     "react-file-download": "^0.3.2",
     "react-file-upload": "0.0.4",
-    "react-drag-and-drop": "^2.1.0",
     "react-notification-system": "^0.2.10",
     "react-router": "^2.8.1"
   },

@@ -42,7 +42,6 @@ export class Admin extends React.Component {
 			</div>
 		)
 	}
->>>>>>> master
 }
 
 export default Admin

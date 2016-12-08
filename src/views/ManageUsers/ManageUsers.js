@@ -1,14 +1,11 @@
 import React, { PropTypes as T } from 'react'
-import {Grid, Row, Col} from 'react-bootstrap'
 import AuthService from '../../utils/AuthService'
 import { Panel } from 'react-bootstrap'
-<<<<<<< HEAD
 import { Table, FormGroup, FormControl, Button } from 'react-bootstrap'
 import './ManageUsers.css'
 
 export class ManageUsers extends React.Component {
   static contextTypes = {
-<<<<<<< HEAD
     router: T.object,
     addNotification: T.func
   }
