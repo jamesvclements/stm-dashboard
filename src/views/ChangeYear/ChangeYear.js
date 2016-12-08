@@ -25,7 +25,7 @@ export class ChangeYear extends React.Component {
 					if(response.ok){
 						console.log(year)
 						this.setState({
-							year: year.year
+							year: year
 						})
 					}
 				})
@@ -118,7 +118,7 @@ export class ChangeYear extends React.Component {
 			Change-Year
 			</Breadcrumb.Item>
 			</Breadcrumb>
-			<PageHeader>{`Current Year: ${this.state.year}`}</PageHeader>
+			<PageHeader>{`Current Academic Year: ${this.state.year} - ${this.state.year + 1}`}</PageHeader>
 			<Grid>
 			<Row>
 			<Col xs={6}>
