@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, Grid, Row, Col } from 'react-bootstrap'
+import { PageHeader, Grid, Row, Col, Panel } from 'react-bootstrap'
 import { StudentViewForm } from '../../components/Student/StudentViewForm/StudentViewForm'
 import { StudentEditForm } from '../../components/Student/StudentEditForm/StudentEditForm'
 import './Student.css'
@@ -70,11 +70,13 @@ export class Student extends React.Component {
         <Grid>
           <Row>
             <Col xs={12}>
-              {
-                this.state.editing ?
-                  <StudentEditForm studentID={student.id} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
-                  : <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)} />
-              }
+              <Panel>
+                {
+                  this.state.editing ?
+                    <StudentEditForm studentID={student.id} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
+                    : <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)} />
+                }
+              </Panel>
             </Col>
           </Row>
         </Grid>

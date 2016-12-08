@@ -246,23 +246,19 @@ export class StudentEditForm extends React.Component {
 
   render() {
     return (
-      <div className="root">
-        <Panel>
-          <Grid>
-            <Row>
-              <Col xs={12}>
-                {this.getEditForm()}
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                <Button bsStyle="primary" ref="editButton" onClick={() => this.saveChanges()}>Save Changes</Button>
-                <Button ref="editButton" onClick={() => this.props.toggleEdit()}>Discard Changes</Button>
-              </Col>
-            </Row>
-          </Grid>
-        </Panel>
-      </div>
+      <Grid fluid>
+        <Row>
+          <Col xs={12}>
+            {this.getEditForm()}
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Button bsStyle="primary" ref="editButton" onClick={() => this.saveChanges()}>Save Changes</Button>
+            <Button ref="editButton" onClick={() => this.props.toggleEdit()}>Discard Changes</Button>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }
