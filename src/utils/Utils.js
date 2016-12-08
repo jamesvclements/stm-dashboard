@@ -175,8 +175,6 @@ export function validateScore(key, val){
         if(isNaN(val))
           return 'error'
       }
-    } else if(!val){
-      return 'error'
     }
     switch(key){
       case 'mathBench':

@@ -73,7 +73,7 @@ export class Section extends React.Component {
         <Grid>
           <Row>
             <Col xs={12}>
-              <StudentTable students={section.students} />
+              <StudentTable sectionID={section.sectionID} students={section.students} />
             </Col>
           </Row>
         </Grid>

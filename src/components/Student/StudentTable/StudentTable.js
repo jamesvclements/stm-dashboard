@@ -9,6 +9,7 @@ export class StudentTable extends React.Component {
   }
 
   static propTypes = {
+    sectionID: T.string,
     students: T.array
   }
 
@@ -38,7 +39,7 @@ export class StudentTable extends React.Component {
                         <Button
                           block
                           bsStyle="primary"
-                          onClick={() => { this.context.router.push(`/students/${student.id}`) } }>
+                          onClick={() => { this.context.router.push(`/students/bulk-edit/${this.props.sectionID}/${student.id}/view`) } }>
                           View Card
                         </Button>
                       </td>
