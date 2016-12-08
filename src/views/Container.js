@@ -22,8 +22,11 @@ export class Container extends React.Component {
     }
 
     props.route.auth.on('authenticated', () => {
+      this.sleep(100).then(()=>{
         this.forceUpdate()
         location.reload()        
+      })
+
     })
 
     props.route.auth.on('profile_updated', profile => {
@@ -37,6 +40,10 @@ export class Container extends React.Component {
         })
       })
   }
+
+  sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
   getChildContext() {
