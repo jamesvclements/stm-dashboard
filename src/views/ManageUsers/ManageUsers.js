@@ -104,6 +104,7 @@ export class ManageUsers extends React.Component {
 					message: 'Successfully deleted staff member',
 					level: 'success'
 				})
+				this.getStaffList()
 			})
 			.catch(err => {
 				console.error(err)
@@ -113,8 +114,6 @@ export class ManageUsers extends React.Component {
 					level: 'error'
 				})
 			})
-
-		this.getStaffList()
 	}
 
 	updateCreateField(field, event) {
