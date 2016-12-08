@@ -1,5 +1,4 @@
 import React, { PropTypes as T } from 'react'
-import AuthService from '../../utils/AuthService'
 import { Grid, Row, Col, Breadcrumb } from 'react-bootstrap'
 import { Panel } from 'react-bootstrap'
 import './Admin.css'
