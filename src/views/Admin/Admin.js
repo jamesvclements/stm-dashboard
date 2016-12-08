@@ -50,6 +50,13 @@ export class Admin extends React.Component {
 								<h3>Upload</h3>
 							</Panel>
 						</Col>
+						<Col xs={6}>
+							<Panel
+								onClick={() => {this.context.router.push('/admin/change-year')}}
+								className="admin-panel">
+								<h3>Change Academic Year</h3>
+							</Panel>
+						</Col>
 					</Row>
 				</Grid>
 			</div>
