@@ -331,3 +331,4 @@ switch(this.state.newStudent.grade){
 }
 
 export default ManageStudents
+//onClick={this.context.router.push(`/students/${this.state.newStudent.id}`)
