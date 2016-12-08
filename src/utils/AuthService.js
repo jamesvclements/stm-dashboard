@@ -58,6 +58,7 @@ export default class AuthService extends EventEmitter {
       })
 
     // Trigger authenticated event
+    this.emit('fuckjames')
     this.emit('authenticated')
   }
 
@@ -142,7 +143,7 @@ export default class AuthService extends EventEmitter {
             resolve(JSON.parse(localStorage.getItem('user')))
           })
           .catch(() => {
-            reject(new Error(`Error getting user: ${this.getProfile().email}`))
+            resolve(this.getUser())
           })
       }
     })

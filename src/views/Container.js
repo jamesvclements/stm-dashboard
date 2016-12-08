@@ -22,10 +22,10 @@ export class Container extends React.Component {
     }
 
     props.route.auth.on('authenticated', () => {
-      this.sleep(500).then(()=>{
+     /* this.sleep(00).then(()=>{
         this.forceUpdate()
         location.reload()        
-      })
+      })*/
 
     })
 
