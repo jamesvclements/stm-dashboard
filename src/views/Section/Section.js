@@ -1,5 +1,4 @@
 import React, { PropTypes as T } from 'react'
-import { render } from 'react-dom'
 import { PageHeader, Grid, Row, Col, Breadcrumb } from 'react-bootstrap'
 import { StudentTable } from '../../components/Student/StudentTable/StudentTable'
 import './Section.css'
@@ -59,7 +58,7 @@ export class Section extends React.Component {
           <Breadcrumb.Item href="#/grades">
             Grades
           </Breadcrumb.Item>
-          <Breadcrumb.Item href={`#/sections/${params.grade}`}>
+          <Breadcrumb.Item href={`#/grades/${params.grade}`}>
             Sections
           </Breadcrumb.Item>
           <Breadcrumb.Item active>

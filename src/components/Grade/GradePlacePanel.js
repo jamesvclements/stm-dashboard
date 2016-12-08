@@ -24,8 +24,8 @@ export class GradePlacePanel extends React.Component {
         })
       })
       .then(() => {
-        this.context.router.push(`/placement/${grade}`)
-      })
+          this.context.router.push(`/placement/${grade}`)
+	  })
       .catch(err => {
         console.error(err)
         this.context.addNotification({

@@ -51,14 +51,7 @@ export class Placement extends React.Component {
             level: 'error'
           })
         }
-      }).catch(err => {
-        console.error(err)
-        this.context.addNotification({
-          title: 'Error',
-          message: `Failed to fetch placement for grade ${this.props.params.grade}`,
-          level: 'error'
-        })
-      })
+	})
   }
 
   reset() {
@@ -206,13 +199,13 @@ export class Placement extends React.Component {
             Placement
           </Breadcrumb.Item>
         </Breadcrumb>
-        <PageHeader>{ordinal(grade)}Placement</PageHeader>
+        <PageHeader>{ordinal(grade)} Placement</PageHeader>
         <Grid>
           <Row>
             {
               placement.sections.map((section, i) => {
                 return (
-                  <Droppable key={section.teacher.name} types={['student']} onDrop={this.onDrop.bind(this, i)}>
+                  <Droppable key={i} types={['student']} onDrop={this.onDrop.bind(this, i)}>
                     <Col md={(placement.sections.length === 4) ? 3 : 4} xs={12}>
                       <SectionListGroup section={section} sectionIndex={i}></SectionListGroup>
                     </Col>

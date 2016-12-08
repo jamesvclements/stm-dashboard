@@ -1,5 +1,4 @@
 import React, { PropTypes as T } from 'react'
-import { render } from 'react-dom'
 import { Grid, Row, Col, Breadcrumb } from 'react-bootstrap'
 import AuthService from '../../utils/AuthService'
 import GradePlacePanel from '../../components/Grade/GradePlacePanel'

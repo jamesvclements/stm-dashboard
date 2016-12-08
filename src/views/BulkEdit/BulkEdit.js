@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { Grid, Row, Col, PageHeader, Button } from 'react-bootstrap'
+import { Grid, Row, Col, PageHeader, Pager, Panel } from 'react-bootstrap'
 import { StudentViewForm } from '../../components/Student/StudentViewForm/StudentViewForm'
 import { StudentEditForm } from '../../components/Student/StudentEditForm/StudentEditForm'
 import './BulkEdit.css'
@@ -23,8 +23,6 @@ export class BulkEdit extends React.Component {
       editing: this.props.params.mode === 'edit'
     }
 
-
-    console.log(`${process.env.REACT_APP_SERVER_ADDRESS}/api/sections/${this.props.params.sectionID}`)
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/sections/${this.props.params.sectionID}`, {
       method: 'GET'
     })
@@ -70,7 +68,7 @@ export class BulkEdit extends React.Component {
   getNextStudent() {
     const { students } = this.state.section
     const { studentIndex } = this.state
-    return studentIndex === students.length - 1 ? students[0].id : students[studentIndex - 1].id
+    return studentIndex === students.length - 1 ? students[0].id : students[studentIndex + 1].id
   }
 
   toggleEdit() {
@@ -86,8 +84,6 @@ export class BulkEdit extends React.Component {
   }
 
   render() {
-    console.log(this.state.section)
-    console.log(this.state.studentIndex)
     const { section } = this.state
     const student = section.students[this.state.studentIndex]
     return (
@@ -96,29 +92,29 @@ export class BulkEdit extends React.Component {
         <Grid>
           <Row>
             <Col xs={1}>
-              <Button onClick={() => 
-                {
+              <Pager fill>
+                <Pager.Item onClick={() => {
                   this.context.router.push(`/students/bulk-edit/${section.sectionID}/${this.getPrevStudent()}/${this.state.editing ? 'edit' : 'view'}`)
                   location.reload()
-                }}>
-                Previous &larr;
-              </Button>
+                }}>Prev &larr;</Pager.Item>
+              </Pager>
             </Col>
             <Col xs={10}>
+              <Panel>
               {
                 this.state.editing ?
                   <StudentEditForm studentID={student.id} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
                   : <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)} />
               }
+              </Panel>
             </Col>
             <Col xs={1}>
-              <Button onClick={() => 
-                {
+              <Pager fill>
+                <Pager.Item onClick={() => {
                   this.context.router.push(`/students/bulk-edit/${section.sectionID}/${this.getNextStudent()}/${this.state.editing ? 'edit' : 'view'}`)
                   location.reload()
-                }}>
-                Next &rarr;
-              </Button>
+                }}>Next &rarr;</Pager.Item>
+              </Pager>
             </Col>
           </Row>
         </Grid>

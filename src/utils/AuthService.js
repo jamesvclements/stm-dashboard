@@ -19,6 +19,10 @@ export default class AuthService extends EventEmitter {
     this.lock = new Auth0Lock(clientId, domain, options)
     // Add callback for lock 'authenticated' event
     this.lock.on('authenticated', this._doAuthentication.bind(this))
+    // Add callback for 'setProfile' event
+    this.on('profile_updated', profile => {
+      this.setProfile(profile)
+    })
     // Bind login functions to keep this context
     this.login = this.login.bind(this)
   }
@@ -26,15 +30,35 @@ export default class AuthService extends EventEmitter {
   _doAuthentication(authResult) {
     // Save user token
     this.setToken(authResult.idToken)
+
     // Async load the user profile data
-    this.lock.getProfile(authResult.idToken, (error, profile) => {
-      if (error) {
-        console.error('Error loading the Profile', error)
-      } else {
-        this.setProfile(profile)
-      }
+    fetch(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/tokeninfo`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id_token: authResult.idToken
+      })
     })
+      .then(response => {
+        if (response.ok) {
+          response.json()
+            .then(profile => {
+              console.log('this profile')
+              console.log(profile)
+              this.setProfile(profile)
+            })
+        } else {
+          console.error('Error loading the Profile')
+        }
+      })
+      .catch(err => {
+        console.error('Error loading the Profile', err)
+      })
+
     // Trigger authenticated event
+    this.emit('fuckjames')
     this.emit('authenticated')
   }
 
@@ -60,13 +84,12 @@ export default class AuthService extends EventEmitter {
 
   setProfile(profile) {
     localStorage.setItem('profile', JSON.stringify(profile))
-    // Trigger profile_updated event
-    this.emit('profile_updated', profile)
+    this.setUser(profile.email)
   }
 
   getProfile() {
     const profile = localStorage.getItem('profile')
-    return profile ? JSON.parse(localStorage.profile) : {}
+    return profile ? JSON.parse(profile) : {}
   }
 
   updateProfile(userId, data) {
@@ -86,9 +109,50 @@ export default class AuthService extends EventEmitter {
       .then(newProfile => this.setProfile(newProfile))
   }
 
+  setUser(emailID) {
+    return new Promise((resolve, reject) => {
+      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff/${emailID}`, {
+        method: 'GET'
+      })
+        .then(response => {
+          if (response.ok) {
+            response.json().then(user => {
+              localStorage.setItem('user', JSON.stringify(user))
+              resolve()
+            })
+          } else {
+            console.error('Error fetching the user')
+            reject(new Error(`Error fetching the user: ${emailID}`))
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching the user')
+          reject(new Error(`Error fetching the user: ${emailID}`))
+        })
+    })
+  }
+
+  getUser() {
+    return new Promise((resolve, reject) => {
+      const user = localStorage.getItem('user')
+      if (user) {
+        resolve(JSON.parse(user))
+      } else {
+        this.setUser(this.getProfile().email)
+          .then(() => {
+            resolve(JSON.parse(localStorage.getItem('user')))
+          })
+          .catch(() => {
+            resolve(this.getUser())
+          })
+      }
+    })
+  }
+
   logout() {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token')
     localStorage.removeItem('profile')
+    localStorage.removeItem('user')
   }
 }

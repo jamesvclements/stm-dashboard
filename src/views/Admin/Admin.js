@@ -4,6 +4,7 @@ import { Panel } from 'react-bootstrap'
 import './Admin.css'
 
 export class Admin extends React.Component {
+
 	static contextTypes = {
 		router: T.object
 	}
@@ -26,6 +27,20 @@ export class Admin extends React.Component {
 								onClick={() => {this.context.router.push('/admin/manage-users')}}
 								className="admin-panel">
 								<h3>Manage Users</h3>
+							</Panel>
+						</Col>
+						<Col xs={6}>
+							<Panel
+								onClick={() => {this.context.router.push('/admin/add-students')}}
+								className="admin-panel">
+								<h3>Add Students</h3>
+							</Panel>
+						</Col>
+						<Col xs={6}>
+							<Panel
+								onClick={() => {this.context.router.push('/admin/delete-students')}}
+								className="admin-panel">
+								<h3>Delete Students</h3>
 							</Panel>
 						</Col>
 						<Col xs={6}>

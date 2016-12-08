@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import * as Utils from '../../../utils/Utils'
 
 export class StudentEditForm extends React.Component {
@@ -248,9 +248,7 @@ export class StudentEditForm extends React.Component {
     return (
       <Grid fluid>
         <Row>
-          <Col xs={12}>
             {this.getEditForm()}
-          </Col>
         </Row>
         <Row>
           <Col xs={12}>

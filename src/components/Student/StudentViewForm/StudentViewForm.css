@@ -1,9 +1,6 @@
-.root {
-  
-}
-
 .student-view-list-group {
   text-align: left;
+  box-shadow: none !important; /* using important is bad, but the Bootstrap list-group-item precendence overrides this otherwise ¯\_(ツ)_/¯ */
 }
 
 .student-view-list-group-item {

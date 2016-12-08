@@ -1,11 +1,17 @@
 import React, { PropTypes as T } from 'react'
-import { Grid, Row, Col, Panel, Breadcrumb } from 'react-bootstrap'
-import './GradeSections.css'
+import { Grid, Row, Col } from 'react-bootstrap'
+import AuthService from '../../utils/AuthService'
+import { Panel } from 'react-bootstrap'
+import './Grade.css'
 
-export class GradeSections extends React.Component {
+export class Grade extends React.Component {
   static contextTypes = {
     router: T.object,
     addNotification: T.func
+  }
+
+  static propTypes = {
+    auth: T.instanceOf(AuthService)
   }
 
   constructor(props) {
@@ -48,31 +54,27 @@ export class GradeSections extends React.Component {
     const { sections } = this.state.grade
     return (
       <div className="root">
-      <Breadcrumb>
-          <Breadcrumb.Item href="#/landing">
-            Home
-          </Breadcrumb.Item>
-          <Breadcrumb.Item href="#/grades">
-            Grades
-          </Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            Sections
-          </Breadcrumb.Item>
-        </Breadcrumb>
         <Grid>
           <Row>
             {
               sections.map((section, i) => {
                 return (
-                  <Col md={sections.length === 4 ? 3 : 4} xs={6} key={i}>
+                  <Col md={3} xs={6} key={i}>
                     <Panel
-                      onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.sectionID}`) } }
-                      className="grade-sections-panel">
+                      onClick={() => { this.context.router.push(`/students/${this.props.params.grade}/${section.id}`) } }
+                      className="grade-panel">
                       <h3>{`${section.teacher.firstName} ${section.teacher.lastName}`}</h3>
                     </Panel>
                   </Col>)
               })
             }
+            <Col md={3} xs={6}>
+              <Panel
+                onClick={() => { this.context.router.push(`/students/${this.props.params.grade}`) } }
+                className="grade-panel">
+                <h3>All</h3>
+              </Panel>
+            </Col>
           </Row>
         </Grid>
       </div>
@@ -80,4 +82,4 @@ export class GradeSections extends React.Component {
   }
 }
 
-export default GradeSections
+export default Grade

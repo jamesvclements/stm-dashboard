@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { Panel, ListGroup, ListGroupItem, Grid, Row, Col, Button } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Grid, Row, Col, Button } from 'react-bootstrap'
 import * as Utils from '../../../utils/Utils'
 import './StudentViewForm.css'
 

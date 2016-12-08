@@ -1,0 +1,7 @@
+.root {
+  text-align: center;
+}
+
+.grade-panel:hover {
+  cursor: pointer
+}
