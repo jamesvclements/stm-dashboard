@@ -49,9 +49,9 @@ export class ChangeYear extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: {
-				'increment': 'Y'
-			}
+			body: JSON.stringify({
+				increment: 'Y'
+			})
 		})
 		.then(() => {
 			this.context.addNotification({
@@ -80,9 +80,9 @@ export class ChangeYear extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: {
-				'increment': 'N'
-			}
+			body: JSON.stringify({
+				increment: 'N'
+			})
 		})
 		.then(() => {
 			this.context.addNotification({
@@ -111,7 +111,7 @@ export class ChangeYear extends React.Component {
 			<Breadcrumb.Item href="#/landing">
 			Home
 			</Breadcrumb.Item>
-			<Breadcrumb.Item>
+			<Breadcrumb.Item href="#/admin">
 			Admin
 			</Breadcrumb.Item>
 			<Breadcrumb.Item active>
