@@ -10,6 +10,8 @@ import NotFound from './NotFound/NotFound'
 import Students from './Students/Students'
 import Admin from './Admin/Admin'
 import ManageUsers from './ManageUsers/ManageUsers'
+import ManageStudents from './ManageStudents/ManageStudents'
+import DeleteStudents from './DeleteStudents/DeleteStudents'
 import Upload from './Upload/Upload'
 import Grades from './Grades/Grades'
 import Section from './Section/Section'
@@ -35,6 +37,8 @@ export const makeRoutes = () => {
       <Route path="placement/:grade" component={Placement} />
   	  <Route path="admin" component={Admin}  />
   	  <Route path="admin/manage-users" component={ManageUsers} />
+      <Route path="admin/manage-students" component={ManageStudents} />
+      <Route path="admin/delete-students" component={DeleteStudents} />
   	  <Route path="admin/upload" component={Upload} />
       <Route path="students" component={Students} onEnter={requireAuth} />
       <Route path="grades" component={Grades} onEnter={requireAuth} />
