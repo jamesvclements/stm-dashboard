@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { PageHeader, ListGroup, ListGroupItem, Panel, Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import * as Utils from '../../../utils/Utils'
 
 export class StudentEditForm extends React.Component {
@@ -10,90 +10,43 @@ export class StudentEditForm extends React.Component {
 
   static propTypes = {
     profile: T.object,
+	studentID: T.string,
+	toggleEdit: T.func,
+	saveChanges: T.func
   }
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      student: {},
-      editStudent: false,
-      allowSave: true
-    }
-
-  }
-
-  toggleEdit() {
-    if (this.state.editStudent) {
-      let tempStudent = this.state.student
-      if (tempStudent.behavior === 'null') {
-        tempStudent.behavior = null
-      } else {
-        tempStudent.behavior = parseInt(tempStudent.behavior, 10)
-      }
-      if (tempStudent.workEthic === 'null') {
-        tempStudent.workEthic = null
-      } else {
-        tempStudent.workEthic = parseInt(tempStudent.workEthic, 10)
-      }
-      let numericKeys = ['mathBench', 'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4']
-      for (let i = 0; i < numericKeys.length; i++) {
-        let key = numericKeys[i]
-        if (typeof this.state.student[key] === 'string' && this.state.student[key]) {
-          tempStudent[key] = parseInt(this.state.student[key], 10)
-        }
-      }
-
-      this.setState({ student: tempStudent })
-
-      for (let i = 0; i < numericKeys.length; i++) {
-        let key = numericKeys[i]
-        if (Utils.validateScore(key, this.state.student[key]) === 'error') {
+  
+  constructor(props){
+	  super(props)
+	  
+	  this.state = {
+		  student: {},
+		  editStudent: true
+	  }
+	  
+	fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.studentID}`, {
+      method: 'GET'
+    }).then(response => {
+		if (response.ok) {
+			response.json().then(student => {
+				this.setState({
+					student: student
+				})
+			})
+		}else {
           this.context.addNotification({
             title: 'Error',
-            message: `Invalid value entered for ${Utils.studentTranslations[key]}`,
+            message: 'Failed to fetch student',
             level: 'error'
           })
-          return
         }
-      }
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.params.studentID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          student: this.state.student
-        })
       }).catch(err => {
         console.error(err)
         this.context.addNotification({
           title: 'Error',
-          message: 'Failed to update student info',
+          message: 'Failed to fetch student',
           level: 'error'
         })
       })
-    } else {
-      this.unchangedStudent = JSON.parse(JSON.stringify(this.state.student))
-    }
-    this.setState({ editStudent: !this.state.editStudent})
-  }
-
-
-  getInfo() {
-    const { student } = this.state
-    return (
-      <ListGroup fill className="student-info-list-group">
-        {
-          Utils.cardKeys.filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-            return (
-              <Col key={i} xs={12} md={6}>
-                <ListGroupItem className="student-info-list-group-item">{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem>
-              </Col>)
-          })
-        }
-      </ListGroup>
-    )
   }
 
   getEditForm() {
@@ -220,8 +173,76 @@ export class StudentEditForm extends React.Component {
         }
     }
   }
+  
+  saveChanges(){
+	let tempStudent = this.state.student
+      if (tempStudent.behavior === 'null') {
+        tempStudent.behavior = null
+      } else {
+        tempStudent.behavior = parseInt(tempStudent.behavior, 10)
+      }
+      if (tempStudent.workEthic === 'null') {
+        tempStudent.workEthic = null
+      } else {
+        tempStudent.workEthic = parseInt(tempStudent.workEthic, 10)
+      }
+      let numericKeys = ['mathBench', 'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4']
+      for (let i = 0; i < numericKeys.length; i++) {
+        let key = numericKeys[i]
+        if (typeof this.state.student[key] === 'string' && this.state.student[key]) {
+          tempStudent[key] = parseInt(this.state.student[key], 10)
+        }
+      }
 
+      this.setState({ student: tempStudent })
 
+      for (let i = 0; i < numericKeys.length; i++) {
+        let key = numericKeys[i]
+        if (Utils.validateScore(key, this.state.student[key]) === 'error') {
+          this.context.addNotification({
+            title: 'Error',
+            message: `Invalid value entered for ${Utils.studentTranslations[key]}`,
+            level: 'error'
+          })
+          return
+        }
+      }
+      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.state.student.studentID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          student: this.state.student
+        })
+      })
+	  .then(response => {
+		if (response.ok) {
+			this.props.updateStudent(this.state.student)
+			this.props.toggleEdit()
+			this.context.addNotification({
+				title: 'Success',
+				message: 'Updated student',
+				level: 'success'
+			})
+		} else {
+			this.context.addNotification({
+				title: 'Error',
+				message: 'Failed to update student info',
+				level: 'error'
+			})
+		}
+	  })
+	  .catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to update student info',
+          level: 'error'
+        })
+      })
+  }
+  
   render() {
     const { student } = this.state
     return (
@@ -233,6 +254,8 @@ export class StudentEditForm extends React.Component {
             </Row>
           </Panel>
         </Grid>
+		<Button bsStyle="primary" ref="editButton" onClick={() => this.saveChanges()}>Save Changes</Button>
+        <Button ref="editButton" onClick={this.props.toggleEdit}>Discard Changes</Button>
       </div>
     )
   }

@@ -13,7 +13,7 @@ export class BulkEdit extends React.Component {
   }
 
   static propTypes = {
-    profile: T.object
+    student: T.array
   }
 
   constructor(props) {

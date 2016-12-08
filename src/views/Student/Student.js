@@ -22,6 +22,7 @@ export class Student extends React.Component {
     this.state = {
       student: {},
       editStudent: false,
+	  allowSave: true
     }
 
     fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students/${this.props.params.studentID}`, {
@@ -52,8 +53,8 @@ export class Student extends React.Component {
       })
     })
   }
-
-
+ 
+/* 
   toggleEdit() {
     if (this.state.editStudent) {
       let tempStudent = this.state.student
@@ -109,13 +110,17 @@ export class Student extends React.Component {
     }
     this.setState({ editStudent: !this.state.editStudent})
   }
-
-  discardChanges(){
-    this.setState({ student: this.unchangedStudent})
-    this.setState({ editStudent: false})
+  */
+  
+  toggleEdit(){
+	this.setState({ editStudent: !this.state.editStudent})
   }
 
-
+  updateStudent(student) {
+	  this.setState({
+		  student: student
+	  })
+  }
   render() {
     const { student } = this.state
     return (
@@ -123,13 +128,13 @@ export class Student extends React.Component {
         <PageHeader>{`${student.firstName} ${student.lastName}`}</PageHeader>
         <Grid>
             <Row>
-				{this.state.editStudent ? <StudentEditForm student={student}/> : <StudentViewForm student={student}/>} 
+				{
+					this.state.editStudent ? 
+						<StudentEditForm studentID={student.id} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)}/> 
+						: <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)}/>
+				} 
             </Row>
         </Grid>
-		<Button bsStyle="primary" ref="editButton" onClick={() => this.toggleEdit()}>
-          {this.state.editStudent ? 'Save Changes' : 'Edit Student'}
-        </Button>
-        {this.state.editStudent ? (<Button ref="editButton" onClick={() => this.discardChanges()}> Discard Changes</Button>) : null}
 	  </div>
     )
   }
