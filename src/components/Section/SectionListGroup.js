@@ -20,8 +20,8 @@ export class SectionListGroup extends React.Component {
         <Panel header="Statistics">
           <ListGroup fill className="section-stats">
             <ListGroupItem>
-              <span className="stat-key">Size:</span>
-              <span className="stat-val"> {section.students.length}</span>
+              <span>Size:</span>
+              <span> {section.students.length}</span>
             </ListGroupItem>
             {
               // only stats in the translations object are displayed
@@ -31,8 +31,8 @@ export class SectionListGroup extends React.Component {
                 // convert age in months to X yr. Y mo.
                 val = (key === 'avgAge') ? `${Utils.round(val / 12, 0)} y. ${Utils.round(val % 12, 0)} mo.` : val
                 return <ListGroupItem key={i}>
-                  <span className="stat-key">{`${Utils.sectionTranslations[key]}:`}</span>
-                  <span className="stat-val"> {val}</span>
+                  <span>{`${Utils.sectionTranslations[key]}:`}</span>
+                  <span> {val}</span>
                 </ListGroupItem>
               })
             }

@@ -1,5 +1,4 @@
 import React, { PropTypes as T } from 'react'
-import { render } from 'react-dom'
 import { Grid, Row, Col, Panel, Breadcrumb } from 'react-bootstrap'
 import './GradeSections.css'
 

@@ -21,42 +21,40 @@ export class DelStudentTable extends React.Component {
   }
 
 
-  deleteStudent(id){
-		fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`,
-	      {
-	        method: 'POST',
-	        headers: {
-	        	'Content-Type':'application/json'
-	        },
-	        body: JSON.stringify({
-	        	id:studentID
-	        })
-	      })
-	      .then(() => {
-	      	this.context.addNotification({
-	          title: 'Success',
-	          message: 'Successfully deleted student',
-	          level: 'success'
-	        })	
-	      	})
-	      .catch(err => {
-	        console.error(err)
-	        this.context.addNotification({
-	          title: 'Error',
-	          message: 'Failed to delete student',
-	          level: 'error'
-	        })
-	      })
+  deleteStudent(id) {
+    fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: id
+        })
+      })
+      .then(() => {
+        this.context.addNotification({
+          title: 'Success',
+          message: 'Successfully deleted student',
+          level: 'success'
+        })
+      })
+      .catch(err => {
+        console.error(err)
+        this.context.addNotification({
+          title: 'Error',
+          message: 'Failed to delete student',
+          level: 'error'
+        })
+      })
 
-	}
+  }
 
   changeNameFilter(event) {
     this.setState({
       nameFilter: event.target.value
     })
   }
-
-
 
   render() {
     const { students } = this.props
@@ -75,6 +73,7 @@ export class DelStudentTable extends React.Component {
                     onChange={this.changeNameFilter.bind(this)}
                     />
                 </FormGroup>
+              </Col>
             </Row>
           </Grid>
         </Panel>
@@ -94,8 +93,6 @@ export class DelStudentTable extends React.Component {
               students
                 .filter(student => {
                   return `${student.firstName} ${student.lastName}`.toLowerCase().includes(nameFilter)
-                    && (gradeFilter === '' || student.grade.toString() === gradeFilter)
-                    && `${student.teacher.firstName} ${student.teacher.lastName}`.toLowerCase().includes(teacherFilter)
                 })
                 .map((student, i) => {
                   return (
@@ -109,8 +106,8 @@ export class DelStudentTable extends React.Component {
                         <Button
                           block
                           bsStyle="danger"
-                onClick={this.deleteStudent.bind(this,student.id)}>
-                {'Delete ' + student.firstName + student.lastName }
+                          onClick={this.deleteStudent.bind(this, student.id)}>
+                          {'Delete ' + student.firstName + student.lastName}
                         </Button>
                       </td>
                     </tr>
