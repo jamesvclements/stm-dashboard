@@ -77,8 +77,14 @@ export class AddStudents extends React.Component {
               for (let section of grade.sections) {
                 options.push({ teacher: section.teacher, sectionID: section.sectionID })
               }
+              if(options[0]!=null){
+                            tempMember.sectionID = options[0].sectionID
+                           }
+                           else{
+                               tempMember.sectionID= '';
+                           }
               console.log(options)
-              tempMember.sectionID = options[0].sectionID
+       
               this.setState({
                 options: options,
                 newStudent: tempMember
