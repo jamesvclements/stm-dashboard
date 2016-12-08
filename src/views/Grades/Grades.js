@@ -27,7 +27,7 @@ export class Grades extends React.Component {
                 <Col md={2} xs={4} key={i}>
                   <Panel
                     onClick={() => {
-                      this.context.router.push(`/sections/${grade}`)
+                      this.context.router.push(`/grades/${grade}`)
                     }}
                     className="grades-panel">
                     <h2>{(grade === 0) ? 'K' : grade}</h2>

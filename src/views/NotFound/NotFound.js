@@ -1,17 +1,7 @@
-import React, { PropTypes as T } from 'react'
-import AuthService from '../../utils/AuthService'
+import React from 'react'
 import './NotFound.css'
 
 export class NotFound extends React.Component {
-  static contextTypes = {
-    router: T.object
-  }
-
-  static propTypes = {
-    auth: T.instanceOf(AuthService),
-    profile: T.object
-  }
-
   render() {
     return (
       <div className="root">
