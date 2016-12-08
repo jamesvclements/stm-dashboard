@@ -30,20 +30,6 @@ export class Admin extends React.Component {
 						</Col>
 						<Col xs={6}>
 							<Panel
-								onClick={() => {this.context.router.push('/admin/delete-students')}}
-								className="admin-panel">
-								<h3>Delete Students</h3>
-							</Panel>
-						</Col>
-						<Col xs={6}>
-							<Panel
-								onClick={() => {this.context.router.push('/admin/add-students')}}
-								className="admin-panel">
-								<h3>Add Students</h3>
-							</Panel>
-						</Col>
-						<Col xs={6}>
-							<Panel
 								onClick={() => {this.context.router.push('/admin/upload')}}
 								className="admin-panel">
 								<h3>Upload</h3>
