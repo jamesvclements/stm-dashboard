@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
-import { Panel } from 'react-bootstrap'
+import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import { Table, FormGroup, FormControl, Button, Breadcrumb } from 'react-bootstrap'
 import './AddStudents.css'
 
@@ -39,7 +39,6 @@ export class AddStudents extends React.Component {
 
         if (response.ok) {
           response.json().then(grade => {
-            console.log(grade)
             // bind the values of section dropdown to 
             let options = []
             for (let section of grade.sections) {
@@ -77,14 +76,13 @@ export class AddStudents extends React.Component {
               for (let section of grade.sections) {
                 options.push({ teacher: section.teacher, sectionID: section.sectionID })
               }
-              if(options[0]!=null){
-                            tempMember.sectionID = options[0].sectionID
-                           }
-                           else{
-                               tempMember.sectionID= '';
-                           }
-              console.log(options)
-       
+              if (options[0] != null) {
+                tempMember.sectionID = options[0].sectionID
+              }
+              else {
+                tempMember.sectionID = ''
+              }
+
               this.setState({
                 options: options,
                 newStudent: tempMember
@@ -177,90 +175,96 @@ export class AddStudents extends React.Component {
             Add Student
           </Breadcrumb.Item>
         </Breadcrumb>
-        <Panel>
-          <Table striped bordered condensed hover>
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>ID</th>
-                <th>Grade</th>
-                <th>Section</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <FormGroup controlId="formBasicTextName">
-                    <FormControl
-                      type="text"
-                      placeholder="Enter First Name"
-                      value={this.state.newStudent.firstName == null ? '' : this.state.newStudent.firstName}
-                      onChange={this.updateCreateField.bind(this, 'firstName')}
-                      />
-                  </FormGroup>
-                </td>
-                <td>
-                  <FormGroup controlId="formBasicTextName">
-                    <FormControl
-                      type="text"
-                      placeholder="Enter Last Name"
-                      value={(this.state.newStudent.lastName == null ? '' : this.state.newStudent.lastName)}
-                      onChange={this.updateCreateField.bind(this, 'lastName')}
-                      />
-                  </FormGroup>
-                </td>
-                <td>
-                  <FormGroup controlId="formBasicTextID">
-                    <FormControl
-                      type="text"
-                      placeholder="Enter Student ID"
-                      value={(this.state.newStudent.id == null ? '' : this.state.newStudent.id)}
-                      onChange={this.updateCreateField.bind(this, 'id')}
-                      />
-                  </FormGroup>
-                </td>
+        <Grid>
+          <Row>
+            <Col xs={12}>
+              <Panel>
+                <Table striped bordered condensed hover fill>
+                  <thead>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>ID</th>
+                      <th>Grade</th>
+                      <th>Section</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <FormGroup controlId="formBasicTextName">
+                          <FormControl
+                            type="text"
+                            placeholder="Enter First Name"
+                            value={this.state.newStudent.firstName == null ? '' : this.state.newStudent.firstName}
+                            onChange={this.updateCreateField.bind(this, 'firstName')}
+                            />
+                        </FormGroup>
+                      </td>
+                      <td>
+                        <FormGroup controlId="formBasicTextName">
+                          <FormControl
+                            type="text"
+                            placeholder="Enter Last Name"
+                            value={(this.state.newStudent.lastName == null ? '' : this.state.newStudent.lastName)}
+                            onChange={this.updateCreateField.bind(this, 'lastName')}
+                            />
+                        </FormGroup>
+                      </td>
+                      <td>
+                        <FormGroup controlId="formBasicTextID">
+                          <FormControl
+                            type="text"
+                            placeholder="Enter Student ID"
+                            value={(this.state.newStudent.id == null ? '' : this.state.newStudent.id)}
+                            onChange={this.updateCreateField.bind(this, 'id')}
+                            />
+                        </FormGroup>
+                      </td>
 
-                <td>
+                      <td>
 
-                  <FormGroup controlId="formSelectGrade">
-                    <FormControl
-                      componentClass="select"
-                      value={this.state.newStudent.grade ? this.state.newStudent.grade : '0'}
-                      onChange={this.updateCreateField.bind(this, 'grade')}>
-                      <option value="0">Kindergarten</option>
-                      <option value="1">First</option>
-                      <option value="2">Second</option>
-                      <option value="3">Third</option>
-                      <option value="4">Fourth</option>
-                      <option value="5">Fifth</option>
-                      <option value="6">Sixth</option>
-                      <option value="7">Seventh</option>
-                      <option value="8">Eighth</option>
-                    </FormControl>
-                  </FormGroup>
-                </td>
+                        <FormGroup controlId="formSelectGrade">
+                          <FormControl
+                            componentClass="select"
+                            value={this.state.newStudent.grade ? this.state.newStudent.grade : '0'}
+                            onChange={this.updateCreateField.bind(this, 'grade')}>
+                            <option value="0">Kindergarten</option>
+                            <option value="1">First</option>
+                            <option value="2">Second</option>
+                            <option value="3">Third</option>
+                            <option value="4">Fourth</option>
+                            <option value="5">Fifth</option>
+                            <option value="6">Sixth</option>
+                            <option value="7">Seventh</option>
+                            <option value="8">Eighth</option>
+                          </FormControl>
+                        </FormGroup>
+                      </td>
 
-                <td>{
-                  <FormGroup controlId="formSelectSection">
-                    <FormControl
-                      componentClass="select"
-                      value={this.state.newStudent.sectionID ? this.state.newStudent.sectionID : '0'}
-                      onChange={this.updateCreateField.bind(this, 'sectionID')}>
-                      {
-                        this.state.options.map((option, i) => {
-                          return (<option key={i} value={option.sectionID}>{option.teacher.firstName + ' ' + option.teacher.lastName}</option>)
-                        })
-                      }
-                    </FormControl>
-                  </FormGroup>
-                }</td>
-                <td><Button bsStyle='primary' onClick={this.createStudent.bind(this)}>ADD STUDENT</Button></td>
-              </tr>
-            </tbody>
-          </Table>
-        </Panel>
+                      <td>{
+                        <FormGroup controlId="formSelectSection">
+                          <FormControl
+                            componentClass="select"
+                            value={this.state.newStudent.sectionID ? this.state.newStudent.sectionID : '0'}
+                            onChange={this.updateCreateField.bind(this, 'sectionID')}>
+                            {
+                              this.state.options.map((option, i) => {
+                                return (<option key={i} value={option.sectionID}>{option.teacher.firstName + ' ' + option.teacher.lastName}</option>)
+                              })
+                            }
+                          </FormControl>
+                        </FormGroup>
+                      }</td>
+                      <td><Button bsStyle='primary' onClick={this.createStudent.bind(this)}>ADD STUDENT</Button></td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Panel>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

@@ -256,7 +256,7 @@ export class ManageUsers extends React.Component {
 						          <FormControl
 						            type="text"
 						            placeholder="Enter Name"
-						            value = {(this.state.newStaff.name)}
+						            value={(this.state.newStaff.name)}
 						            onChange={this.updateCreateField.bind(this, 'name')}
 						          />
 						        </FormGroup>
