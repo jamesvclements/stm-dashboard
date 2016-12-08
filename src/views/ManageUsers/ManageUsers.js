@@ -1,7 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
-import { Panel } from 'react-bootstrap'
-import { Table, FormGroup, FormControl, Button } from 'react-bootstrap'
+import { Grid, Row, Col, Table, FormGroup, FormControl, Button, Breadcrumb } from 'react-bootstrap'
 import './ManageUsers.css'
 
 export class ManageUsers extends React.Component {
@@ -28,7 +27,6 @@ export class ManageUsers extends React.Component {
 	}
 
 	getStaffList() {
-		console.log('here son son')
 		fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff`,
 			{
 				method: 'GET',
@@ -225,8 +223,21 @@ export class ManageUsers extends React.Component {
 	render() {
 		return (
 			<div className="root">
-				<Panel>
-					<Table striped bordered condensed hover>
+				<Breadcrumb>
+          <Breadcrumb.Item href="#/landing">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="#/admin">
+            Admin
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            Manage Users
+          </Breadcrumb.Item>
+        </Breadcrumb>
+				<Grid>
+					<Row>
+						<Col xs={12}>
+							<Table striped bordered condensed hover fill className="manage-users-table">
 						<thead>
 							<tr>
 								<th>Name</th>
@@ -272,7 +283,7 @@ export class ManageUsers extends React.Component {
 									</FormGroup>
 								</td>
 								<td>{this.getGradeDropDown()}</td>
-								<td><Button bsStyle='primary' onClick={this.createStaff.bind(this)}>{this.getButtonLabel()}</Button></td>
+								<td><Button block bsStyle='primary' onClick={this.createStaff.bind(this)}>{this.getButtonLabel()}</Button></td>
 							</tr>
 							{
 								this.state.staff.map((member, i) => {
@@ -291,7 +302,7 @@ export class ManageUsers extends React.Component {
 											</td>
 											<td>
 												<FormGroup controlId="formControlsSelectGrade">
-													<FormControl componentClass="select" value={member.gradeTeaching} onChange={this.updateField.bind(this, 'gradeTeaching', member.emailID)}>
+													<FormControl componentClass="select" value={member.gradeTeaching == null ? '' : member.gradeTeaching} onChange={this.updateField.bind(this, 'gradeTeaching', member.emailID)}>
 														<option value="0">Kindergarten</option>
 														<option value="1">First</option>
 														<option value="2">Second</option>
@@ -305,14 +316,16 @@ export class ManageUsers extends React.Component {
 													</FormControl>
 												</FormGroup>
 											</td>
-											<td><Button bsStyle='danger' onClick={this.deleteStaff.bind(this, member.emailID)}>{'Delete ' + member.firstName}</Button></td>
+											<td><Button block bsStyle='danger' onClick={this.deleteStaff.bind(this, member.emailID)}>{'Delete ' + member.firstName}</Button></td>
 										</tr>
 									)
 								})
 							}
 						</tbody>
 					</Table>
-				</Panel>
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		)
 	}
