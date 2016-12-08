@@ -45,7 +45,7 @@ export const makeRoutes = () => {
       <Route path="placement/:grade" component={Placement} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="students/:studentID" component={Student} onEnter={requireAuth} />
-	  <Route path="bulk-edit/:sectionID" component={BulkEdit} onEnter={requireAuth} />
+	  <Route path="students/bulk-edit/:sectionID/:studentID" component={BulkEdit} onEnter={requireAuth} />
       <Route path="access_token=:token" component={Login} />
       <Route path="*" component={NotFound} />
     </Route>
