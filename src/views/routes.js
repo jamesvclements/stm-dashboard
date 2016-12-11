@@ -29,6 +29,7 @@ const auth = new AuthService(
 const requireAuth = (nextState, replace, callback) => {
   if (!auth.loggedIn()) {
     replace({ pathname: '/login' })
+    callback()
   }
 
   auth.getUser()
