@@ -31,13 +31,16 @@ export class ManageUsers extends React.Component {
 			{
 				method: 'GET',
 			})
-			.then(staff => {
-				staff.json().then(staff => {
-					staff.sort((a, b) => { return a.emailID.localeCompare(b.emailID) })
-					this.setState({
-						staff: staff
+			.then(response => {
+				if(response.ok){
+					response.json().then(staff => {
+						staff.sort((a, b) => { return a.emailID.localeCompare(b.emailID) })
+						this.setState({
+							staff: staff
+						})
 					})
-				})
+				}
+				
 			})
 			.catch(err => {
 				console.error(err)
