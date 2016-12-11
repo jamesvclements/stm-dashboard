@@ -65,6 +65,11 @@ export class ManageUsers extends React.Component {
 			staff: tempStaff
 		})
 
+
+		let postStaff = JSON.parse(JSON.stringify(this.state.staff[memberIndex]))
+		delete postStaff['year']
+		delete postStaff['sectionID']
+
 		fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff`,
 			{
 				method: 'POST',
@@ -72,15 +77,26 @@ export class ManageUsers extends React.Component {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					staff: this.state.staff[memberIndex]
+					staff: postStaff
 				})
 			})
-			.then(staff => {
-				this.context.addNotification({
-					title: 'Success',
-					message: 'Successfully updated teacher info',
-					level: 'success'
-				})
+			.then(response => {
+				if(response.ok){
+					this.context.addNotification({
+						title: 'Success',
+						message: 'Successfully updated teacher info',
+						level: 'success'
+					})
+				}
+				else{
+					this.context.addNotification({
+						title: 'Error',
+						message: 'Failed to update staff info',
+						level: 'error'
+					})
+				}
+
+
 			})
 			.catch(err => {
 				console.error(err)
@@ -268,6 +284,7 @@ export class ManageUsers extends React.Component {
 								<th>Email</th>
 								<th>Access Level</th>
 								<th>Grade</th>
+								<th>Section ID</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -307,6 +324,7 @@ export class ManageUsers extends React.Component {
 									</FormGroup>
 								</td>
 								<td>{this.getCreateGradeDropDown()}</td>
+								<td></td>
 								<td><Button block bsStyle='primary' onClick={this.createStaff.bind(this)}>{this.getButtonLabel()}</Button></td>
 							</tr>
 							{
@@ -325,6 +343,7 @@ export class ManageUsers extends React.Component {
 												</FormGroup>
 											</td>
 											<td>{this.getGradeDropDown(member)}</td>
+											<td>{member.accessLevel == '2' ? member.sectionID : null}</td>
 											<td><Button block bsStyle='danger' onClick={this.deleteStaff.bind(this, member.emailID)}>{'Delete ' + member.firstName}</Button></td>
 										</tr>
 									)
