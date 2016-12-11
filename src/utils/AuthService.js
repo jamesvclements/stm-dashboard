@@ -1,5 +1,6 @@
 import Auth0Lock from 'auth0-lock'
 import { EventEmitter } from 'events'
+import { ACCESS } from '../constants/Constants'
 import logo from '../images/stm-logo.png'
 
 export default class AuthService extends EventEmitter {
@@ -45,8 +46,6 @@ export default class AuthService extends EventEmitter {
         if (response.ok) {
           response.json()
             .then(profile => {
-              console.log('this profile')
-              console.log(profile)
               this.setProfile(profile)
             })
         } else {
@@ -58,7 +57,6 @@ export default class AuthService extends EventEmitter {
       })
 
     // Trigger authenticated event
-    this.emit('fuckjames')
     this.emit('authenticated')
   }
 
@@ -84,7 +82,7 @@ export default class AuthService extends EventEmitter {
 
   setProfile(profile) {
     localStorage.setItem('profile', JSON.stringify(profile))
-    this.setUser(profile.email)
+    this.setUser(profile)
   }
 
   getProfile() {
@@ -109,9 +107,9 @@ export default class AuthService extends EventEmitter {
       .then(newProfile => this.setProfile(newProfile))
   }
 
-  setUser(emailID) {
+  setUser(profile) {
     return new Promise((resolve, reject) => {
-      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff/${emailID}`, {
+      fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff/${profile.email}`, {
         method: 'GET'
       })
         .then(response => {
@@ -120,14 +118,45 @@ export default class AuthService extends EventEmitter {
               localStorage.setItem('user', JSON.stringify(user))
               resolve()
             })
-          } else {
-            console.error('Error fetching the user')
-            reject(new Error(`Error fetching the user: ${emailID}`))
+          } else if (profile.email && response.status === 404) {
+            const user = {
+              emailID: profile.email,
+              accessLevel: ACCESS.PENDING,
+              firstName: profile.given_name,
+              lastName: profile.family_name
+            }
+            fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/staff`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  staff: user
+                })
+              })
+              .then(response => {
+                if (response.ok) {
+                  localStorage.setItem('user', JSON.stringify(user))
+                  resolve()
+                } else {
+                  console.error(`Error creating the pending user: ${profile.email}`)
+                  reject(new Error(`Error creating the pending user: ${profile.email}`))
+                }
+              })
+              .catch(err => {
+                console.error(`Error creating the pending user: ${profile.email}`)
+                reject(new Error(`Error creating the pending user: ${profile.email}`))
+              })
+          }
+          else {
+            console.error(`Error fetching the user: ${profile.email}`)
+            reject(new Error(`Error fetching the user: ${profile.email}`))
           }
         })
         .catch(err => {
-          console.error('Error fetching the user')
-          reject(new Error(`Error fetching the user: ${emailID}`))
+          console.error(`Error fetching the user: ${profile.email}`)
+          reject(new Error(`Error fetching the user: ${profile.email}`))
         })
     })
   }
@@ -138,12 +167,12 @@ export default class AuthService extends EventEmitter {
       if (user) {
         resolve(JSON.parse(user))
       } else {
-        this.setUser(this.getProfile().email)
+        this.setUser(this.getProfile())
           .then(() => {
             resolve(JSON.parse(localStorage.getItem('user')))
           })
           .catch(() => {
-            resolve(this.getUser())
+            return this.getUser()
           })
       }
     })

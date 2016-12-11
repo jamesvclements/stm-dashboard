@@ -1,5 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
+import ACCESS from '../../constants/Constants'
 import { Grid, Row, Col, Table, FormGroup, FormControl, Button, Breadcrumb } from 'react-bootstrap'
 import './ManageUsers.css'
 
@@ -343,7 +344,7 @@ export class ManageUsers extends React.Component {
 												</FormGroup>
 											</td>
 											<td>{this.getGradeDropDown(member)}</td>
-											<td>{member.accessLevel == '2' ? member.sectionID : null}</td>
+											<td>{parseInt(member.accessLevel, 10) === ACCESS.TEACHER ? member.sectionID : null}</td>
 											<td><Button block bsStyle='danger' onClick={this.deleteStaff.bind(this, member.emailID)}>{'Delete ' + member.firstName}</Button></td>
 										</tr>
 									)
