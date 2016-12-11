@@ -147,12 +147,12 @@ export class StudentEditForm extends React.Component {
                 </FormControl.Static>
               </FormGroup>
             )
-          case 'age':
+          case 'dob':
             return (
               <FormGroup>
                 <ControlLabel>{Utils.studentTranslations[key]}</ControlLabel>
                 <FormControl.Static>
-                  {Utils.round(val / 12, 0)}y. {Utils.round(val % 12, 0)}mo.
+                  {val}
                 </FormControl.Static>
               </FormGroup>
             )

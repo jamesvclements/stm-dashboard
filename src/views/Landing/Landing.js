@@ -29,7 +29,7 @@ export class Landing extends React.Component {
                 <Col md={6} xs={12}>
                   <Panel
                     onClick={() => { this.context.router.push('/students') } }
-                    className="landing-panel">
+                    className="clickable-panel">
                     <h3>Students</h3>
                   </Panel>
                 </Col>
@@ -40,7 +40,7 @@ export class Landing extends React.Component {
                 <Col md={6} xs={12}>
                   <Panel
                     onClick={() => { this.context.router.push('/grades') } }
-                    className="landing-panel">
+                    className="clickable-panel">
                     <h3>Grades</h3>
                   </Panel>
                 </Col>
@@ -51,7 +51,7 @@ export class Landing extends React.Component {
                 <Col md={6} xs={12}>
                   <Panel
                     onClick={() => { this.context.router.push('/run-placements') } }
-                    className="landing-panel">
+                    className="clickable-panel">
                     <h3>Placement</h3>
                   </Panel>
                 </Col>
@@ -62,7 +62,7 @@ export class Landing extends React.Component {
               <Col md={6} xs={12}>
                 <Panel
                   onClick={() => { this.context.router.push('/admin') } }
-                  className="landing-panel">
+                  className="clickable-panel">
                   <h3>Admin</h3>
                 </Panel>
               </Col>

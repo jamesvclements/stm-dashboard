@@ -23,32 +23,39 @@ export class GradeSections extends React.Component {
       .then(response => {
         if (response.ok) {
           response.json().then(grade => {
+            if (grade.sections.length === 0) {
+              this.context.addNotification({
+                title: 'Error',
+                message: `No sections exist for grade ${this.props.params.grade}`,
+                level: 'error'
+              })
+            }
             this.setState({
               grade: grade
             })
           })
         } else {
-          this.context.addNotification({
-            title: 'Error',
-            message: `Failed to fetch sections for grade ${this.props.params.grade}`,
-            level: 'error'
-          })
+          this.failToFetchSections()
         }
       }).catch(err => {
         console.error(err)
-        this.context.addNotification({
-          title: 'Error',
-          message: `Failed to fetch sections for grade ${this.props.params.grade}`,
-          level: 'error'
-        })
+        this.failToFetchSections()
       })
+  }
+
+  failToFetchSections() {
+    this.context.addNotification({
+      title: 'Error',
+      message: `Failed to fetch sections for grade ${this.props.params.grade}`,
+      level: 'error'
+    })
   }
 
   render() {
     const { sections } = this.state.grade
     return (
       <div className="root">
-      <Breadcrumb>
+        <Breadcrumb>
           <Breadcrumb.Item href="#/landing">
             Home
           </Breadcrumb.Item>
@@ -67,7 +74,7 @@ export class GradeSections extends React.Component {
                   <Col md={sections.length === 4 ? 3 : 4} xs={6} key={i}>
                     <Panel
                       onClick={() => { this.context.router.push(`/sections/${this.props.params.grade}/${section.sectionID}`) } }
-                      className="grade-sections-panel">
+                      className="clickable-panel">
                       <h3>{`${section.teacher.firstName} ${section.teacher.lastName}`}</h3>
                     </Panel>
                   </Col>)

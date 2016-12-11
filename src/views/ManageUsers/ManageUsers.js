@@ -59,6 +59,8 @@ export class ManageUsers extends React.Component {
 		}
 		let tempStaff = this.state.staff
 		tempStaff[memberIndex][field] = event.target.value
+		if(field === 'accessLevel' && event.target.value !== 2)
+			tempStaff[memberIndex].gradeTeaching = null
 		this.setState({
 			staff: tempStaff
 		})
@@ -197,13 +199,35 @@ export class ManageUsers extends React.Component {
 		}
 	}
 
-	getGradeDropDown() {
+	getCreateGradeDropDown() {
 		if (this.state.newStaff.accessLevel === '2') {
 			return (<FormGroup controlId="formControlsSelectGrade">
 				<FormControl
 					componentClass="select"
 					value={this.state.newStaff.gradeTeaching ? this.state.newStaff.gradeTeaching : '0'}
 					onChange={this.updateCreateField.bind(this, 'gradeTeaching')}>
+					<option value="0">Kindergarten</option>
+					<option value="1">First</option>
+					<option value="2">Second</option>
+					<option value="3">Third</option>
+					<option value="4">Fourth</option>
+					<option value="5">Fifth</option>
+					<option value="6">Sixth</option>
+					<option value="7">Seventh</option>
+					<option value="8">Eighth</option>
+				</FormControl>
+			</FormGroup>)
+		} else {
+			return null
+		}
+	}
+	getGradeDropDown(member) {
+		if (member.accessLevel === '2') {
+			return (<FormGroup controlId="formControlsSelectGrade">
+				<FormControl
+					componentClass="select"
+					value={member.gradeTeaching ? member.gradeTeaching : '0'}
+					onChange={this.updateField.bind(this, 'gradeTeaching', member.emailID )}>
 					<option value="0">Kindergarten</option>
 					<option value="1">First</option>
 					<option value="2">Second</option>
@@ -282,7 +306,7 @@ export class ManageUsers extends React.Component {
 										</FormControl>
 									</FormGroup>
 								</td>
-								<td>{this.getGradeDropDown()}</td>
+								<td>{this.getCreateGradeDropDown()}</td>
 								<td><Button block bsStyle='primary' onClick={this.createStaff.bind(this)}>{this.getButtonLabel()}</Button></td>
 							</tr>
 							{
@@ -300,22 +324,7 @@ export class ManageUsers extends React.Component {
 													</FormControl>
 												</FormGroup>
 											</td>
-											<td>
-												<FormGroup controlId="formControlsSelectGrade">
-													<FormControl componentClass="select" value={member.gradeTeaching == null ? '' : member.gradeTeaching} onChange={this.updateField.bind(this, 'gradeTeaching', member.emailID)}>
-														<option value="0">Kindergarten</option>
-														<option value="1">First</option>
-														<option value="2">Second</option>
-														<option value="3">Third</option>
-														<option value="4">Fourth</option>
-														<option value="5">Fifth</option>
-														<option value="6">Sixth</option>
-														<option value="7">Seventh</option>
-														<option value="8">Eighth</option>
-														<option value=''>None</option>
-													</FormControl>
-												</FormGroup>
-											</td>
+											<td>{this.getGradeDropDown(member)}</td>
 											<td><Button block bsStyle='danger' onClick={this.deleteStaff.bind(this, member.emailID)}>{'Delete ' + member.firstName}</Button></td>
 										</tr>
 									)

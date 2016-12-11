@@ -10,3 +10,8 @@
 .logo:hover, .title:hover {
   cursor: pointer;
 }
+
+.clickable-panel:hover {
+  cursor: pointer;
+  background: #F5F5F5;
+}

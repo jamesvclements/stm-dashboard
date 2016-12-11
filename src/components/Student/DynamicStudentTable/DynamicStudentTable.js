@@ -109,7 +109,7 @@ export class DynamicStudentTable extends React.Component {
               students
                 .filter(student => {
                   return `${student.firstName} ${student.lastName}`.toLowerCase().includes(nameFilter)
-                    && (gradeFilter === '' || student.grade.toString() === gradeFilter)
+                    && (gradeFilter === '' || student.sectionID[0] === gradeFilter)
                     && `${student.teacher.firstName} ${student.teacher.lastName}`.toLowerCase().includes(teacherFilter)
                 })
                 .map((student, i) => {
@@ -118,8 +118,8 @@ export class DynamicStudentTable extends React.Component {
                       <td>{i}</td>
                       <td>{student.firstName}</td>
                       <td>{student.lastName}</td>
-                      <td>{(parseInt(student.grade, 10) === 0) ? 'K' : student.grade}</td>
-                      <td>{`${student.teacher.firstName} ${student.teacher.lastName}`}</td>
+                      <td>{student.grade ? ((parseInt(student.grade, 10) === 0) ? 'K' : student.grade) : ((parseInt(student.sectionID[0], 10) === 0) ? 'K' : parseInt(student.sectionID[0], 10))}</td>
+                      <td>{student.teacher.firstName ? `${student.teacher.firstName} ${student.teacher.lastName}`: ''}</td>
                       <td>
                         <Button
                           block

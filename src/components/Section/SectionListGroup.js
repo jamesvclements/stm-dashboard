@@ -16,7 +16,7 @@ export class SectionListGroup extends React.Component {
     const { stats } = section
     return (
       <div>
-        <h5>Teacher: {section.teacher.name}</h5>
+        <h5>{`Teacher: ${section.teacher.firstName} ${section.teacher.lastName}`}</h5>
         <Panel header="Statistics">
           <ListGroup fill className="section-stats">
             <ListGroupItem>

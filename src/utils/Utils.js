@@ -64,7 +64,7 @@ export const studentTranslations = {
   asp: 'ASP',
   behaviorObservation: 'Behavior Observation',
   dial4: 'Dial 4',
-  age: 'Age',
+  dob: 'DOB',
   comments: 'Comments'
 }
 
@@ -94,15 +94,13 @@ export function forHumanAttr(key, val) {
         case 'behaviorObservation':
         case 'dial4':
         case 'comments':
+        case 'sex':
+        case 'dob':
           return `${studentTranslations[key]}: ${val}`
         case 'behavior':
         case 'workEthic':
           const mark = (val === 0 || val === '0') ? '-' : (val === 1 || val === '1') ? '\u2713' : (val === 2 || val === '2') ? '+' : 'N/A'
           return `${studentTranslations[key]}: ${mark}`
-        case 'sex':
-          return `${studentTranslations[key]}: ${val}`
-        case 'age':
-          return `${studentTranslations[key]}: ${round(val / 12, 0)} y. ${round(val % 12, 0)} mo.`
         default:
           return `${key}: ${val}`
       }
@@ -149,7 +147,7 @@ const studentStatPrecendence = {
   asp: 14,
   behaviorObservation: 7,
   dial4: 3,
-  age: 1,
+  dob: 1,
   comments: 16
 }
 
@@ -160,7 +158,7 @@ export function sortStudentStats(a, b) {
 export const cardKeys = ['potentialDelay','advancedMath','medicalConcern','facultyStudent',
                          'newStudent', 'hmp', 'asp', 'behavior', 'workEthic', 'sex', 'mathBench',
                          'cogAT', 'dra', 'elaTotal', 'mathTotal', 'behaviorObservation', 'dial4',
-                         'age', 'comments']
+                         'dob', 'comments']
 
 export function validateScore(key, val){
     if (typeof val === 'undefined' || val === null) {

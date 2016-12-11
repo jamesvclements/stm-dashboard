@@ -40,18 +40,33 @@ export class Placement extends React.Component {
       .then(response => {
         if (response.ok) {
           response.json().then(placement => {
+            if (placement.sections.length === 0) {
+              this.context.addNotification({
+                title: 'Error',
+                message: `No placement exists for grade ${this.props.params.grade}`,
+                level: 'error'
+              })
+            }
             this.setState({
               placement: placement
             })
           })
         } else {
-          this.context.addNotification({
-            title: 'Error',
-            message: `Failed to fetch placement for grade ${this.props.params.grade}`,
-            level: 'error'
-          })
+          this.failToFetchPlacement()
         }
-	})
+      })
+      .catch(err => {
+        console.error(err)
+        this.failToFetchPlacement()
+      })
+  }
+
+  failToFetchPlacement() {
+    this.context.addNotification({
+      title: 'Error',
+      message: `Failed to fetch placement for grade ${this.props.params.grade}`,
+      level: 'error'
+    })
   }
 
   reset() {

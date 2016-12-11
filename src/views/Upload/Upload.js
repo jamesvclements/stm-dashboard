@@ -134,7 +134,7 @@ export class Upload extends React.Component {
                 <Row>
                   <Col xs={12}>
                     <Dropzone className='centered' onDrop={this.onDrop.bind(this)} multiple={false} accept='text/csv'>
-                      <Panel className="upload-panel">
+                      <Panel className="clickable-panel">
                         <h2>DROP FILE OR CLICK TO UPLOAD CSV</h2>
                       </Panel>
                     </Dropzone>
