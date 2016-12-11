@@ -32,11 +32,7 @@ export class DraggableStudentListItem extends React.Component {
     return (
       <Draggable type="student" data={JSON.stringify({student: student, sectionIndex: sectionIndex, studentIndex: studentIndex})}>
         <Panel 
-          header={
-            // temp solution until JSON is standardized
-            student.hasOwnProperty('name')
-              ? student.name : `${student.firstName} ${student.lastName}`
-          } 
+          header={`${student.firstName} ${student.lastName}`} 
           collapsible 
           expanded={this.state.open} 
           onClick={() => this.setState({ open: !this.state.open })}

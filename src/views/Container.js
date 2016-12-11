@@ -21,30 +21,19 @@ export class Container extends React.Component {
       user: {}
     }
 
-    props.route.auth.on('authenticated', () => {
-     /* this.sleep(00).then(()=>{
-        this.forceUpdate()
-        location.reload()        
-      })*/
-
-    })
-
     props.route.auth.on('profile_updated', profile => {
       this.setState({ profile: profile })
     })
 
-    props.route.auth.getUser()
-      .then(user => {
-        this.setState({
-          user: user
+    if (props.route.auth.loggedIn()) {
+      props.route.auth.getUser()
+        .then(user => {
+          this.setState({
+            user: user
+          })
         })
-      })
+    }
   }
-
-  sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 
   getChildContext() {
     return {

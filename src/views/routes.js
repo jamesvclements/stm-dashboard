@@ -23,48 +23,50 @@ import Unauthorized from './Unauthorized/Unauthorized'
 import AccessPending from './AccessPending/AccessPending'
 
 const auth = new AuthService(
-    process.env.REACT_APP_AUTH0_CLIENT_ID,
-    process.env.REACT_APP_AUTH0_DOMAIN)
+  process.env.REACT_APP_AUTH0_CLIENT_ID,
+  process.env.REACT_APP_AUTH0_DOMAIN)
 
 const requireAuth = (nextState, replace, callback) => {
   if (!auth.loggedIn()) {
     replace({ pathname: '/login' })
     callback()
-  }
+  } else {
+    auth.getUser()
+      .then(user => {
+        
+        const accessLevel = parseInt(user.accessLevel, 10)
+        console.log(accessLevel)
+        if (accessLevel === ACCESS.PENDING) {
+          replace({ pathname: '/access-pending' })
+          callback()
+        } else {
+          // assume lowest access
+          let requiredAccessLevel = ACCESS.TEACHER
+          const destination = nextState.location.pathname
 
-  auth.getUser()
-    .then(user => {
-      const accessLevel = parseInt(user.accessLevel, 10)
+          // general route protection
+          if (destination.includes('admin')) {
+            requiredAccessLevel = ACCESS.ADMIN
+          } else if (destination.includes('placement')) {
+            requiredAccessLevel = ACCESS.COUNSELOR
+          } else if (destination === '/students' || destination.includes('grades')) {
+            requiredAccessLevel = ACCESS.COUNSELOR
+          } else if (destination.includes('sections') && accessLevel === ACCESS.TEACHER) {
+            // teachers only have access to their section
+            if (user.sectionID !== nextState.params.sectionID) {
+              replace({ pathname: '/unauthorized' })
+            }
+          }
 
-      if (accessLevel === ACCESS.PENDING) {
-        replace({ pathname: '/access-pending' })
-      }
-
-      // assume lowest access
-      let requiredAccessLevel = ACCESS.TEACHER
-      const destination = nextState.location.pathname
-
-      // general route protection
-      if (destination.includes('admin')) {
-        requiredAccessLevel = ACCESS.ADMIN
-      } else if (destination.includes('placement')) {
-        requiredAccessLevel = ACCESS.COUNSELOR
-      } else if (destination === '/students' || destination.includes('grades')) {
-        requiredAccessLevel = ACCESS.COUNSELOR
-      } else if (destination.includes('sections') && accessLevel === ACCESS.TEACHER) {
-        // teachers only have access to their section
-        if (user.sectionID !== nextState.params.sectionID) {
-          replace({ pathname: '/unauthorized' })
+          if (destination === '/landing' && accessLevel === ACCESS.TEACHER) {
+            replace({ pathname: `/sections/${user.gradeTeaching}/${user.sectionID}` })
+          } else if (accessLevel > requiredAccessLevel) {
+            replace({ pathname: '/unauthorized' })
+          }
+          callback()
         }
-      }
-
-      if (destination === '/landing' && accessLevel === ACCESS.TEACHER) {
-        replace({ pathname: `/sections/${user.gradeTeaching}/${user.sectionID}` })
-      } else if (accessLevel > requiredAccessLevel) {
-        replace({ pathname: '/unauthorized' })
-      }
-      callback()
-    })
+      })
+  }
 }
 
 export const makeRoutes = () => {
@@ -72,14 +74,14 @@ export const makeRoutes = () => {
     <Route path="/" component={Container} auth={auth}>
       <IndexRedirect to="/landing" />
       <Route path="landing" component={Landing} onEnter={requireAuth} />
-      <Route path="run-placements" component={RunPlacements} onEnter={requireAuth}/>
-      <Route path="placement/:grade" component={Placement} onEnter={requireAuth}/>
-      <Route path="admin/delete-students" component={DeleteStudents} onEnter={requireAuth}/>
-      <Route path="admin/add-students" component={AddStudents} onEnter={requireAuth}/>
-  	  <Route path="admin/upload" component={Upload} onEnter={requireAuth}/>
+      <Route path="run-placements" component={RunPlacements} onEnter={requireAuth} />
+      <Route path="placement/:grade" component={Placement} onEnter={requireAuth} />
+      <Route path="admin/delete-students" component={DeleteStudents} onEnter={requireAuth} />
+      <Route path="admin/add-students" component={AddStudents} onEnter={requireAuth} />
+      <Route path="admin/upload" component={Upload} onEnter={requireAuth} />
       <Route path="admin" component={Admin} onEnter={requireAuth} />
-      <Route path="admin/manage-users" component={ManageUsers} onEnter={requireAuth}/>
-      <Route path="admin/upload" component={Upload} onEnter={requireAuth}/>
+      <Route path="admin/manage-users" component={ManageUsers} onEnter={requireAuth} />
+      <Route path="admin/upload" component={Upload} onEnter={requireAuth} />
       <Route path="students" component={Students} onEnter={requireAuth} />
       <Route path="grades" component={Grades} onEnter={requireAuth} />
       <Route path="grades/:grade" component={GradeSections} onEnter={requireAuth} />
