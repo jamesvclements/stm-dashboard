@@ -53,8 +53,8 @@ export class Admin extends React.Component {
 						<Col xs={6}>
 							<Panel
 								onClick={() => {this.context.router.push('/admin/change-year')}}
-								className="admin-panel">
-								<h3>Change Academic Year</h3>
+								className="clickable-panel">
+								<h3>Advance Academic Year</h3>
 							</Panel>
 						</Col>
 					</Row>
