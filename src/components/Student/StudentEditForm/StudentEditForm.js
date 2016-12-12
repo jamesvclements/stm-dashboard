@@ -19,7 +19,7 @@ export class StudentEditForm extends React.Component {
     super(props)
 
     this.state = {
-      student: {}
+      student: JSON.parse(JSON.stringify(props.student))
     }
   }
 
@@ -150,6 +150,7 @@ export class StudentEditForm extends React.Component {
 
   saveChanges() {
     let tempStudent = this.state.student
+
     if (tempStudent.behavior === 'null') {
       tempStudent.behavior = null
     } else {
@@ -172,7 +173,7 @@ export class StudentEditForm extends React.Component {
 
     for (let i = 0; i < numericKeys.length; i++) {
       let key = numericKeys[i]
-      console.log(`validating key: ${key} val: ${this.state.student[key]}`)
+
       if (Utils.validateScore(key, this.state.student[key]) === 'error') {
         this.context.addNotification({
           title: 'Error',
