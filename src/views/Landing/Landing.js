@@ -13,8 +13,7 @@ export class Landing extends React.Component {
   static propTypes = {
     auth: T.instanceOf(AuthService),
     profile: T.object,
-    user: T.object,
-    accessLevel: T.number
+    user: T.object
   }
 
   constructor(props){
@@ -22,7 +21,8 @@ export class Landing extends React.Component {
   }
 
   render() {
-    const { user, accessLevel } = this.props
+    const { user } = this.props
+    const accessLevel = parseInt(user.accessLevel, 10)
 
     return (
       <div className="root">
