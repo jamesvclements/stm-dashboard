@@ -21,6 +21,7 @@ import Student from './Student/Student'
 import BulkEdit from './BulkEdit/BulkEdit'
 import Unauthorized from './Unauthorized/Unauthorized'
 import AccessPending from './AccessPending/AccessPending'
+import ChangeYear from './ChangeYear/ChangeYear'
 
 const auth = new AuthService(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
@@ -80,14 +81,16 @@ export const makeRoutes = () => {
       <Route path="admin/add-students" component={AddStudents} onEnter={requireAuth} />
       <Route path="admin/upload" component={Upload} onEnter={requireAuth} />
       <Route path="admin" component={Admin} onEnter={requireAuth} />
-      <Route path="admin/manage-users" component={ManageUsers} onEnter={requireAuth} />
-      <Route path="admin/upload" component={Upload} onEnter={requireAuth} />
+      <Route path="admin/manage-users" component={ManageUsers} onEnter={requireAuth}/>
+      <Route path="admin/upload" component={Upload} onEnter={requireAuth}/>
+      <Route path="admin/change-year" component={ChangeYear} onEnter={requireAuth}/>
       <Route path="students" component={Students} onEnter={requireAuth} />
       <Route path="grades" component={Grades} onEnter={requireAuth} />
       <Route path="grades/:grade" component={GradeSections} onEnter={requireAuth} />
       <Route path="sections/:grade/:sectionID" component={Section} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="students/:studentID" component={Student} onEnter={requireAuth} />
+
       <Route path="students/bulk-edit/:sectionID/:studentID/:mode" component={BulkEdit} onEnter={requireAuth} />
       <Route path="access_token=:token" component={Login} />
       <Route path="unauthorized" component={Unauthorized} />
