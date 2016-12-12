@@ -13,12 +13,16 @@ export class Landing extends React.Component {
   static propTypes = {
     auth: T.instanceOf(AuthService),
     profile: T.object,
-    user: T.object
+    user: T.object,
+    accessLevel: T.number
+  }
+
+  constructor(props){
+    super(props)
   }
 
   render() {
-    const { user } = this.props
-    const accessLevel = parseInt(user.accessLevel, 10)
+    const { user, accessLevel } = this.props
 
     return (
       <div className="root">

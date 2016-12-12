@@ -18,21 +18,22 @@ export class Container extends React.Component {
 
     this.state = {
       profile: props.route.auth.getProfile(),
-      user: {}
+      user: {},
+      accessLevel: 3
     }
 
     props.route.auth.on('profile_updated', profile => {
       this.setState({ profile: profile })
     })
 
-    if (props.route.auth.loggedIn()) {
-      props.route.auth.getUser()
-        .then(user => {
-          this.setState({
-            user: user
-          })
+    console.log('getting user')
+    props.route.auth.getUser()
+      .then(user => {
+        this.setState({
+          user: user,
+          accessLevel: parseInt(user.accessLevel,10)
         })
-    }
+      })
   }
 
   getChildContext() {
@@ -69,7 +70,8 @@ export class Container extends React.Component {
       children = React.cloneElement(this.props.children, {
         auth: this.props.route.auth,
         profile: this.state.profile,
-        user: this.state.user
+        user: this.state.user,
+        accessLevel: this.state.accessLevel
       })
     }
 
