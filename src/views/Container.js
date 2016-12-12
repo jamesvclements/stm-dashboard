@@ -25,7 +25,6 @@ export class Container extends React.Component {
       this.setState({ profile: profile })
     })
 
-    console.log('getting user')
     props.route.auth.getUser()
       .then(user => {
         this.setState({

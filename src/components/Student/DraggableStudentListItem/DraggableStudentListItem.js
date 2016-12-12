@@ -31,13 +31,13 @@ export class DraggableStudentListItem extends React.Component {
     const { studentIndex } = this.props
     return (
       <Draggable type="student" data={JSON.stringify({student: student, sectionIndex: sectionIndex, studentIndex: studentIndex})}>
-        <Panel 
+        <Panel
           header={`${student.firstName} ${student.lastName}`} 
           collapsible 
           expanded={this.state.open} 
           onClick={() => this.setState({ open: !this.state.open })}
           className="student-panel">
-          <StudentStats student={student}></StudentStats>
+          <StudentStats fill student={student}></StudentStats>
           <Button 
             block
             bsStyle="primary"

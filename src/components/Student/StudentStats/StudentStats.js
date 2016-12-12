@@ -11,7 +11,7 @@ export class StudentStats extends React.Component {
   render() {
     const student = this.props.student
     return (
-        <ListGroup fill className="student-stats">
+        <ListGroup className="student-stats">
           {
             Object.keys(student).filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
               return <ListGroupItem key={i}>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem>

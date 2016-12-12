@@ -36,7 +36,7 @@ const requireAuth = (nextState, replace, callback) => {
       .then(user => {
         
         const accessLevel = parseInt(user.accessLevel, 10)
-        console.log(accessLevel)
+
         if (accessLevel === ACCESS.PENDING) {
           replace({ pathname: '/access-pending' })
           callback()
@@ -90,7 +90,6 @@ export const makeRoutes = () => {
       <Route path="sections/:grade/:sectionID" component={Section} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="students/:studentID" component={Student} onEnter={requireAuth} />
-
       <Route path="students/bulk-edit/:sectionID/:studentID/:mode" component={BulkEdit} onEnter={requireAuth} />
       <Route path="access_token=:token" component={Login} />
       <Route path="unauthorized" component={Unauthorized} />

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap'
-import * as Utils from '../../../utils/Utils'
+import { Panel } from 'react-bootstrap'
+import  { StudentStats } from '../StudentStats/StudentStats'
 import './StudentListItem.css'
 
 export class StudentListItem extends React.Component {
@@ -25,13 +25,7 @@ export class StudentListItem extends React.Component {
         expanded={this.state.open} 
         onClick={() => this.setState({ open: !this.state.open })}
         className="student-panel">
-        <ListGroup fill className="student-stats">
-          {
-            Object.keys(student).filter(key => key in Utils.studentTranslations).sort(Utils.sortStudentStats).map((key, i) => {
-              return <ListGroupItem key={i}>{`${Utils.forHumanAttr(key, student[key])}`}</ListGroupItem>
-            })
-          }
-        </ListGroup>
+        <StudentStats fill student={student}></StudentStats>
       </Panel>
     )
   }

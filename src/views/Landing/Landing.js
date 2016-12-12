@@ -16,10 +16,6 @@ export class Landing extends React.Component {
     user: T.object
   }
 
-  constructor(props){
-    super(props)
-  }
-
   render() {
     const { user } = this.props
     const accessLevel = parseInt(user.accessLevel, 10)
