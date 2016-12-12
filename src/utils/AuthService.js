@@ -172,7 +172,7 @@ export default class AuthService extends EventEmitter {
             resolve(JSON.parse(localStorage.getItem('user')))
           })
           .catch(() => {
-            return this.getUser()
+            resolve(this.getUser())
           })
       }
     })
