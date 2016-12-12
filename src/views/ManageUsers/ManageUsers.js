@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
-import ACCESS from '../../constants/Constants'
+import { ACCESS } from '../../constants/Constants'
 import { Grid, Row, Col, Table, FormGroup, FormControl, Button, Breadcrumb } from 'react-bootstrap'
 import './ManageUsers.css'
 
@@ -318,9 +318,10 @@ export class ManageUsers extends React.Component {
 									<FormGroup controlId="formControlsSelectAccess">
 										<FormControl
 											componentClass="select"
-											value={this.state.newStaff.accessLevel == null ? '2' : this.state.newStaff.accessLevel}
+											value={this.state.newStaff.accessLevel == null ? '3' : this.state.newStaff.accessLevel}
 											onChange={this.updateCreateField.bind(this, 'accessLevel')}
 											>
+											<option value="3">Pending</option>
 											<option value="2">Teacher</option>
 											<option value="1">Counselor</option>
 											<option value="0">Administrator</option>
@@ -340,6 +341,7 @@ export class ManageUsers extends React.Component {
 											<td>
 												<FormGroup controlId="formControlsSelectAccess">
 													<FormControl componentClass="select" value={member.accessLevel} onChange={this.updateField.bind(this, 'accessLevel', member.emailID)}>
+														<option value="3">Pending</option>
 														<option value="2">Teacher</option>
 														<option value="1">Counselor</option>
 														<option value="0">Administrator</option>

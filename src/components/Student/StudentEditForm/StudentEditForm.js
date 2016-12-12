@@ -38,7 +38,9 @@ export class StudentEditForm extends React.Component {
 
   handleChange(key, event) {
     let tempStudent = this.state.student
+    console.log(event.target.value)
     tempStudent[key] = event.target.value
+    console.log(tempStudent)
     this.setState({ student: tempStudent })
   }
 

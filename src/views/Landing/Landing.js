@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
-import { Grid, Row, Col, Panel } from 'react-bootstrap'
+import { Grid, Row, Col, Panel, Breadcrumb } from 'react-bootstrap'
 import { ACCESS } from '../../constants/Constants'
 import './Landing.css'
 
@@ -22,6 +22,11 @@ export class Landing extends React.Component {
 
     return (
       <div className="root">
+      <Breadcrumb>
+          <Breadcrumb.Item active>
+            Home
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <Grid>
           <Row>
             {

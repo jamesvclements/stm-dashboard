@@ -96,16 +96,16 @@ export class BulkEdit extends React.Component {
                 <Pager.Item onClick={() => {
                   this.context.router.push(`/students/bulk-edit/${section.sectionID}/${this.getPrevStudent()}/${this.state.editing ? 'edit' : 'view'}`)
                   location.reload()
-                }}>Prev &larr;</Pager.Item>
+                } }>Prev &larr;</Pager.Item>
               </Pager>
             </Col>
             <Col xs={10}>
               <Panel>
-              {
-                this.state.editing ?
-                  <StudentEditForm student={student} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
-                  : <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)} />
-              }
+                {
+                  this.state.editing ?
+                    <StudentEditForm student={student} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
+                    : <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)} />
+                }
               </Panel>
             </Col>
             <Col xs={1}>
@@ -113,7 +113,7 @@ export class BulkEdit extends React.Component {
                 <Pager.Item onClick={() => {
                   this.context.router.push(`/students/bulk-edit/${section.sectionID}/${this.getNextStudent()}/${this.state.editing ? 'edit' : 'view'}`)
                   location.reload()
-                }}>Next &rarr;</Pager.Item>
+                } }>Next &rarr;</Pager.Item>
               </Pager>
             </Col>
           </Row>

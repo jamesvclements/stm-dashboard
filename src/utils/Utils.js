@@ -79,7 +79,7 @@ export function forHumanAttr(key, val) {
     case 'hmp':
     case 'asp':
       return (`${studentTranslations[key]}: 
-              ${(val) ? 'Yes' : 'No'}`)
+              ${(parseInt(val, 10)) ? 'Yes' : 'No'}`)
     default:
       // for rest of the keys, an empty string is ok
       if (!val){

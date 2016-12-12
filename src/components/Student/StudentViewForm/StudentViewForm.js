@@ -15,6 +15,7 @@ export class StudentViewForm extends React.Component {
 
   render() {
     const { student } = this.props
+    console.log(student)
     return (
         <Grid fluid>
           <Row>
