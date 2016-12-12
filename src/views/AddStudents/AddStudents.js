@@ -1,6 +1,7 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../../utils/AuthService'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
+import DatePicker from 'react-bootstrap-date-picker'
 import { Table, FormGroup, FormControl, Button, Breadcrumb } from 'react-bootstrap'
 import './AddStudents.css'
 
@@ -18,17 +19,15 @@ export class AddStudents extends React.Component {
     super()
 
     this.state = {
-      student: [],
       newStudent: {
-        grade: '0',
-        sectionID: '00',
-        id: null,
-        firstName: null,
-        lastName: null,
-        sex: null,
-        dob: null
+        dobValue: '2006-01-01T12:00:00.000Z',
+        dob: '01/01/2006',
+        id: '',
+        firstName: '',
+        lastName: '',
+        sex: 'M'
       },
-      options: [],
+      options: []
     }
 
     // initalize dropdown
@@ -36,17 +35,15 @@ export class AddStudents extends React.Component {
       method: 'GET'
     })
       .then(response => {
-
         if (response.ok) {
           response.json().then(grade => {
-            // bind the values of section dropdown to 
             let options = []
             for (let section of grade.sections) {
               options.push({ teacher: section.teacher, sectionID: section.sectionID })
             }
-            // student.sectionID = options[0]
             this.setState({
-              options: options
+              options: options,
+              newStudent: Object.assign({ sectionID: grade.sections[0].sectionID }, this.state.newStudent)
             })
           })
         } else {
@@ -56,6 +53,15 @@ export class AddStudents extends React.Component {
         console.error(err)
         this.notifyError('Failed to fetch sections')
       })
+  }
+
+  updateCreateDOB(value, formattedValue) {
+    let tempMember = this.state.newStudent
+    tempMember['dob'] = formattedValue
+    tempMember['dobValue'] = value
+    this.setState({
+      newStudent: tempMember
+    })
   }
 
   updateCreateField(field, event) {
@@ -96,25 +102,16 @@ export class AddStudents extends React.Component {
           this.notifyError('Failed to fetch sections')
         })
     }
+    tempMember[field] = event.target.value
 
-    if (field === 'sectionID') {
-      tempMember.sectionID = event.target.value
-      this.setState({
-        newStudent: tempMember
-      })
-    } else {
-      tempMember[field] = event.target.value
-    }
 
     this.setState({
       newStudent: tempMember
     })
   }
 
-
-
   createStudent() {
-    if (!this.state.newStudent.firstName || !this.state.newStudent.lastName || !this.state.newStudent.id || !this.state.newStudent.sectionID) {
+    if (!this.state.newStudent.firstName || !this.state.newStudent.lastName || !this.state.newStudent.id || !this.state.newStudent.sectionID || !this.state.newStudent.dob || !this.state.newStudent.sex) {
       let error = ''
       if (!this.state.newStudent.firstName) {
         error = 'no name provided'
@@ -126,12 +123,21 @@ export class AddStudents extends React.Component {
       else if (!this.state.newStudent.id) {
         error = 'no student ID'
       }
+      else if (!this.state.newStudent.dob) {
+        error = 'no student date of birth'
+      }
+      else if (!this.state.newStudent.sex) {
+        error = 'no student gender'
+      }
       this.context.addNotification({
         title: 'Error',
         message: 'Failed to create new student, ' + error,
         level: 'error'
       })
     } else {
+      let tempStudent = this.state.newStudent
+      delete tempStudent['dobValue']
+
       fetch(`${process.env.REACT_APP_SERVER_ADDRESS}/api/students`,
         {
           method: 'POST',
@@ -139,16 +145,24 @@ export class AddStudents extends React.Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            student: this.state.newStudent
+            student: tempStudent
           })
         })
-        .then(() => {
-          this.context.addNotification({
-            title: 'Success',
-            message: 'Successfully created new student',
-            level: 'success'
-          })
-          this.context.router.push(`/students/${this.state.newStudent.id}`)
+        .then(response => {
+          if (response.ok) {
+            this.context.addNotification({
+              title: 'Success',
+              message: 'Successfully created new student',
+              level: 'success'
+            })
+            this.context.router.push(`/students/${this.state.newStudent.id}`)
+          } else {
+            this.context.addNotification({
+              title: 'Error',
+              message: 'Failed to create new student',
+              level: 'error'
+            })
+          }
         })
         .catch(err => {
           console.error(err)
@@ -175,16 +189,18 @@ export class AddStudents extends React.Component {
             Add Student
           </Breadcrumb.Item>
         </Breadcrumb>
-        <Grid>
+        <Grid fluid>
           <Row>
             <Col xs={12}>
               <Panel>
                 <Table striped bordered condensed hover fill>
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>First Name</th>
                       <th>Last Name</th>
-                      <th>ID</th>
+                      <th>Gender</th>
+                      <th>DOB</th>
                       <th>Grade</th>
                       <th>Section</th>
                       <th>Action</th>
@@ -192,6 +208,16 @@ export class AddStudents extends React.Component {
                   </thead>
                   <tbody>
                     <tr>
+                      <td>
+                        <FormGroup controlId="formBasicTextID">
+                          <FormControl
+                            type="text"
+                            placeholder="Enter Student ID"
+                            value={(this.state.newStudent.id == null ? '' : this.state.newStudent.id)}
+                            onChange={this.updateCreateField.bind(this, 'id')}
+                            />
+                        </FormGroup>
+                      </td>
                       <td>
                         <FormGroup controlId="formBasicTextName">
                           <FormControl
@@ -213,37 +239,44 @@ export class AddStudents extends React.Component {
                         </FormGroup>
                       </td>
                       <td>
-                        <FormGroup controlId="formBasicTextID">
+                        <FormGroup controlId="formSelectSex">
                           <FormControl
-                            type="text"
-                            placeholder="Enter Student ID"
-                            value={(this.state.newStudent.id == null ? '' : this.state.newStudent.id)}
-                            onChange={this.updateCreateField.bind(this, 'id')}
-                            />
+                            componentClass="select"
+                            value={this.state.newStudent.sex ? this.state.newStudent.sex : 'M'}
+                            onChange={this.updateCreateField.bind(this, 'sex')}>
+                            <option value="M">M</option>
+                            <option value="F">F</option>
+                          </FormControl>
                         </FormGroup>
                       </td>
-
                       <td>
-
+                        <FormGroup controlId="formSelectDOB">
+                          <DatePicker
+                            id="datepicker"
+                            showClearButton={false}
+                            value={this.state.newStudent.dobValue}
+                            onChange={this.updateCreateDOB.bind(this)} />
+                        </FormGroup>
+                      </td>
+                      <td>
                         <FormGroup controlId="formSelectGrade">
                           <FormControl
                             componentClass="select"
                             value={this.state.newStudent.grade ? this.state.newStudent.grade : '0'}
                             onChange={this.updateCreateField.bind(this, 'grade')}>
-                            <option value="0">Kindergarten</option>
-                            <option value="1">First</option>
-                            <option value="2">Second</option>
-                            <option value="3">Third</option>
-                            <option value="4">Fourth</option>
-                            <option value="5">Fifth</option>
-                            <option value="6">Sixth</option>
-                            <option value="7">Seventh</option>
-                            <option value="8">Eighth</option>
+                            <option value="0">K</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
                           </FormControl>
                         </FormGroup>
                       </td>
-
-                      <td>{
+                      <td>
                         <FormGroup controlId="formSelectSection">
                           <FormControl
                             componentClass="select"
@@ -251,13 +284,15 @@ export class AddStudents extends React.Component {
                             onChange={this.updateCreateField.bind(this, 'sectionID')}>
                             {
                               this.state.options.map((option, i) => {
-                                return (<option key={i} value={option.sectionID}>{option.teacher.firstName + ' ' + option.teacher.lastName}</option>)
+                                return (<option key={i} value={option.sectionID}>{`${option.teacher.firstName} ${option.teacher.lastName}`}</option>)
                               })
                             }
                           </FormControl>
                         </FormGroup>
-                      }</td>
-                      <td><Button bsStyle='primary' onClick={this.createStudent.bind(this)}>ADD STUDENT</Button></td>
+                      </td>
+                      <td>
+                        <Button block bsStyle='primary' onClick={this.createStudent.bind(this)}>ADD STUDENT</Button>
+                      </td>
                     </tr>
                   </tbody>
                 </Table>
