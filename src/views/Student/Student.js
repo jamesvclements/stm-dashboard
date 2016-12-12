@@ -73,7 +73,7 @@ export class Student extends React.Component {
               <Panel>
                 {
                   this.state.editing ?
-                    <StudentEditForm studentID={student.id} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
+                    <StudentEditForm student={student} toggleEdit={this.toggleEdit.bind(this)} updateStudent={this.updateStudent.bind(this)} />
                     : <StudentViewForm student={student} toggleEdit={this.toggleEdit.bind(this)} />
                 }
               </Panel>
