@@ -63,7 +63,7 @@ export class DynamicStudentTable extends React.Component {
               <Col md={4} xs={12}>
                 <FormGroup>
                   <ControlLabel>Grade</ControlLabel>
-                  <FormControl 
+                  <FormControl
                     componentClass="select"
                     placeholder="ALL"
                     onChange={this.changeGradeFilter.bind(this)}>
@@ -126,6 +126,13 @@ export class DynamicStudentTable extends React.Component {
                           bsStyle="primary"
                           onClick={() => { this.context.router.push(`/students/${student.id}`) } }>
                           View Card
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          block
+                          bsStyle="primary">
+                          View Profile
                         </Button>
                       </td>
                     </tr>
