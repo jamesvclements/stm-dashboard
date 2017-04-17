@@ -62,6 +62,17 @@ export class Landing extends React.Component {
                 </Col>
                 : null
             }
+	  {
+              (accessLevel <= ACCESS.COUNSELOR) ?
+	      <Col md={6} xs={12}>
+                  <Panel
+	      // onClick={() => { this.context.router.push('/run-placements') } }
+                    className="clickable-panel">
+                    <h3>Reports</h3>
+                  </Panel>
+                </Col>
+	      : null
+	  }
             {
               (accessLevel === ACCESS.ADMIN) ? 
               <Col md={6} xs={12}>
